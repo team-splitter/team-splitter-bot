@@ -1,0 +1,7 @@
+com/max/user/service/persistence/UserServicePersistenceConfig.class
+com/max/user/service/persistence/entities/TransactionEntity.class
+com/max/user/service/persistence/config/UserServicePersistenceH2Config.class
+com/max/user/service/persistence/entities/PollEntity.class
+com/max/user/service/persistence/repositories/TransactionRepository.class
+com/max/user/service/persistence/config/UserServicePersistencePostgresConfig.class
+com/max/user/service/persistence/config/UserServicePersistenceMySQLConfig.class

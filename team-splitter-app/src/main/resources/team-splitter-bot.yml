@@ -1,0 +1,14 @@
+telegram:
+  bot:
+    token: ""#Bot token
+
+command:
+  allowed-users: "355281005" #"Maksym"
+#  allowed-users: ""
+db: "mysql"
+team-splitter:
+  db:
+    mysql:
+      url: "jdbc:mysql://localhost:3306/team-splitter"
+      user: "root"
+      password: "pass"
