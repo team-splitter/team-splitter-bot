@@ -1,7 +1,0 @@
-/Users/max/projects/team-splitter-bot/team-splitter-persistence/src/main/java/com/max/user/service/persistence/config/UserServicePersistencePostgresConfig.java
-/Users/max/projects/team-splitter-bot/team-splitter-persistence/src/main/java/com/max/user/service/persistence/config/UserServicePersistenceH2Config.java
-/Users/max/projects/team-splitter-bot/team-splitter-persistence/src/main/java/com/max/user/service/persistence/entities/PollEntity.java
-/Users/max/projects/team-splitter-bot/team-splitter-persistence/src/main/java/com/max/user/service/persistence/UserServicePersistenceConfig.java
-/Users/max/projects/team-splitter-bot/team-splitter-persistence/src/main/java/com/max/user/service/persistence/config/UserServicePersistenceMySQLConfig.java
-/Users/max/projects/team-splitter-bot/team-splitter-persistence/src/main/java/com/max/user/service/persistence/repositories/TransactionRepository.java
-/Users/max/projects/team-splitter-bot/team-splitter-persistence/src/main/java/com/max/user/service/persistence/entities/TransactionEntity.java
