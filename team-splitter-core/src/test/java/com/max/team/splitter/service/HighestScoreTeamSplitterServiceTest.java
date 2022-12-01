@@ -20,9 +20,9 @@ public class HighestScoreTeamSplitterServiceTest {
 
     static  {
         scores.put(1L, 65);
-        scores.put(2L, 30);
+        scores.put(2L, 20);
         scores.put(3L, 55);
-        scores.put(4L, 45);
+        scores.put(4L, 25);
         scores.put(5L, 70);
         scores.put(6L, 80);
     }

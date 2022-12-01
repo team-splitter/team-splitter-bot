@@ -4,13 +4,16 @@ import com.max.team.splitter.model.Player;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class HighestScoreTeamSplitterService implements TeamSplitterService {
-    private static final int DEFAULT_SCORE = 50;
+    private static final  String[] teamColors = new String[]{"Blue", "Red", "White", "Black"};
+
+    private static final int DEFAULT_SCORE = 30;
     private static final int MAX_SCORE = 100;
     private static final int MIN_SCORE = 0;
 
@@ -45,6 +48,20 @@ public class HighestScoreTeamSplitterService implements TeamSplitterService {
             i++;
         }
         return teams;
+    }
+
+    public Map<String, List<Player>> splitTeams(int numberOfTeams, List<Player> players) {
+        List<List<Player>> teams = splitIntoTeams(numberOfTeams, players);
+        LinkedHashMap<String, List<Player>> teamMap = new LinkedHashMap<>();
+        int teamNum = 0;
+        for (List<Player> team : teams) {
+            String teamColor = teamColors[teamNum];
+
+            teamMap.put(teamColor, team);
+            teamNum++;
+        }
+
+        return teamMap;
     }
 
     private List<PlayerScore> getPlayerScores(List<Player> players) {

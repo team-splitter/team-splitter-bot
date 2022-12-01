@@ -2,6 +2,7 @@ package com.max.team.splitter.handlers.command;
 
 import com.max.team.splitter.handlers.BotCommand;
 import com.max.team.splitter.model.Player;
+import com.max.team.splitter.service.GameService;
 import com.max.team.splitter.service.PlayerService;
 import com.max.team.splitter.service.PollService;
 import com.max.team.splitter.service.TeamSplitterService;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -27,12 +29,14 @@ public class SplitCommandHandler implements BotCommandHandler {
     private final PlayerService playerService;
     private final TelegramBot bot;
     private final TeamSplitterService teamSplitterService;
+    private final GameService gameService;
 
-    public SplitCommandHandler(PollService pollService, PlayerService playerService, TelegramBot bot, TeamSplitterService teamSplitterService) {
+    public SplitCommandHandler(PollService pollService, PlayerService playerService, TelegramBot bot, TeamSplitterService teamSplitterService, GameService gameService) {
         this.pollService = pollService;
         this.playerService = playerService;
         this.bot = bot;
         this.teamSplitterService = teamSplitterService;
+        this.gameService = gameService;
     }
 
     @Override
@@ -41,18 +45,19 @@ public class SplitCommandHandler implements BotCommandHandler {
         Optional<String> lastPollId = pollService.getLastPollId(message.chat().id());
         if (lastPollId.isEmpty()) return;
 
-        List<Long> ids = pollService.getPlayerIdsGoingToGame(lastPollId.get());
-        List<Player> players = playerService.getPlayersByIds(ids);
+        String pollId = lastPollId.get();
+        List<Long> playerIds = pollService.getPlayerIdsGoingToGame(pollId);
+        List<Player> players = playerService.getPlayersByIds(playerIds);
 
         log.info("Split players={}", players);
-        List<List<Player>> teams = teamSplitterService.splitIntoTeams(2, players);
+        Map<String, List<Player>> teams = teamSplitterService.splitTeams(2, players);
+        gameService.saveGameSplit(teams, pollId);
 
-        String[] teamColors = new String[]{"Blue", "Red", "White", "Black"};
 
         String textMessage = "";
-        int teamNum = 0;
-        for (List<Player> team : teams) {
-            String teamColor = teamColors[teamNum];
+        for (Map.Entry<String, List<Player>> entry : teams.entrySet()) {
+            String teamColor = entry.getKey();
+            List<Player> team = entry.getValue();
 
             textMessage += "Team " + teamColor + "\n";
             for (Player player : team) {
@@ -72,10 +77,8 @@ public class SplitCommandHandler implements BotCommandHandler {
                 }
 
             }
-            teamNum++;
         }
 
-//                textMessage = "test";
         Long chatId = message.chat().id();
         log.info("Sending message text={} to chatId={}", textMessage, chatId);
         SendMessage request = new SendMessage(chatId, textMessage);

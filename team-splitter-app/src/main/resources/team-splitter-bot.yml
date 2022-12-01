@@ -3,7 +3,7 @@ telegram:
     token: ""#Bot token
 
 command:
-  allowed-users: "355281005" #"Maksym"
+  allowed-users: "355281005,156023871" #"Maksym"
 #  allowed-users: ""
 db: "mysql"
 team-splitter:

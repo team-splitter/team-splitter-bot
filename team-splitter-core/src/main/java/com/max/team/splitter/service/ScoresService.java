@@ -1,25 +1,26 @@
 package com.max.team.splitter.service;
 
+import com.max.team.splitter.persistence.entities.PlayerScoreEntity;
+import com.max.team.splitter.persistence.repositories.PlayerScoreRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ScoresService {
-    private static Map<Long, Integer> scores = new HashMap<>();
+    private final PlayerScoreRepository playerScoreRepository;
 
-    static  {
-        scores.put(1L, 65);
-        scores.put(2L, 30);
-        scores.put(3L, 55);
-        scores.put(4L, 45);
-        scores.put(5L, 70);
-        scores.put(6L, 80);
+    public ScoresService(PlayerScoreRepository playerScoreRepository) {
+        this.playerScoreRepository = playerScoreRepository;
     }
 
     public Map<Long, Integer> getScores() {
-        return Collections.unmodifiableMap(scores);
+        List<PlayerScoreEntity> scoreEntities = playerScoreRepository.findAll();
+
+        return scoreEntities.stream()
+                .collect(Collectors.toMap(PlayerScoreEntity::getPlayerId, PlayerScoreEntity::getScore));
     }
 }

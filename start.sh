@@ -1,0 +1,26 @@
+docker stop mysql
+docker rm mysql
+
+docker run --name mysql -d \
+  --network springmysql-net \
+  -p 3306:3306 \
+  -e MYSQL_ROOT_PASSWORD=$MYSQLDB_USER \
+  -e MYSQL_DATABASE=team-splitter \
+  -u root \
+  --restart unless-stopped \
+  -v mysql:/var/lib/mysql \
+  mysql:8
+
+docker stop app
+docker rm app
+docker run --name app -d \
+  --network springmysql-net \
+  --env-file ./.env \
+  -e SPRING_APPLICATION_JSON='{
+              "telegram.bot.token": "${TELEGRAM_BOT_TOKEN}",
+               "team-splitter.db.mysql.url"  : "jdbc:mysql://mysql:${MYSQLDB_DOCKER_PORT}/${MYSQLDB_DATABASE}?useSSL=false",
+               "team-splitter.db.mysql.username" : "${MYSQLDB_USER}",
+               "team-splitter.db.mysql.password" : "${MYSQLDB_ROOT_PASSWORD}",
+               "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"
+             }' \
+  mukhanovmax/team-splitter-bot:1.0

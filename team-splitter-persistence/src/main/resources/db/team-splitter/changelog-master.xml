@@ -18,5 +18,6 @@
     <include file="db/team-splitter/changelogs/base/player_table.xml"/>
     <include file="db/team-splitter/changelogs/base/player_score_table.xml"/>
     <include file="db/team-splitter/changelogs/base/poll_table.xml"/>
+    <include file="db/team-splitter/changelogs/base/game_table.xml"/>
 
 </databaseChangeLog>
