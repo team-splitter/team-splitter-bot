@@ -44,7 +44,11 @@ public class PollService {
         if (optionIds.length == 0) {
             //retract vote
             log.info("retract vote, removing player by id={}", userId);
-            //TODO remove entity when retrack
+            Optional<PollAnswerEntity> existing = pollAnswerRepository.findByPollIdAndPlayerId(pollId, userId);
+            if (existing.isPresent()) {
+                log.info("Deleting existing poll answer with id={}", existing.get().getPollId());
+                pollAnswerRepository.delete(existing.get());
+            }
         } else if (optionIds[0] == 0) {
             //vote +
             log.info("adding player with id={}", userId);
