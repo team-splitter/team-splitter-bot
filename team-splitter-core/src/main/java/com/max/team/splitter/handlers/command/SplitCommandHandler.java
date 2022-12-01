@@ -43,9 +43,12 @@ public class SplitCommandHandler implements BotCommandHandler {
     public void handle(Message message, String text, MessageEntity botCommandEntity) {
         log.info("Handling split command");
         Optional<String> lastPollId = pollService.getLastPollId(message.chat().id());
-        if (lastPollId.isEmpty()) return;
-
+        if (lastPollId.isEmpty()) {
+            log.warn("Last poll id is not found by chat_id={}", message.chat().id());
+            return;
+        }
         String pollId = lastPollId.get();
+        log.info("Last poll_id={} found by chat_id={}", pollId, message.chat().id());
         List<Long> playerIds = pollService.getPlayerIdsGoingToGame(pollId);
         List<Player> players = playerService.getPlayersByIds(playerIds);
 
