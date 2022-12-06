@@ -62,24 +62,27 @@ public class SplitCommandHandler implements BotCommandHandler {
             String teamColor = entry.getKey();
             List<Player> team = entry.getValue();
 
-            textMessage += "Team " + teamColor + "\n";
+            textMessage += "*Team " + teamColor + "*\n";
             for (Player player : team) {
-                if (player.getUsername() != null) {
-                    textMessage += "@" + player.getUsername() + "\n";
-                } else {
-                    String personName = "";
-                    if (player.getFirstName() != null) {
-                        personName += player.getFirstName();
-                    }
-                    if (player.getLastName() != null) {
+                String playerNameRow = playerDisplayName(player);
+//                if (player.getUsername() != null) {
+//                    textMessage += "@" + player.getUsername() + "\n";
+//                } else {
+//                    String personName = "";
+//                    if (player.getFirstName() != null) {
+//                        personName += player.getFirstName();
+//                    }
+//                    if (player.getLastName() != null) {
+//
+//                        personName += (personName.length() == 0 ? "" : " ") + player.getLastName();
+//                    }
+//                    textMessage += "[" + personName + "](tg://user?id=" + player.getId() + ") \n";
+//
+//                }
 
-                        personName += (personName.length() == 0 ? " " : "") + player.getLastName();
-                    }
-                    textMessage += "[" + personName + "](tg://user?id=" + player.getId() + ") \n";
-
-                }
-
+                textMessage += playerNameRow + "\n";
             }
+            textMessage += "\n";
         }
 
         Long chatId = message.chat().id();
@@ -88,6 +91,37 @@ public class SplitCommandHandler implements BotCommandHandler {
         request.parseMode(ParseMode.MarkdownV2);
         SendResponse sendResponse = bot.execute(request);
         log.info("SendMessage response={}", sendResponse);
+    }
+
+    private String playerDisplayName(Player player) {
+        String personName = "";
+        if (player.getFirstName() != null) {
+            personName += player.getFirstName();
+        }
+        if (player.getLastName() != null) {
+
+            personName += (personName.length() == 0 ? "" : " ") + player.getLastName();
+        }
+
+        return personName;
+
+//        String displayName = "";
+//        if (player.getUsername() != null) {
+//            displayName += "@" + player.getUsername() + "\n";
+//        } else {
+//            String personName = "";
+//            if (player.getFirstName() != null) {
+//                personName += player.getFirstName();
+//            }
+//            if (player.getLastName() != null) {
+//
+//                personName += (personName.length() == 0 ? "" : " ") + player.getLastName();
+//            }
+//            displayName += "[" + personName + "](tg://user?id=" + player.getId() + ") \n";
+//
+//        }
+//
+//        return displayName;
     }
 
     @Override

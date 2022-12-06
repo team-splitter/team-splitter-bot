@@ -1,6 +1,9 @@
 package com.max.team.splitter.service;
 
 import com.max.team.splitter.model.Player;
+import com.max.team.splitter.model.PlayerScore;
+import com.max.team.splitter.strategy.TeamSplitStrategy;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,9 +21,12 @@ public class HighestScoreTeamSplitterService implements TeamSplitterService {
     private static final int MIN_SCORE = 0;
 
     private final ScoresService scoresService;
+    private final TeamSplitStrategy splitStrategy;
 
-    public HighestScoreTeamSplitterService(ScoresService scoresService) {
+    public HighestScoreTeamSplitterService(ScoresService scoresService,
+                                           @Qualifier("BackAndForceTeamSplitStrategy") TeamSplitStrategy splitStrategy) {
         this.scoresService = scoresService;
+        this.splitStrategy = splitStrategy;
     }
 
     @Override
@@ -29,24 +35,16 @@ public class HighestScoreTeamSplitterService implements TeamSplitterService {
 
         //Sort by score descending then by player id
         playerScores.sort((a, b) -> {
-            if (a.score > b.score) {
+            if (a.getScore() > b.getScore()) {
                 return -1;
-            } else if (a.score < b.score) {
+            } else if (a.getScore() < b.getScore()) {
                 return 1;
             } else {
-                return a.player.getId().compareTo(b.player.getId());
+                return a.getPlayer().getId().compareTo(b.getPlayer().getId());
             }
         });
-        List<List<Player>> teams = new ArrayList<>();
-        for (int i = 0; i < numberOfTeams; i++) {
-            teams.add(new ArrayList<>());
-        }
 
-        int i = 0;
-        for (PlayerScore playerScore : playerScores) {
-            teams.get(i % numberOfTeams).add(playerScore.player);
-            i++;
-        }
+        List<List<Player>> teams = splitStrategy.split(numberOfTeams, playerScores);
         return teams;
     }
 
@@ -69,15 +67,5 @@ public class HighestScoreTeamSplitterService implements TeamSplitterService {
         return players.stream()
                 .map((player -> new PlayerScore(player, scores.getOrDefault(player.getId(), DEFAULT_SCORE))))
                 .collect(Collectors.toList());
-    }
-
-    static class PlayerScore {
-        Player player;
-        int score;
-
-        public PlayerScore(Player player, int score) {
-            this.player = player;
-            this.score = score;
-        }
     }
 }
