@@ -1,0 +1,7 @@
+db: "mysql"
+team-splitter:
+  db:
+    mysql:
+      url: ""
+      user: ""
+      password: ""

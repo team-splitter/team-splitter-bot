@@ -17,16 +17,15 @@ services:
   app:
     depends_on:
       - mysql
-    build: ./
-    restart: on-failure
+    build: ./team-splitter-app
     env_file: ./.env
     environment:
       SPRING_APPLICATION_JSON: '{
-        "team-splitter.db.mysql.url"  : "jdbc:mysql://mysql:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
-        "spring.datasource.username" : "$MYSQLDB_USER",
-        "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
-        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
-        "spring.jpa.hibernate.ddl-auto" : "update"
+        "telegram.bot.token": "${TELEGRAM_BOT_TOKEN}",
+        "team-splitter.db.mysql.url"  : "jdbc:mysql://mysql:${MYSQLDB_DOCKER_PORT}/${MYSQLDB_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false",
+         "team-splitter.db.mysql.user" : "${MYSQLDB_USER}",
+         "team-splitter.db.mysql.password" : "${MYSQLDB_ROOT_PASSWORD}",
+         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"
       }'
     volumes:
       - .m2:/root/.m2
@@ -34,6 +33,24 @@ services:
       - springmysql-net
     stdin_open: true
     tty: true
+
+  backend:
+    depends_on:
+      - mysql
+    build: ./team-splitter-server
+    env_file: ./.env
+    environment:
+      SPRING_APPLICATION_JSON: '{
+         "team-splitter.db.mysql.url"  : "jdbc:mysql://mysql:${MYSQLDB_DOCKER_PORT}/${MYSQLDB_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false",
+          "team-splitter.db.mysql.user" : "${MYSQLDB_USER}",
+          "team-splitter.db.mysql.password" : "${MYSQLDB_ROOT_PASSWORD}",
+          "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"
+       }'
+    networks:
+      - springmysql-net
+    stdin_open: true
+    ports:
+      - "8080:8080"
 
 volumes:
   mysql:

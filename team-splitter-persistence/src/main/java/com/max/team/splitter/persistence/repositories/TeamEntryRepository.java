@@ -4,6 +4,10 @@ import com.max.team.splitter.persistence.entities.TeamEntryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface TeamEntryRepository extends JpaRepository<TeamEntryEntity, Long> {
+
+    List<TeamEntryEntity> findByGameIdIn(List<Long> gameIds);
 }

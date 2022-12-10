@@ -8,8 +8,14 @@ else
   version=$1;
 fi
 
-echo $version
+echo "Building version "$version
+
 
 mvn clean package
 
-docker build -t mukhanovmax/team-splitter-bot:$version .
+
+echo "Building image mukhanovmax/team-splitter-bot:${version}"
+docker build -t mukhanovmax/team-splitter-bot:$version ./team-splitter-app/
+
+echo "Building image mukhanovmax/team-splitter-server:${version}"
+docker build -t mukhanovmax/team-splitter-server:$version ./team-splitter-server/
