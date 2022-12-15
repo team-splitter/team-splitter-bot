@@ -16,6 +16,8 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static com.max.team.splitter.core.service.Constants.TEAM_COLORS;
+
 @Service
 public class GameService {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -49,6 +51,17 @@ public class GameService {
                 game.setTeams(Collections.emptyMap());
             }
         }
+        games.forEach((game -> {
+            Map<String, List<Player>> teams = game.getTeams();
+            LinkedHashMap<String, List<Player>> sortedByTeamColor = new LinkedHashMap<>();
+            for (String teamColor : TEAM_COLORS) {
+                if (teams.containsKey(teamColor)) {
+                    sortedByTeamColor.put(teamColor, teams.get(teamColor));
+                }
+            }
+            game.setTeams(sortedByTeamColor);
+        }));
+
         return games;
     }
 

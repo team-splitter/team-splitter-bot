@@ -56,4 +56,8 @@ public class PlayerService {
         return entities.stream().map(CoreConverters::toPlayer).collect(Collectors.toList());
     }
 
+    public void deletePlayer(Long id) {
+        playerRepository.deleteById(id);
+    }
+
 }

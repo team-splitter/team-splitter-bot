@@ -11,9 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.max.team.splitter.core.service.Constants.TEAM_COLORS;
+
 @Service
 public class HighestScoreTeamSplitterService implements TeamSplitterService {
-    private static final  String[] teamColors = new String[]{"Blue", "Red", "White", "Black"};
 
     private static final int DEFAULT_SCORE = 30;
     private static final int MAX_SCORE = 100;
@@ -52,7 +53,7 @@ public class HighestScoreTeamSplitterService implements TeamSplitterService {
         LinkedHashMap<String, List<Player>> teamMap = new LinkedHashMap<>();
         int teamNum = 0;
         for (List<Player> team : teams) {
-            String teamColor = teamColors[teamNum];
+            String teamColor = TEAM_COLORS[teamNum];
 
             teamMap.put(teamColor, team);
             teamNum++;

@@ -13,8 +13,8 @@ docker run --name mysql -d \
   -v mysql:/var/lib/mysql \
   mysql:8
 
-docker stop app
-docker rm app
+docker stop bot
+docker rm bot
 docker run --name app -d \
   --network springmysql-net \
   --env-file ./.env \
@@ -30,7 +30,7 @@ docker run --name app -d \
   docker stop backend
   docker rm backend
   docker run --name backend -d \
-    -p8080:8080 \
+    -p80:8080 \
     --network springmysql-net \
     --env-file ./.env \
     -e SPRING_APPLICATION_JSON='{

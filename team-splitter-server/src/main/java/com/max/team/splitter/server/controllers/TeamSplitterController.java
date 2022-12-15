@@ -17,6 +17,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static com.max.team.splitter.server.converters.DtoConverters.toPlayerDto;
+
 @RestController
 @RequestMapping("/team")
 public class TeamSplitterController {
@@ -59,13 +61,9 @@ public class TeamSplitterController {
     private List<PlayerDto> toPlayerDtoList(List<Player> players, Map<Long, Integer> playerScores) {
         List<PlayerDto> playerDtos = new LinkedList<>();
         for (Player player : players) {
-            PlayerDto dto = new PlayerDto();
-            dto.setId(player.getId());
-            dto.setFirstName(player.getFirstName());
-            dto.setLastName(player.getLastName());
-            dto.setUsername(player.getUsername());
-
+            PlayerDto dto = toPlayerDto(player);
             dto.setScore(playerScores.get(player.getId()));
+
             playerDtos.add(dto);
         }
 

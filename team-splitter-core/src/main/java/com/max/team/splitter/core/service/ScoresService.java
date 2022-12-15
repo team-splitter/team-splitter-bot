@@ -23,4 +23,11 @@ public class ScoresService {
         return scoreEntities.stream()
                 .collect(Collectors.toMap(PlayerScoreEntity::getPlayerId, PlayerScoreEntity::getScore));
     }
+
+    public void saveScore(Long playerId, Integer score) {
+        PlayerScoreEntity entity = new PlayerScoreEntity();
+        entity.setPlayerId(playerId);
+        entity.setScore(score);
+        playerScoreRepository.save(entity);
+    }
 }
