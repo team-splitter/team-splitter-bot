@@ -65,6 +65,22 @@ public class PollService {
         }
     }
 
+    public PollAnswerModel addPollAnswer(String pollId, Long playerId) {
+        Optional<PollAnswerEntity> found = pollAnswerRepository.findByPollIdAndPlayerId(pollId, playerId);
+        if (found.isPresent()) {
+            return CoreConverters.toPollAnswerModel(found.get());
+        }
+        PollAnswerEntity entity = CoreConverters.toPollAnswerEntity(pollId, playerId);
+        PollAnswerEntity vote = pollAnswerRepository.save(entity);
+        return CoreConverters.toPollAnswerModel(vote);
+    }
+
+    public void deletePollAnswer(String pollId, Long playerId) {
+        PollAnswerEntity entity = pollAnswerRepository.findByPollIdAndPlayerId(pollId, playerId)
+                .orElseThrow(() -> new NotFoundException("Not fount by pollId=" + pollId + " and playerId=" + playerId));
+        pollAnswerRepository.delete(entity);
+    }
+
     public List<Long> getPlayerIdsGoingToGame(String pollId) {
         List<PollAnswerEntity> answers = pollAnswerRepository.findByPollId(pollId);
         List<Long> going = answers.stream().map(PollAnswerEntity::getPlayerId).collect(Collectors.toList());
@@ -80,5 +96,11 @@ public class PollService {
     public Optional<Integer> getLastPollMessageId(Long chatId) {
         Optional<PollEntity> poll = pollRepository.findFirstByChatIdOrderByCreationTimestampDesc(chatId);
         return poll.map(PollEntity::getMessageId);
+    }
+
+    public List<PollAnswerModel> getVotesForPoll(String pollId) {
+        List<PollAnswerEntity> answers = pollAnswerRepository.findByPollId(pollId);
+
+        return answers.stream().map(CoreConverters::toPollAnswerModel).collect(Collectors.toList());
     }
 }

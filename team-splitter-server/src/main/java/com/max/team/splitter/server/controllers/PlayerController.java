@@ -52,6 +52,14 @@ public class PlayerController {
         return dto;
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public PlayerDto updatePlayer(@PathVariable("id") Long id, @RequestBody PlayerDto dto) {
+        playerService.updatePlayer(id, DtoConverters.toPlayer(dto));
+        Long playerId = dto.getId();
+        scoresService.saveScore(playerId, dto.getScore());
+        return dto;
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void removePlayer(@PathVariable("id") Long id) {
         playerService.deletePlayer(id);

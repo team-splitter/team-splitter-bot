@@ -41,6 +41,8 @@ public class PlayerService {
         boolean exists= playerRepository.existsById(id);
         if (exists) {
             log.info("Player with id={} already exists", id);
+            //TODO separate create and update
+            updatePlayer(id, player);
             return false;
         } else {
             PlayerEntity entity = CoreConverters.toPlayerEntity(player);
@@ -48,6 +50,19 @@ public class PlayerService {
             log.info("Player with id={} has added", id);
             return true;
         }
+    }
+
+    public Player updatePlayer(Long playerId, Player player) {
+        log.info("Updating player with id={}", playerId);
+        Optional<PlayerEntity> getPlayer = playerRepository.findById(playerId);
+        PlayerEntity existingPlayer = getPlayer.orElseThrow(() -> new NotFoundException("Player with id=" + playerId + " is not found"));
+
+        existingPlayer.setFirstName(player.getFirstName());
+        existingPlayer.setLastName(player.getLastName());
+        existingPlayer.setUserName(player.getUsername());
+
+
+        return CoreConverters.toPlayer(playerRepository.save(existingPlayer));
     }
 
     public List<Player> getPlayersByIds(Collection<Long> ids) {

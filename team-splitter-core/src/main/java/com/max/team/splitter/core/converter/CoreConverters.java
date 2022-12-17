@@ -48,10 +48,14 @@ public class CoreConverters {
     }
 
     public static PollAnswerEntity toPollAnswerEntity(PollAnswerModel pollAnswer) {
+        return toPollAnswerEntity(pollAnswer.getPollId(), pollAnswer.getPlayerId());
+    }
+
+    public static PollAnswerEntity toPollAnswerEntity(String pollId, Long playerId) {
         PollAnswerEntity entity = new PollAnswerEntity();
-        entity.setPollId(pollAnswer.getPollId());
+        entity.setPollId(pollId);
         entity.setCreationTimestamp(Instant.now());
-        entity.setPlayerId(pollAnswer.getPlayerId());
+        entity.setPlayerId(playerId);
         return entity;
     }
 
@@ -61,5 +65,12 @@ public class CoreConverters {
         game.setPollId(entity.getPollId());
         game.setCreationTime(entity.getCreationTimestamp());
         return game;
+    }
+
+    public static PollAnswerModel toPollAnswerModel(PollAnswerEntity entity) {
+        PollAnswerModel model = new PollAnswerModel();
+        model.setId(entity.getId());
+        model.setPlayerId(entity.getPlayerId());
+        return model;
     }
 }
