@@ -39,7 +39,7 @@ docker run --name bot -d \
                  "team-splitter.db.mysql.password" : "${MYSQLDB_ROOT_PASSWORD}",
                  "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"
                }' \
-    mukhanovmax/team-splitter-server:1.8
+    mukhanovmax/team-splitter-server:1.9
 
 docker stop frontend
 docker rm frontend
