@@ -50,10 +50,10 @@ public class PollController {
         return vote;
     }
 
-    @RequestMapping(value = "/{id}/vote/{playerId}", method = RequestMethod.DELETE)
-    public boolean deleteVote(@PathVariable(value = "id") String pollId, @PathVariable("playerId") Long playerId) {
-        log.info("Delete vote for poll={} and playerId={}", pollId, playerId);
-        pollService.deletePollAnswer(pollId, playerId);
+    @RequestMapping(value = "/{id}/vote/{voteId}", method = RequestMethod.DELETE)
+    public boolean deleteVote(@PathVariable(value = "id") String pollId, @PathVariable("voteId") Long voteId) {
+        log.info("Delete vote for poll={} and voteId={}", pollId, voteId);
+        pollService.deletePollAnswer(pollId, voteId);
 
         return true;
     }

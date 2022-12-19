@@ -75,9 +75,12 @@ public class PollService {
         return CoreConverters.toPollAnswerModel(vote);
     }
 
-    public void deletePollAnswer(String pollId, Long playerId) {
-        PollAnswerEntity entity = pollAnswerRepository.findByPollIdAndPlayerId(pollId, playerId)
-                .orElseThrow(() -> new NotFoundException("Not fount by pollId=" + pollId + " and playerId=" + playerId));
+    public void deletePollAnswer(String pollId, Long voteId) {
+        PollAnswerEntity entity = pollAnswerRepository.findById(voteId)
+                .orElseThrow(() -> new NotFoundException("Not fount by pollId=" + pollId + " and voteId=" + voteId));
+        if (!pollId.equals(entity.getPollId())) {
+            throw new NotFoundException("Not fount by pollId=" + pollId + " and voteId=" + voteId);
+        }
         pollAnswerRepository.delete(entity);
     }
 

@@ -52,8 +52,10 @@ public class SplitCommandHandler implements BotCommandHandler {
         List<Long> playerIds = pollService.getPlayerIdsGoingToGame(pollId);
         List<Player> players = playerService.getPlayersByIds(playerIds);
 
+        int numberOfTeams = getNumberOfTeams(text, botCommandEntity);
+
         log.info("Split players={}", players);
-        Map<String, List<Player>> teams = teamSplitterService.splitTeams(2, players);
+        Map<String, List<Player>> teams = teamSplitterService.splitTeams(numberOfTeams, players);
         gameService.saveGameSplit(teams, pollId);
 
 
@@ -65,20 +67,6 @@ public class SplitCommandHandler implements BotCommandHandler {
             textMessage += "*Team " + teamColor + "*\n";
             for (Player player : team) {
                 String playerNameRow = playerDisplayName(player);
-//                if (player.getUsername() != null) {
-//                    textMessage += "@" + player.getUsername() + "\n";
-//                } else {
-//                    String personName = "";
-//                    if (player.getFirstName() != null) {
-//                        personName += player.getFirstName();
-//                    }
-//                    if (player.getLastName() != null) {
-//
-//                        personName += (personName.length() == 0 ? "" : " ") + player.getLastName();
-//                    }
-//                    textMessage += "[" + personName + "](tg://user?id=" + player.getId() + ") \n";
-//
-//                }
 
                 textMessage += playerNameRow + "\n";
             }
@@ -93,6 +81,21 @@ public class SplitCommandHandler implements BotCommandHandler {
         log.info("SendMessage response={}", sendResponse);
     }
 
+    private int getNumberOfTeams(String text, MessageEntity botCommandEntity) {
+        int numberOfTeams = 2;
+
+        String[] tokens = text.substring(botCommandEntity.offset() + botCommandEntity.length()).trim().split(" ");
+        if (tokens.length > 0) {
+            try {
+                numberOfTeams = Integer.parseInt(tokens[0]);
+            } catch (NumberFormatException e) {
+                log.info("Can't get number of teams from tokens={}", tokens);
+            }
+        }
+
+        return numberOfTeams;
+    }
+
     private String playerDisplayName(Player player) {
         String personName = "";
         if (player.getFirstName() != null) {
@@ -104,24 +107,6 @@ public class SplitCommandHandler implements BotCommandHandler {
         }
 
         return personName;
-
-//        String displayName = "";
-//        if (player.getUsername() != null) {
-//            displayName += "@" + player.getUsername() + "\n";
-//        } else {
-//            String personName = "";
-//            if (player.getFirstName() != null) {
-//                personName += player.getFirstName();
-//            }
-//            if (player.getLastName() != null) {
-//
-//                personName += (personName.length() == 0 ? "" : " ") + player.getLastName();
-//            }
-//            displayName += "[" + personName + "](tg://user?id=" + player.getId() + ") \n";
-//
-//        }
-//
-//        return displayName;
     }
 
     @Override
