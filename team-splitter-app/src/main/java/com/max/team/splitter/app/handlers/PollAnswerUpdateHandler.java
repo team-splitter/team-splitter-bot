@@ -34,6 +34,6 @@ public class PollAnswerUpdateHandler  implements UpdateHandler {
 
         pollService.addPollAnswer(AppConverters.toPollAnswerModel(pollAnswer));
         Player player = AppConverters.toPlayer(pollAnswer.user());
-        playerService.addPlayer(player);
+        playerService.createPlayer(player);
     }
 }

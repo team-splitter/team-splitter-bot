@@ -45,8 +45,8 @@ public class PlayerController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public PlayerDto savePlayer(@RequestBody PlayerDto dto) {
-        playerService.addPlayer(DtoConverters.toPlayer(dto));
+    public PlayerDto createPlayer(@RequestBody PlayerDto dto) {
+        playerService.createPlayer(DtoConverters.toPlayer(dto));
         Long playerId = dto.getId();
         scoresService.saveScore(playerId, dto.getScore());
         return dto;
