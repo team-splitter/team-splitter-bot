@@ -1,7 +1,5 @@
 source .env
 
-echo "test"
-
 docker stop mysql
 docker rm mysql
 
