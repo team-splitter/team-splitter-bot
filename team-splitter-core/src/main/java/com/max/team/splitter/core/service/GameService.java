@@ -87,6 +87,7 @@ public class GameService {
                 teamEntry.setTeamName(teamColor);
                 teamEntry.setPlayerId(player.getId());
                 teamEntry.setGameId(savedGame.getId());
+                teamEntry.setScore(player.getScore());
                 teamEntryEntities.add(teamEntry);
             }
         }

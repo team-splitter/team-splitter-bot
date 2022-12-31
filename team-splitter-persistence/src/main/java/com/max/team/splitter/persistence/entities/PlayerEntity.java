@@ -16,6 +16,9 @@ public class PlayerEntity {
     @Column(name = "username")
     private String userName;
 
+    @Column(name = "score")
+    private Integer score;
+
     public Long getId() {
         return id;
     }
@@ -46,5 +49,13 @@ public class PlayerEntity {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 }

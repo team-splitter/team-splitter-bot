@@ -11,6 +11,7 @@ public class DtoConverters {
         dto.setFirstName(player.getFirstName());
         dto.setLastName(player.getLastName());
         dto.setUsername(player.getUsername());
+        dto.setScore(player.getScore());
 
         return dto;
     }
@@ -20,6 +21,7 @@ public class DtoConverters {
         player.setFirstName(dto.getFirstName());
         player.setLastName(dto.getLastName());
         player.setUsername(dto.getUsername());
+        player.setScore(dto.getScore());
 
         return player;
     }

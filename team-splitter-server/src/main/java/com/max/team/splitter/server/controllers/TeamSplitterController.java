@@ -3,11 +3,9 @@ package com.max.team.splitter.server.controllers;
 import com.max.team.splitter.core.model.Player;
 import com.max.team.splitter.core.service.PlayerService;
 import com.max.team.splitter.core.service.PollService;
-import com.max.team.splitter.core.service.ScoresService;
 import com.max.team.splitter.core.service.TeamSplitterService;
 import com.max.team.splitter.server.dto.PlayerDto;
 import com.max.team.splitter.server.dto.TeamDto;
-import liquibase.pro.packaged.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +28,6 @@ public class TeamSplitterController {
     private PollService pollService;
     @Autowired
     private PlayerService playerService;
-    @Autowired
-    private ScoresService scoresService;
 
     @RequestMapping(value = "/split/{pollId}", method = RequestMethod.GET)
     public List<TeamDto>  split(@PathVariable(value = "pollId") String pollId,
@@ -45,24 +41,22 @@ public class TeamSplitterController {
         List<Long> playerIds = pollService.getPlayerIdsGoingToGame(pollId);
         List<Player> players = playerService.getPlayersByIds(playerIds);
         Map<String, List<Player>> teamsMap = teamSplitterService.splitTeams(numberOfTeams, players);
-        Map<Long, Integer> playerScores = scoresService.getScores();
 
         List<TeamDto> teams = new LinkedList<>();
         for (Map.Entry<String, List<Player>> entry : teamsMap.entrySet()) {
             TeamDto team = new TeamDto();
             team.setName(entry.getKey());
-            team.setPlayers(toPlayerDtoList(entry.getValue(), playerScores));
+            team.setPlayers(toPlayerDtoList(entry.getValue()));
             teams.add(team);
         }
 
         return teams;
     }
 
-    private List<PlayerDto> toPlayerDtoList(List<Player> players, Map<Long, Integer> playerScores) {
+    private List<PlayerDto> toPlayerDtoList(List<Player> players) {
         List<PlayerDto> playerDtos = new LinkedList<>();
         for (Player player : players) {
             PlayerDto dto = toPlayerDto(player);
-            dto.setScore(playerScores.get(player.getId()));
 
             playerDtos.add(dto);
         }

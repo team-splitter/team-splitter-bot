@@ -59,6 +59,7 @@ public class PlayerService {
         existingPlayer.setFirstName(player.getFirstName());
         existingPlayer.setLastName(player.getLastName());
         existingPlayer.setUserName(player.getUsername());
+        existingPlayer.setScore(player.getScore());
 
 
         return CoreConverters.toPlayer(playerRepository.save(existingPlayer));

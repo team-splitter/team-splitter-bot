@@ -15,6 +15,8 @@ public class TeamEntryEntity {
     private String teamName;
     @Column(name = "player_id")
     private Long playerId;
+    @Column(name = "score")
+    private Integer score;
 
     public Long getId() {
         return id;
@@ -46,5 +48,13 @@ public class TeamEntryEntity {
 
     public void setPlayerId(Long playerId) {
         this.playerId = playerId;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 }

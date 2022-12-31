@@ -2,7 +2,6 @@ package com.max.team.splitter.core.strategy;
 
 import com.max.team.splitter.core.TestData;
 import com.max.team.splitter.core.model.Player;
-import com.max.team.splitter.core.model.PlayerScore;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -15,23 +14,23 @@ class CircularTeamSplitStrategyTest {
 
     @Test
     void splitIntoTwoTeams() {
-        Player p1 = TestData.createPlayer(1L);
-        Player p2 = TestData.createPlayer(2L);
-        Player p3 = TestData.createPlayer(3L);
-        Player p4 = TestData.createPlayer(4L);
-        Player p5 = TestData.createPlayer(5L);
-        Player p6 = TestData.createPlayer(6L);
-        Player p7 = TestData.createPlayer(7L);
-        Player p8 = TestData.createPlayer(8L);
+        Player p1 = TestData.createPlayer(1L, 80);
+        Player p2 = TestData.createPlayer(2L, 75);
+        Player p3 = TestData.createPlayer(3L, 75);
+        Player p4 = TestData.createPlayer(4L, 70);
+        Player p5 = TestData.createPlayer(5L, 65);
+        Player p6 = TestData.createPlayer(6L, 65);
+        Player p7 = TestData.createPlayer(7L, 60);
+        Player p8 = TestData.createPlayer(8L, 55);
         List<List<Player>> teams = splitStrategy.split(2, List.of(
-                new PlayerScore(p1, 80),
-                new PlayerScore(p2, 75),
-                new PlayerScore(p3, 75),
-                new PlayerScore(p4, 70),
-                new PlayerScore(p5, 65),
-                new PlayerScore(p6, 65),
-                new PlayerScore(p7, 60),
-                new PlayerScore(p8, 55)
+                p1,
+                p2,
+                p3,
+                p4,
+                p5,
+                p6,
+                p7,
+                p8
         ));
 
         assertThat(teams).containsExactly(
@@ -42,25 +41,25 @@ class CircularTeamSplitStrategyTest {
 
     @Test
     void splitIntoThreeTeams() {
-        Player p1 = TestData.createPlayer(1L);
-        Player p2 = TestData.createPlayer(2L);
-        Player p3 = TestData.createPlayer(3L);
-        Player p4 = TestData.createPlayer(4L);
-        Player p5 = TestData.createPlayer(5L);
-        Player p6 = TestData.createPlayer(6L);
-        Player p7 = TestData.createPlayer(7L);
-        Player p8 = TestData.createPlayer(8L);
-        Player p9 = TestData.createPlayer(9L);
+        Player p1 = TestData.createPlayer(1L, 80);
+        Player p2 = TestData.createPlayer(2L, 75);
+        Player p3 = TestData.createPlayer(3L, 75);
+        Player p4 = TestData.createPlayer(4L, 70);
+        Player p5 = TestData.createPlayer(5L, 65);
+        Player p6 = TestData.createPlayer(6L, 65);
+        Player p7 = TestData.createPlayer(7L, 60);
+        Player p8 = TestData.createPlayer(8L, 55);
+        Player p9 = TestData.createPlayer(9L, 55);
         List<List<Player>> teams = splitStrategy.split(3, List.of(
-                new PlayerScore(p1, 80),
-                new PlayerScore(p2, 75),
-                new PlayerScore(p3, 75),
-                new PlayerScore(p4, 70),
-                new PlayerScore(p5, 65),
-                new PlayerScore(p6, 65),
-                new PlayerScore(p7, 60),
-                new PlayerScore(p8, 55),
-                new PlayerScore(p9, 55)
+                p1,
+                p2,
+                p3,
+                p4,
+                p5,
+                p6,
+                p7,
+                p8,
+                p9
         ));
 
         assertThat(teams).containsExactly(
