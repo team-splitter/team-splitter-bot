@@ -15,7 +15,7 @@ import java.util.Properties;
 @Import({
         TeamSplitterAppConfig.class,
 })
-public class TeamSplitterApplication  implements CommandLineRunner {
+public class 1TeamSplitterApplication  implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(TeamSplitterApplication.class);
     private static final String SPRING_CONFIG_NAME = "spring.config.name";
     private static final String SPRING_APPLICATION_NAME = "spring.application.name";
