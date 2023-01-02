@@ -41,7 +41,7 @@ pipeline {
                 script {
                     currentBuild.displayName = "${VERSION}"
                 }
-                sh 'mvn deploy scm:tag -Drevision=${VERSION}'
+//                 sh 'mvn deploy scm:tag -Drevision=${VERSION}'
             }
         }
     }
