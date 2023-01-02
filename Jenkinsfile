@@ -5,6 +5,10 @@ pipeline {
         jdk 'OpenJDK11'
     }
 
+    environment {
+        VERSION = "1.0.${env.BUILD_ID}"
+    }
+
     stages {
         stage ('Initialize') {
             steps {
@@ -29,8 +33,11 @@ pipeline {
         }
 
         stage ("deploy") {
+            when {
+                BRANCH_NAME == 'main'
+            }
             steps {
-                echo 'deploying the application'
+                echo "deploying the application version ${VERSION}"
             }
         }
     }
