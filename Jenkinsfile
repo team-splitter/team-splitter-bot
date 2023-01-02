@@ -34,7 +34,9 @@ pipeline {
 
         stage ("deploy") {
             when {
-                BRANCH_NAME == 'main'
+                expression {
+                    BRANCH_NAME == 'main'
+                }
             }
             steps {
                 echo "deploying the application version ${VERSION}"
