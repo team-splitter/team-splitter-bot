@@ -11,6 +11,7 @@ pipeline {
                 sh '''
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
+                    export JAVA_HOME="/var/jenkins_home/tools/hudson.model.JDK/OpenJDK11.0.1"
                 '''
             }
         }
