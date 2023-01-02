@@ -1,13 +1,15 @@
 pipeline {
     agent any
+    tools {
+        maven 'maven3.8.6'
+        jdk 'OpenJDK11.0.1'
+    }
 
     stages {
         stage ("build") {
             steps {
                 echo 'building the application'
-                withMaven() {
-                    sh 'mvn clean package'
-                }
+                sh 'mvn clean package'
             }
         }
 
