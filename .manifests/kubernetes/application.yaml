@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: team-splitter-argo-application
+  name: team-splitter
   namespace: argocd
 spec:
   project: default
