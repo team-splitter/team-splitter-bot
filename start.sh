@@ -18,6 +18,7 @@ docker rm bot
 docker run --name bot -d \
   --network  team-splitter-net \
   --env-file ./.env \
+  --restart unless-stopped \
   -e SPRING_APPLICATION_JSON='{
               "telegram.bot.token": "${TELEGRAM_BOT_TOKEN}",
                "team-splitter.db.mysql.url"  : "jdbc:mysql://mysql:${MYSQLDB_DOCKER_PORT}/${MYSQLDB_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false",
@@ -25,7 +26,7 @@ docker run --name bot -d \
                "team-splitter.db.mysql.password" : "${MYSQLDB_ROOT_PASSWORD}",
                "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"
              }' \
-  mukhanovmax/team-splitter-bot:1.12
+  mukhanovmax/team-splitter-bot:1.13
 
   docker stop backend
   docker rm backend
@@ -33,13 +34,14 @@ docker run --name bot -d \
     -p 8080:8080 \
     --network team-splitter-net \
     --env-file ./.env \
+    --restart unless-stopped \
     -e SPRING_APPLICATION_JSON='{
                  "team-splitter.db.mysql.url"  : "jdbc:mysql://mysql:${MYSQLDB_DOCKER_PORT}/${MYSQLDB_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false",
                  "team-splitter.db.mysql.user" : "${MYSQLDB_USER}",
                  "team-splitter.db.mysql.password" : "${MYSQLDB_ROOT_PASSWORD}",
                  "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"
                }' \
-    mukhanovmax/team-splitter-server:1.12
+    mukhanovmax/team-splitter-server:1.13
 
 docker stop frontend
 docker rm frontend
@@ -47,4 +49,5 @@ docker run --name frontend -d \
   -p 9000:80 \
   --network team-splitter-net \
   --env-file ./.env \
+  --restart unless-stopped \
   mukhanovmax/team-splitter-ui:1.7

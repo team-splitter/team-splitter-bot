@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bot-deployment
+  labels:
+    app: team-splitter-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: team-splitter-bot
+  template:
+    metadata:
+      labels:
+        app: team-splitter-bot
+    spec:
+      containers:
+        - name: team-splitter-bot
+          image: mukhanovmax/team-splitter-bot:1.13
+          env:
+            - name: TEAM-SPLITTER_DB_MYSQL_URL
+              value: jdbc:mysql://mysql-service:3306/team-splitter?allowPublicKeyRetrieval=true&useSSL=false
+            - name: TEAM-SPLITTER_DB_MYSQL_USER
+              value: root
+            - name: TEAM-SPLITTER_DB_MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-password
+            - name: TELEGRAM_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: team-splitter-secret
+                  key: telegram-bot-token
+

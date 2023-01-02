@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: team-splitter-backend-deployment
+  labels:
+    app: team-splitter-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: team-splitter-backend
+  template:
+    metadata:
+      labels:
+        app: team-splitter-backend
+    spec:
+      containers:
+        - name: team-splitter-backend
+          image: mukhanovmax/team-splitter-server:1.13
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TEAM-SPLITTER_DB_MYSQL_URL
+              value: jdbc:mysql://mysql-service:3306/team-splitter?allowPublicKeyRetrieval=true&useSSL=false
+            - name: TEAM-SPLITTER_DB_MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-user
+            - name: TEAM-SPLITTER_DB_MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-password
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+#  type: NodePort
+  selector:
+    app: team-splitter-backend
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+#      nodePort: 30100
