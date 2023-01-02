@@ -34,12 +34,14 @@ pipeline {
 
         stage ("deploy") {
             when {
-                expression {
-                    BRANCH_NAME == 'main'
-                }
+                branch 'main'
             }
             steps {
                 echo "deploying the application version ${VERSION}"
+                script {
+                    currentBuild.displayName = "${VERSION}"
+                }
+                sh 'mvn deploy scm:tag -Drevision=${VERSION}'
             }
         }
     }
