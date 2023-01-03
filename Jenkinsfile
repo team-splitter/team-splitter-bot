@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent any
 
     tools {
         maven 'maven3.8.6'
@@ -12,7 +12,7 @@ pipeline {
 
     stages {
         stage('Run CI?') {
-          agent any
+//           agent any
           steps {
             script {
               if (sh(script: "git log -1 --pretty=%B | fgrep -ie '[skip ci]' -e '[ci skip]'", returnStatus: true) == 0) {
