@@ -3,7 +3,7 @@
 
     <groupId>com.max</groupId>
     <artifactId>team-splitter-parent</artifactId>
-    <version>1.14-SNAPSHOT</version>
+    <version>1.15-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Team Splitter Bot :: Parent</name>
     <url>http://maven.apache.org</url>
