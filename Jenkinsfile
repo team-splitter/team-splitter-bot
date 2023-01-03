@@ -53,19 +53,22 @@ pipeline {
 //                     currentBuild.displayName = "${VERSION}"
 //                 }
                     sh '''
-                        mvn -B -DscmCommentPrefix="[platform] " \
-                        -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" \
-                        -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" \
-                        -DdryRun=true release:prepare
+                        release_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | cut -d- -f1)
 
-                        cat release.properties | grep "scm.tag="  | cut -d'=' -f2 > buildVersion
-                        release_version=$(tail -n 1 buildVersion)
+                        mvn versions:set -DnewVersion=${release_version}
 
                         mvn -DskipTests -DskipITs \
                         -Djib.to.tags=${release_version} \
                         -Djib.to.auth.username=$dockerhub_USR \
                         -Djib.to.auth.password=$dockerhub_PSW \
                         clean package -Pdocker-deploy
+
+                        mvn versions:revert
+
+                        mvn -B -DscmCommentPrefix="[platform] " \
+                        -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" \
+                        -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" \
+                        -DdryRun=true release:prepare
                     '''
 //                 sh ''
             }

@@ -7,7 +7,6 @@
         <version>1.14-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.max</groupId>
     <artifactId>team-splitter-app</artifactId>
     <version>1.14-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -16,6 +15,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <start-class>com.max.team.splitter.app.TeamSplitterApplication</start-class>
     </properties>
 
     <dependencies>
@@ -44,6 +44,26 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <configuration>
+                    <to>
+                        <image>
+                            registry.hub.docker.com/mukhanovmax/${project.artifactId}:${project.version}
+                        </image>
+                    </to>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <configuration>
+                    <mainClass>${start-class}</mainClass>
+                    <classpathScope>runtime</classpathScope>
+                </configuration>
             </plugin>
         </plugins>
     </build>
