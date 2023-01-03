@@ -1,6 +1,6 @@
-package com.max.team.splitter.app;
+package com.max.team.splitter.bot;
 
-import com.max.team.splitter.app.handlers.CompositeUpdateHandler;
+import com.max.team.splitter.bot.handlers.CompositeUpdateHandler;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;

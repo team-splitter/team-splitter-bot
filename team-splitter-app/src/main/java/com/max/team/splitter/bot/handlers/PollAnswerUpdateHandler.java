@@ -1,6 +1,6 @@
-package com.max.team.splitter.app.handlers;
+package com.max.team.splitter.bot.handlers;
 
-import com.max.team.splitter.app.converter.AppConverters;
+import com.max.team.splitter.bot.converter.AppConverters;
 import com.max.team.splitter.core.model.Player;
 import com.max.team.splitter.core.service.PlayerService;
 import com.max.team.splitter.core.service.PollService;

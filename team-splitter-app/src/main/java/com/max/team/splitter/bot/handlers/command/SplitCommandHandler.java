@@ -1,10 +1,10 @@
-package com.max.team.splitter.app.handlers.command;
+package com.max.team.splitter.bot.handlers.command;
 
+import com.max.team.splitter.bot.handlers.BotCommand;
 import com.max.team.splitter.core.model.Player;
 import com.max.team.splitter.core.service.GameService;
 import com.max.team.splitter.core.service.PlayerService;
 import com.max.team.splitter.core.service.TeamSplitterService;
-import com.max.team.splitter.app.handlers.BotCommand;
 import com.max.team.splitter.core.service.PollService;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Message;

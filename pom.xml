@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.max</groupId>
-    <artifactId>team-splitter-bot</artifactId>
+    <artifactId>team-splitter-parent</artifactId>
     <version>1.14-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Team Splitter Bot :: Parent</name>

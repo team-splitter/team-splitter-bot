@@ -1,9 +1,9 @@
-package com.max.team.splitter.app;
+package com.max.team.splitter.bot;
 
-import com.max.team.splitter.app.handlers.CompositeUpdateHandler;
-import com.max.team.splitter.app.handlers.MessageUpdateHandler;
-import com.max.team.splitter.app.handlers.PollAnswerUpdateHandler;
-import com.max.team.splitter.app.handlers.PollUpdateHandler;
+import com.max.team.splitter.bot.handlers.CompositeUpdateHandler;
+import com.max.team.splitter.bot.handlers.MessageUpdateHandler;
+import com.max.team.splitter.bot.handlers.PollAnswerUpdateHandler;
+import com.max.team.splitter.bot.handlers.PollUpdateHandler;
 import com.max.team.splitter.core.TeamSplitterCoreConfig;
 import com.pengrad.telegrambot.TelegramBot;
 import org.springframework.beans.factory.annotation.Value;

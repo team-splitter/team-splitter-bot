@@ -1,8 +1,8 @@
-package com.max.team.splitter.app.handlers.command;
+package com.max.team.splitter.bot.handlers.command;
 
-import com.max.team.splitter.app.handlers.BotCommand;
+import com.max.team.splitter.bot.handlers.BotCommand;
+import com.max.team.splitter.bot.converter.AppConverters;
 import com.max.team.splitter.core.service.PollService;
-import com.max.team.splitter.app.converter.AppConverters;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.MessageEntity;

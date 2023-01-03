@@ -3,19 +3,19 @@
 
     <parent>
         <groupId>com.max</groupId>
-        <artifactId>team-splitter-bot</artifactId>
+        <artifactId>team-splitter-parent</artifactId>
         <version>1.14-SNAPSHOT</version>
     </parent>
 
-    <artifactId>team-splitter-app</artifactId>
+    <artifactId>team-splitter-bot</artifactId>
     <version>1.14-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Team Splitter Bot :: App</name>
+    <name>Team Splitter :: Bot</name>
     <url>http://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class>com.max.team.splitter.app.TeamSplitterApplication</start-class>
+        <start-class>com.max.team.splitter.bot.TeamSplitterApplication</start-class>
     </properties>
 
     <dependencies>

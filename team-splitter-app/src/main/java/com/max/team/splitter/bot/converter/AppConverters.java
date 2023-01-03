@@ -1,4 +1,4 @@
-package com.max.team.splitter.app.converter;
+package com.max.team.splitter.bot.converter;
 
 import com.max.team.splitter.core.model.Player;
 import com.max.team.splitter.core.model.PollAnswerModel;

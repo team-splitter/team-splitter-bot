@@ -1,4 +1,4 @@
-package com.max.team.splitter.app.handlers;
+package com.max.team.splitter.bot.handlers;
 
 import com.pengrad.telegrambot.model.Update;
 

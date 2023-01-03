@@ -4,13 +4,13 @@
 
     <parent>
         <groupId>com.max</groupId>
-        <artifactId>team-splitter-bot</artifactId>
+        <artifactId>team-splitter-parent</artifactId>
         <version>1.14-SNAPSHOT</version>
     </parent>
 
     <artifactId>team-splitter-persistence</artifactId>
     <version>1.14-SNAPSHOT</version>
-    <name>Team Splitter Bot :: Persistence</name>
+    <name>Team Splitter :: Persistence</name>
 
     <dependencies>
         <dependency>

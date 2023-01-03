@@ -1,4 +1,4 @@
-package com.max.team.splitter.app;
+package com.max.team.splitter.bot;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
