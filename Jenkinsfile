@@ -52,7 +52,7 @@ pipeline {
 //                 script {
 //                     currentBuild.displayName = "${VERSION}"
 //                 }
-                withMaven(maven: 'maven3.8.6', mavenSettingsConfig: 'team-splitter-settings') {
+                configFileProvider([configFile(fileId: 'team-splitter-settings', variable: 'MAVEN_SETTINGS_XML')]) {
                     sh '''
                         release_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | cut -d- -f1)
 
@@ -71,6 +71,7 @@ pipeline {
                         git config --global user.name "Platform"
 
                         mvn -B -DscmCommentPrefix="[platform] " \
+                        -s $MAVEN_SETTINGS_XML \
                         -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" \
                         -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" \
                         release:prepare
