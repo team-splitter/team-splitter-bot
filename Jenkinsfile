@@ -1,5 +1,6 @@
 pipeline {
-    agent any
+    agent none
+
     tools {
         maven 'maven3.8.6'
         jdk 'OpenJDK11'
@@ -10,6 +11,18 @@ pipeline {
     }
 
     stages {
+        stage('Run CI?') {
+          agent any
+          steps {
+            script {
+              if (sh(script: "git log -1 --pretty=%B | fgrep -ie '[skip ci]' -e '[ci skip]'", returnStatus: true) == 0) {
+                currentBuild.result = 'NOT_BUILT'
+                error 'Aborting because commit message contains [skip ci]'
+              }
+            }
+          }
+        }
+
         stage ('Initialize') {
             steps {
                 sh '''
