@@ -4,11 +4,11 @@
     <parent>
         <groupId>com.max</groupId>
         <artifactId>team-splitter-bot</artifactId>
-        <version>1.6-SNAPSHOT</version>
+        <version>1.6</version>
     </parent>
 
     <artifactId>team-splitter-server</artifactId>
-    <version>1.6-SNAPSHOT</version>
+    <version>1.6</version>
     <packaging>jar</packaging>
     <name>Team Splitter Bot :: Server</name>
     <url>http://maven.apache.org</url>
