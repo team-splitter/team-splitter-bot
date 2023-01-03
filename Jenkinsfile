@@ -49,7 +49,7 @@ pipeline {
 //                 script {
 //                     currentBuild.displayName = "${VERSION}"
 //                 }
-//                 sh 'mvn deploy scm:tag -Drevision=${VERSION}'
+//                 sh 'mvn -B -DscmCommentPrefix="[platform] " -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" release:prepare'
 //                 sh 'mvn -DskipTests -DskipITs -Djib.to.tags=${VERSION} -Djib.to.auth.username=$dockerhub_USR -Djib.to.auth.password=$dockerhub_PSW clean package -Pdocker-deploy'
             }
         }
