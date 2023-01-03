@@ -8,6 +8,7 @@ pipeline {
 
     environment {
         VERSION = "${env.BUILD_ID}"
+        dockerhub=credentials('docker_hub')
     }
 
     stages {
@@ -55,6 +56,7 @@ pipeline {
 //                     currentBuild.displayName = "${VERSION}"
 //                 }
 //                 sh 'mvn deploy scm:tag -Drevision=${VERSION}'
+                sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
                 sh 'mvn -DskipTests -DskipITs -Djib.to.tags=${VERSION} clean package -Pdocker-deploy'
             }
         }
