@@ -56,8 +56,7 @@ pipeline {
 //                     currentBuild.displayName = "${VERSION}"
 //                 }
 //                 sh 'mvn deploy scm:tag -Drevision=${VERSION}'
-//                 sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
-                sh 'mvn -DskipTests -DskipITs -Djib.to.tags=${VERSION} -Djib.to.auth.username=$dockerhub_USR -Djib.to.auth.password=$dockerhub_PSW clean package -Pdocker-deploy'
+                sh 'mvn -DskipTests -DskipITs -Djib.to.tags=${VERSION} clean package -Pdocker-deploy'
             }
         }
     }
