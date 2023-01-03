@@ -52,6 +52,7 @@ pipeline {
 //                 script {
 //                     currentBuild.displayName = "${VERSION}"
 //                 }
+                withMaven(maven: 'maven3.8.6', mavenSettingsConfig: 'team-splitter-settings') {
                     sh '''
                         release_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | cut -d- -f1)
 
@@ -65,12 +66,17 @@ pipeline {
 
                         mvn versions:revert
 
+                        git checkout ${BRANCH_NAME}
+                        git config --global user.email "mukhanov.max@gmail.com"
+                        git config --global user.name "Platform"
+
                         mvn -B -DscmCommentPrefix="[platform] " \
                         -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" \
                         -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" \
-                        -DdryRun=true release:prepare
+                        release:prepare release:perform
                     '''
 //                 sh ''
+                }
             }
         }
     }
