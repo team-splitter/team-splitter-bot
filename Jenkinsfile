@@ -52,7 +52,7 @@ pipeline {
 //                 script {
 //                     currentBuild.displayName = "${VERSION}"
 //                 }
-//                 withMaven(maven: 'maven3.8.6', mavenSettingsConfig: 'team-splitter-settings') {
+                withMaven(maven: 'maven3.8.6', mavenSettingsConfig: 'team-splitter-settings') {
                     sh '''
                         release_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | cut -d- -f1)
 
@@ -76,7 +76,7 @@ pipeline {
                         release:prepare
                     '''
 //                 sh ''
-//                 }
+                }
             }
         }
     }
