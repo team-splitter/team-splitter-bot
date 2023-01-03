@@ -59,8 +59,10 @@ pipeline {
                         -DdryRun=true release:prepare
 
                         cat release.properties | grep "scm.tag="  | cut -d'=' -f2 > buildVersion
+                        release_version=$(tail -n 1 buildVersion)
+                        mvn -DskipTests -DskipITs -Djib.to.tags=${release_version} -Djib.to.auth.username=$dockerhub_USR -Djib.to.auth.password=$dockerhub_PSW clean package -Pdocker-deploy
                     '''
-//                 sh 'mvn -DskipTests -DskipITs -Djib.to.tags=${VERSION} -Djib.to.auth.username=$dockerhub_USR -Djib.to.auth.password=$dockerhub_PSW clean package -Pdocker-deploy'
+//                 sh ''
             }
         }
     }
