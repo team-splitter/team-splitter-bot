@@ -1,6 +1,6 @@
 source .env
 
-echo "test"
+echo "test skip ci"
 
 docker stop mysql
 docker rm mysql
