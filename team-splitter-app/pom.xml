@@ -4,12 +4,12 @@
     <parent>
         <groupId>com.max</groupId>
         <artifactId>team-splitter-bot</artifactId>
-        <version>1.5-SNAPSHOT</version>
+        <version>1.5</version>
     </parent>
 
     <groupId>com.max</groupId>
     <artifactId>team-splitter-app</artifactId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.5</version>
     <packaging>jar</packaging>
     <name>Team Splitter Bot :: App</name>
     <url>http://maven.apache.org</url>
