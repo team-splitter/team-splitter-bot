@@ -7,8 +7,13 @@ pipeline {
     }
 
     environment {
-        VERSION = "${env.BUILD_ID}"
         dockerhub=credentials('docker_hub')
+    }
+
+    parameters {
+        booleanParam(name: "RELEASE",
+                description: "Build a release from current commit.",
+                defaultValue: false)
     }
 
     stages {
@@ -34,24 +39,24 @@ pipeline {
             }
         }
 
-        stage ("test") {
-            steps {
-                echo 'testing the application'
-            }
-        }
-
-        stage ("deploy") {
+        stage ("Release") {
             when {
-                branch 'main'
+                expression { params.RELEASE }
             }
             steps {
-                echo "deploying the application version ${VERSION}"
+                echo "Releasing version"
 //                 script {
 //                     currentBuild.displayName = "${VERSION}"
 //                 }
 //                 sh 'mvn -B -DscmCommentPrefix="[platform] " -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" release:prepare'
 //                 sh 'mvn -DskipTests -DskipITs -Djib.to.tags=${VERSION} -Djib.to.auth.username=$dockerhub_USR -Djib.to.auth.password=$dockerhub_PSW clean package -Pdocker-deploy'
             }
+        }
+    }
+
+    post {
+        always {
+            deleteDir()
         }
     }
 }
