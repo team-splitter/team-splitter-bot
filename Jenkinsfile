@@ -66,7 +66,7 @@ pipeline {
 
                         mvn versions:revert
 
-                        git checkout ${BRANCH_NAME}
+
                         git config --global user.email "mukhanov.max@gmail.com"
                         git config --global user.name "Platform"
 
