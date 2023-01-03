@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        VERSION = "1.0.${env.BUILD_ID}"
+        VERSION = "${env.BUILD_ID}"
     }
 
     stages {
@@ -51,10 +51,11 @@ pipeline {
             }
             steps {
                 echo "deploying the application version ${VERSION}"
-                script {
-                    currentBuild.displayName = "${VERSION}"
-                }
+//                 script {
+//                     currentBuild.displayName = "${VERSION}"
+//                 }
 //                 sh 'mvn deploy scm:tag -Drevision=${VERSION}'
+                sh 'mvn -DskipTests -DskipITs -Djib.to.tags=${VERSION} clean package -Pdocker-deploy'
             }
         }
     }
