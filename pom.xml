@@ -15,6 +15,14 @@
     <name>Team Splitter Bot :: Parent</name>
     <url>http://maven.apache.org</url>
 
+    <scm>
+        <!--suppress MavenModelInspection -->
+        <developerConnection>
+            scm:git:https://gitlab.com/maxmukhanov/team-splitter-bot
+        </developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
     <properties>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
