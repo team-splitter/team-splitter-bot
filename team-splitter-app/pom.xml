@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.max</groupId>
             <artifactId>team-splitter-core</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <dependency>
