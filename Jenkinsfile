@@ -52,7 +52,14 @@ pipeline {
 //                 script {
 //                     currentBuild.displayName = "${VERSION}"
 //                 }
-//                 sh 'mvn -B -DscmCommentPrefix="[platform] " -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" release:prepare'
+                    sh '''
+                        mvn -B -DscmCommentPrefix="[platform] " \
+                        -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" \
+                        -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" \
+                        -DdryRun=true release:prepare
+
+                        cat release.properties | grep "scm.tag="  | cut -d'=' -f2 > buildVersion
+                    '''
 //                 sh 'mvn -DskipTests -DskipITs -Djib.to.tags=${VERSION} -Djib.to.auth.username=$dockerhub_USR -Djib.to.auth.password=$dockerhub_PSW clean package -Pdocker-deploy'
             }
         }
