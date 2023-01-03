@@ -70,11 +70,11 @@ pipeline {
                         git config --global user.email "mukhanov.max@gmail.com"
                         git config --global user.name "Platform"
 
-                        mvn -B -DscmCommentPrefix="[platform] " \
+                        mvn -B -DskipTests -DscmCommentPrefix="[platform] " \
                         -s $MAVEN_SETTINGS_XML \
                         -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" \
                         -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" \
-                        release:prepare
+                        release:clean release:prepare
                     '''
 //                 sh ''
                 }
