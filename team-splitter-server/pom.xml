@@ -54,7 +54,7 @@
                 <configuration>
                     <to>
                         <image>
-                            mukhanovmax/${project.artifactId}:${project.version}
+                            registry.hub.docker.com/mukhanovmax/${project.artifactId}:${project.version}
                         </image>
                     </to>
                 </configuration>
