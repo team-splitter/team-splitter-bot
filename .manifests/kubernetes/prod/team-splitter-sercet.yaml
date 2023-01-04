@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: team-splitter-secret
+type: Opaque
+data:
+  telegram-bot-token: NTg0Mjk4Mjk2OTpBQUUyTVk1UENBVkNRSWJCUnNhLXY1TlpCWGVxdEprcFRLNA==
