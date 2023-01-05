@@ -10,6 +10,9 @@ public class Player {
 
     private Integer score;
 
+    public Player() {
+    }
+
     public Player(Long id) {
         this.id = id;
     }
