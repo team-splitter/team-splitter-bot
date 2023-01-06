@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static com.max.team.splitter.core.Constants.DEFAULT_SCORE;
 import static com.max.team.splitter.server.converters.DtoConverters.toPlayerDto;
 
 @RestController
@@ -40,6 +41,8 @@ public class TeamSplitterController {
 
         List<Long> playerIds = pollService.getPlayerIdsGoingToGame(pollId);
         List<Player> players = playerService.getPlayersByIds(playerIds);
+        players.forEach(player -> player.setScore(player.getScore() != null ? player.getScore() : DEFAULT_SCORE));
+
         Map<String, List<Player>> teamsMap = teamSplitterService.splitTeams(numberOfTeams, players);
 
         List<TeamDto> teams = new LinkedList<>();

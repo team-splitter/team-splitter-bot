@@ -14,10 +14,6 @@ import static com.max.team.splitter.core.service.Constants.TEAM_COLORS;
 @Service
 public class HighestScoreTeamSplitterService implements TeamSplitterService {
 
-    private static final int DEFAULT_SCORE = 30;
-    private static final int MAX_SCORE = 100;
-    private static final int MIN_SCORE = 0;
-
     private final TeamSplitStrategy splitStrategy;
 
     public HighestScoreTeamSplitterService(@Qualifier("BackAndForceTeamSplitStrategy") TeamSplitStrategy splitStrategy) {
