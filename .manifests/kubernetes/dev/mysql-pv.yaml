@@ -13,3 +13,11 @@ spec:
     - ReadWriteOnce
   local:
     path: "/mnt/data"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - cka
