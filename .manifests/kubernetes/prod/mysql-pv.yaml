@@ -5,10 +5,19 @@ metadata:
   labels:
     type: local
 spec:
-  storageClassName: manual
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
   capacity:
     storage: 5Gi
   accessModes:
     - ReadWriteOnce
-  hostPath:
-    path: "/mnt/data"
+  local:
+    path: "/Users/lotus/mysql-data"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - docker-desktop
