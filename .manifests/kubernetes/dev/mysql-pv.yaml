@@ -5,19 +5,10 @@ metadata:
   labels:
     type: local
 spec:
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage
+  storageClassName: manual
   capacity:
     storage: 5Gi
   accessModes:
     - ReadWriteOnce
-  local:
+  hostPath:
     path: "/mnt/data"
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - cka
