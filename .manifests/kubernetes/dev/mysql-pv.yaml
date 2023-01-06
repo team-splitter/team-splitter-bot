@@ -12,7 +12,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   local:
-    path: "/mnt/data"
+    path: "/Users/max/mysql-data"
   nodeAffinity:
     required:
       nodeSelectorTerms:
