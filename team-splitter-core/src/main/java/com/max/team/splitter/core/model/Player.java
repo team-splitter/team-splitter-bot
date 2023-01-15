@@ -84,6 +84,7 @@ public class Player {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
+                ", score='" + score + '\'' +
                 '}';
     }
 }
