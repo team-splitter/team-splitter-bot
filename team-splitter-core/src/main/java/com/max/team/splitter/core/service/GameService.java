@@ -69,6 +69,8 @@ public class GameService {
         Set<Long> ids = teamEntryEntities.stream().map(TeamEntryEntity::getPlayerId).collect(Collectors.toSet());
         List<Player> playersByIds = playerService.getPlayersByIds(ids);
         Map<Long, Player> playerMap = playersByIds.stream().collect(Collectors.toMap(Player::getId, Function.identity()));
+        //set player score from team entry, hence current player score could be different
+        teamEntryEntities.forEach((entry -> playerMap.get(entry.getPlayerId()).setScore(entry.getScore())));
         return playerMap;
     }
 
