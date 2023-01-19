@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import static com.max.team.splitter.core.Constants.DEFAULT_SCORE;
+
 @Component
 public class SplitCommandHandler implements BotCommandHandler {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -51,6 +53,7 @@ public class SplitCommandHandler implements BotCommandHandler {
         log.info("Last poll_id={} found by chat_id={}", pollId, message.chat().id());
         List<Long> playerIds = pollService.getPlayerIdsGoingToGame(pollId);
         List<Player> players = playerService.getPlayersByIds(playerIds);
+        players.forEach(player -> player.setScore(player.getScore() != null ? player.getScore() : DEFAULT_SCORE));
 
         int numberOfTeams = getNumberOfTeams(text, botCommandEntity);
 
