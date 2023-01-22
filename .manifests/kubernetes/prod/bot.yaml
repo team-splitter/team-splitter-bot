@@ -38,3 +38,9 @@ spec:
               value: "-1001333858606"
             - name: GAME_SCHEDULER_TASK_PERIODINSECONDS
               value: "300"
+            - name: GAME_SCHEDULER_TASK_OPEN_POLL_ENABLED
+              value: "true"
+            - name: GAME_SCHEDULER_TASK_CLOSE_POLL_ENABLED
+              value: "true"
+            - name: GAME_SCHEDULER_TASK_SPLIT_TEAMS_ENABLED
+              value: "true"
