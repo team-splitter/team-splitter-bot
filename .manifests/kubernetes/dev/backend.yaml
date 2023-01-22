@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: team-splitter-backend
-          image: mukhanovmax/team-splitter-server:1.20
+          image: mukhanovmax/team-splitter-server:1.21
           ports:
             - containerPort: 8080
           env:
