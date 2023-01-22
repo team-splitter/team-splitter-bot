@@ -33,7 +33,7 @@ spec:
                   name: team-splitter-secret
                   key: telegram-bot-token
             - name: GAME_SCHEDULER_ENABLED
-              value: "true"
+              value: "false"
             - name: GAME_SCHEDULER_CHAT_ID
               value: "-1001517284618"
             - name: GAME_SCHEDULER_TASK_PERIODINSECONDS
