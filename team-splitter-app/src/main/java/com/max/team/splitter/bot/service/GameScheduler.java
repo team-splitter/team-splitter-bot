@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -155,8 +156,12 @@ public class GameScheduler {
             GameSchedule gameSchedule = first.get();
 
             log.info("Sending poll for gate at {} at location {}", gameSchedule.getDate(), gameSchedule.getLocation());
+            SimpleDateFormat sdf = new SimpleDateFormat("EEEE (MM-dd-yyyy) 'at' hh:mm aa");
+            sdf.setTimeZone(TimeZone.getTimeZone("EST"));
+            String estDate = sdf.format(Date.from(gameSchedule.getDate()));
 
-            String message = MessageFormat.format("Game is on {0, date, EEEE (MM-dd-yyyy) } at {0, time, hh:mm aa} at {1}. Please bring red and blue T-shirts.", Date.from(gameSchedule.getDate()), gameSchedule.getLocation());
+            String message = MessageFormat.format("Game is on {0} at {1}.", estDate, gameSchedule.getLocation());
+
             SendPoll sendPoll = new SendPoll(chatId, message, "+", "-");
             sendPoll.isAnonymous(false);
 
