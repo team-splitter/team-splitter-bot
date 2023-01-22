@@ -12,3 +12,19 @@ team-splitter:
       url: "jdbc:mysql://localhost:3306/team-splitter"
       user: "root"
       password: "pass"
+
+game:
+  scheduler:
+    enabled: false
+    chat_id: -1001517284618 # dev
+    task:
+      periodInSeconds: 10
+      open_poll:
+        enabled: false
+        lookForwardInDays: 2
+      close_poll:
+        enabled: false
+        lookForwardInHours: 2
+      split_teams:
+        enabled: false
+        lookForwardInHours: 1

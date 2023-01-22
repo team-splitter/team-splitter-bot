@@ -19,6 +19,9 @@ public class GameSchedule {
     @Enumerated(value = EnumType.STRING)
     private GameScheduleStatus status = GameScheduleStatus.CREATED;
 
+    @Column(name = "poll_id")
+    private String pollId;
+
     public Long getId() {
         return id;
     }
@@ -49,5 +52,13 @@ public class GameSchedule {
 
     public void setStatus(GameScheduleStatus status) {
         this.status = status;
+    }
+
+    public String getPollId() {
+        return pollId;
+    }
+
+    public void setPollId(String pollId) {
+        this.pollId = pollId;
     }
 }

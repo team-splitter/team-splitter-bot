@@ -47,6 +47,7 @@ public class CoreConverters {
         model.setQuestion(entity.getQuestion());
         model.setChatId(entity.getChatId());
         model.setCreationTime(entity.getCreationTimestamp());
+        model.setMessageId(entity.getMessageId());
         return model;
     }
 

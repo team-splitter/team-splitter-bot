@@ -25,25 +25,6 @@ public class TeamSplitterBot {
             for (Update update : updates) {
                 log.info("Received update={}", update);
                 updateHandler.handle(update);
-                try {
-                    if (update.poll() != null) {
-                        log.info("new poll created");
-                    }
-
-                    if (update.pollAnswer() != null) {
-
-                    }
-
-                    if (update.message() == null) continue;
-
-//                    if (update.message().poll() != null) {
-//                        System.out.println("Poll update");
-//                        Poll poll = update.message().poll();
-//                        pollMap.put(poll.id(), new HashSet<>());
-//                    }
-                } catch (Exception e) {
-                    log.error("unexpected error", e);
-                }
             }
 
             return UpdatesListener.CONFIRMED_UPDATES_ALL;

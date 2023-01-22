@@ -22,5 +22,6 @@
     <include file="db/team-splitter/changelogs/base/game_schedule_table.xml"/>
     <include file="db/team-splitter/changelogs/base/player_score.xml"/>
     <include file="db/team-splitter/changelogs/base/team_entry_score.xml"/>
+    <include file="db/team-splitter/changelogs/base/game_schedule_add_poll.xml"/>
 
 </databaseChangeLog>
