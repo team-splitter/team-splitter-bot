@@ -57,6 +57,9 @@ public class BotTeamSplitService {
             String teamColor = entry.getKey();
             List<Player> team = entry.getValue();
 
+            //Apply sorting by first name
+            sortTeamByFirstName(team);
+
             textMessage += "*Team " + teamColor + "*\n";
             for (Player player : team) {
                 String playerNameRow = playerDisplayName(player);
@@ -84,5 +87,21 @@ public class BotTeamSplitService {
         }
 
         return personName;
+    }
+
+    private static void sortTeamByFirstName(List<Player> team) {
+        team.sort((a, b) -> {
+            String f1 = a.getFirstName();
+            String f2 = b.getFirstName();
+            if (f1 != null && f2 != null) {
+                return f1.compareTo(f2);
+            } else if (f1 != null )  {
+                return 1;
+            } else if ( f2 != null) {
+                return -1;
+            }else {
+                return 0;
+            }
+        });
     }
 }
