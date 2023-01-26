@@ -43,6 +43,6 @@ spec:
             - name: GAME_SCHEDULER_TASK_OPEN_POLL_LOOKFORWARDINDAYS
               value: "2"
             - name: GAME_SCHEDULER_TASK_CLOSE_POLL_ENABLED
-              value: "true"
+              value: "false"
             - name: GAME_SCHEDULER_TASK_SPLIT_TEAMS_ENABLED
               value: "false"
