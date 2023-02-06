@@ -68,6 +68,8 @@ public class CoreConverters {
         game.setId(entity.getId());
         game.setPollId(entity.getPollId());
         game.setCreationTime(entity.getCreationTimestamp());
+        game.setBlueScored(entity.getBlueScored());
+        game.setRedScored(entity.getRedScored());
         return game;
     }
 

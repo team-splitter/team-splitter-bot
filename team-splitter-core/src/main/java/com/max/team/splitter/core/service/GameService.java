@@ -1,6 +1,7 @@
 package com.max.team.splitter.core.service;
 
 import com.max.team.splitter.core.converter.CoreConverters;
+import com.max.team.splitter.core.exception.NotFoundException;
 import com.max.team.splitter.core.model.Game;
 import com.max.team.splitter.core.model.Player;
 import com.max.team.splitter.persistence.entities.GameEntity;
@@ -16,6 +17,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static com.max.team.splitter.core.converter.CoreConverters.toGame;
 import static com.max.team.splitter.core.service.Constants.TEAM_COLORS;
 
 @Service
@@ -30,6 +32,15 @@ public class GameService {
         this.gameRepository = gameRepository;
         this.teamEntryRepository = teamEntryRepository;
         this.playerService = playerService;
+    }
+
+    public List<Game> getAllGames() {
+        List<GameEntity> gameEntities = gameRepository.findAll();
+        List<Game> games = gameEntities.stream().map(CoreConverters::toGame)
+                .sorted(Comparator.comparing(Game::getCreationTime).reversed())
+                .collect(Collectors.toList());
+
+        return games;
     }
 
     public List<Game> getGameByPoll(String pollId) {
@@ -95,5 +106,13 @@ public class GameService {
         }
 
         teamEntryRepository.saveAll(teamEntryEntities);
+    }
+
+    public void saveGameScore(Long gameId, Integer blueScored, Integer redScored) {
+        GameEntity gameEntity = gameRepository.findById(gameId).orElseThrow(() -> new NotFoundException("Game id=" + gameId + " is not found"));
+        gameEntity.setBlueScored(blueScored);
+        gameEntity.setRedScored(redScored);
+        gameRepository.save(gameEntity);
+
     }
 }

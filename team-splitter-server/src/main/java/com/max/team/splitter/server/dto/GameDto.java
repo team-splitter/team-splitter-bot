@@ -7,6 +7,9 @@ public class GameDto {
     private Long id;
     private String pollId;
     private Instant creationTime;
+
+    private Integer blueScored;
+    private Integer redScored;
     private List<TeamDto> teams;
 
     public Long getId() {
@@ -39,5 +42,21 @@ public class GameDto {
 
     public void setTeams(List<TeamDto> teams) {
         this.teams = teams;
+    }
+
+    public Integer getBlueScored() {
+        return blueScored;
+    }
+
+    public void setBlueScored(Integer blueScored) {
+        this.blueScored = blueScored;
+    }
+
+    public Integer getRedScored() {
+        return redScored;
+    }
+
+    public void setRedScored(Integer redScored) {
+        this.redScored = redScored;
     }
 }

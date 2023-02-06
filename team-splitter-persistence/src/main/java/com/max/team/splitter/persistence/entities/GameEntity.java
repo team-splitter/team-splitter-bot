@@ -15,6 +15,11 @@ public class GameEntity {
     @Column(name = "creation_ts")
     private Instant creationTimestamp;
 
+    @Column(name = "blue_scored")
+    private Integer blueScored;
+    @Column(name = "red_scored")
+    private Integer redScored;
+
     public Long getId() {
         return id;
     }
@@ -37,5 +42,21 @@ public class GameEntity {
 
     public void setCreationTimestamp(Instant creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
+    }
+
+    public Integer getBlueScored() {
+        return blueScored;
+    }
+
+    public void setBlueScored(Integer blueScored) {
+        this.blueScored = blueScored;
+    }
+
+    public Integer getRedScored() {
+        return redScored;
+    }
+
+    public void setRedScored(Integer redScored) {
+        this.redScored = redScored;
     }
 }

@@ -9,14 +9,13 @@ import com.max.team.splitter.server.dto.TeamDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.max.team.splitter.server.converters.DtoConverters.toGameDtos;
 
 @RestController
 @RequestMapping("/game")
@@ -32,25 +31,18 @@ public class GameController {
         List<Game> games = gameService.getGameByPoll(pollId);
         games.sort(Comparator.comparing(Game::getCreationTime).reversed());
 
-        List<GameDto> gameDtos = games.stream().map((game -> {
-            GameDto dto = new GameDto();
-            dto.setId(game.getId());
-            dto.setPollId(game.getPollId());
-            dto.setCreationTime(game.getCreationTime());
-            dto.setTeams(game.getTeams().entrySet().stream()
-                    .map((entry -> {
-                        TeamDto teamDto = new TeamDto();
-                        teamDto.setName(entry.getKey());
-                        teamDto.setPlayers(entry.getValue().stream()
-                                .map(DtoConverters::toPlayerDto)
-                                .collect(Collectors.toList()));
-                        return teamDto;
-                    }))
-                    .collect(Collectors.toList()));
-            return dto;
-        })).collect(Collectors.toList());
+        return toGameDtos(games);
+    }
 
-        return gameDtos;
+    @RequestMapping(method = RequestMethod.GET)
+    public List<GameDto> allGames() {
+        return toGameDtos(gameService.getAllGames());
+    }
+    @RequestMapping(value = "/{gameId}/score", method = RequestMethod.PUT)
+    public void setGameScore(@PathVariable(name = "gameId") Long gameId,
+                                @RequestParam(name = "blue") Integer blueScored,
+                                @RequestParam(name = "red") Integer redScored) {
+        gameService.saveGameScore(gameId, blueScored, redScored);
     }
 
 }

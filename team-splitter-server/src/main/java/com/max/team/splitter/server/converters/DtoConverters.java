@@ -1,7 +1,13 @@
 package com.max.team.splitter.server.converters;
 
+import com.max.team.splitter.core.model.Game;
 import com.max.team.splitter.core.model.Player;
+import com.max.team.splitter.server.dto.GameDto;
 import com.max.team.splitter.server.dto.PlayerDto;
+import com.max.team.splitter.server.dto.TeamDto;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DtoConverters {
 
@@ -24,5 +30,28 @@ public class DtoConverters {
         player.setScore(dto.getScore());
 
         return player;
+    }
+
+    public static List<GameDto> toGameDtos(List<Game> games) {
+        return games.stream().map(DtoConverters::toGameDto).collect(Collectors.toList());
+    }
+    public static GameDto toGameDto(Game game) {
+        GameDto dto = new GameDto();
+        dto.setId(game.getId());
+        dto.setPollId(game.getPollId());
+        dto.setCreationTime(game.getCreationTime());
+        dto.setBlueScored(game.getBlueScored());
+        dto.setRedScored(game.getRedScored());
+        dto.setTeams(game.getTeams().entrySet().stream()
+                .map((entry -> {
+                    TeamDto teamDto = new TeamDto();
+                    teamDto.setName(entry.getKey());
+                    teamDto.setPlayers(entry.getValue().stream()
+                            .map(DtoConverters::toPlayerDto)
+                            .collect(Collectors.toList()));
+                    return teamDto;
+                }))
+                .collect(Collectors.toList()));
+        return dto;
     }
 }
