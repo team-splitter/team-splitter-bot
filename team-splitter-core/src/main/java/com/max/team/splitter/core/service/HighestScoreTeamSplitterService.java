@@ -5,6 +5,8 @@ import com.max.team.splitter.core.strategy.TeamSplitStrategy;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +25,18 @@ public class HighestScoreTeamSplitterService implements TeamSplitterService {
     @Override
     public List<List<Player>> splitIntoTeams(int numberOfTeams, List<Player> players) {
         //Sort by score descending then by player id
+        int DIVIDER = 5;
+        long dayOfTheMonth = LocalDate.now().get(ChronoField.DAY_OF_MONTH);
         players.sort((a, b) -> {
             if (a.getScore() > b.getScore()) {
                 return -1;
             } else if (a.getScore() < b.getScore()) {
                 return 1;
             } else {
-                return a.getId().compareTo(b.getId());
+                //Shifts same scores players depends on the day of the month
+                Long id1 = (a.getId() % DIVIDER + dayOfTheMonth) % DIVIDER ;
+                Long id2 = (b.getId() % DIVIDER + dayOfTheMonth) % DIVIDER;
+                return id1.compareTo(id2);
             }
         });
 
