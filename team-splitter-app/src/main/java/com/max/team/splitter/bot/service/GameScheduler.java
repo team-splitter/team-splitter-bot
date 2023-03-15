@@ -157,7 +157,7 @@ public class GameScheduler {
 
             log.info("Sending poll for gate at {} at location {}", gameSchedule.getDate(), gameSchedule.getLocation());
             SimpleDateFormat sdf = new SimpleDateFormat("EEEE (MM-dd-yyyy) 'at' hh:mm aa");
-            sdf.setTimeZone(TimeZone.getTimeZone("EST"));
+            sdf.setTimeZone(TimeZone.getTimeZone("America/New_York"));
             String estDate = sdf.format(Date.from(gameSchedule.getDate()));
 
             String message = MessageFormat.format("Game is on {0} at {1}.", estDate, gameSchedule.getLocation());
