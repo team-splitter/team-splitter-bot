@@ -43,6 +43,7 @@ public class GameController {
                                 @RequestParam(name = "blue") Integer blueScored,
                                 @RequestParam(name = "red") Integer redScored) {
         gameService.saveGameScore(gameId, blueScored, redScored);
+
     }
 
 }

@@ -60,9 +60,13 @@ public class PlayerService {
         existingPlayer.setLastName(player.getLastName());
         existingPlayer.setUserName(player.getUsername());
         existingPlayer.setScore(player.getScore());
-
+        existingPlayer.setGameScore(player.getGameScore() != null ? player.getGameScore() : player.getScore());
 
         return CoreConverters.toPlayer(playerRepository.save(existingPlayer));
+    }
+
+    public void increasePlayerScore(Long playerId) {
+
     }
 
     public List<Player> getPlayersByIds(Collection<Long> ids) {

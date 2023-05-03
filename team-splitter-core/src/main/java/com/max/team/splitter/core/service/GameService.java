@@ -114,5 +114,36 @@ public class GameService {
         gameEntity.setRedScored(redScored);
         gameRepository.save(gameEntity);
 
+
+        if (blueScored.equals(redScored)) {
+            return;
+        }
+
+        log.info("Updating players scores");
+        List<TeamEntryEntity> winnerTeam;
+        List<TeamEntryEntity> lostTeam;
+        if (blueScored > redScored) {
+            winnerTeam = teamEntryRepository.findByGameIdAndTeamName(gameId, "Blue");
+            lostTeam = teamEntryRepository.findByGameIdAndTeamName(gameId, "Red");
+        } else {
+            winnerTeam = teamEntryRepository.findByGameIdAndTeamName(gameId, "Red");
+            lostTeam = teamEntryRepository.findByGameIdAndTeamName(gameId, "Blue");
+        }
+
+        List<Player> winnerPlayers = playerService.getPlayersByIds(
+                winnerTeam.stream().map(TeamEntryEntity::getPlayerId).collect(Collectors.toList()));
+        for (Player winnerPlayer : winnerPlayers) {
+            winnerPlayer.setGameScore(winnerPlayer.getGameScore() + 1);
+            playerService.updatePlayer(winnerPlayer.getId(), winnerPlayer);
+        };
+
+        List<Player> lostPlayers = playerService.getPlayersByIds(
+                lostTeam.stream().map(TeamEntryEntity::getPlayerId).collect(Collectors.toList()));
+
+        for (Player lostPlayer : lostPlayers) {
+            lostPlayer.setGameScore(lostPlayer.getGameScore() - 1);
+            playerService.updatePlayer(lostPlayer.getId(), lostPlayer);
+        };
+        log.info("Player game_score update is completed");
     }
 }
