@@ -9,6 +9,8 @@ public class Player {
     private String username;
 
     private Integer score;
+    private Integer gameScore;
+    private Boolean privacy;
 
     public Player() {
     }
@@ -22,6 +24,7 @@ public class Player {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+        this.privacy = false;
     }
 
     public Long getId() {
@@ -64,6 +67,22 @@ public class Player {
         this.score = score;
     }
 
+    public Integer getGameScore() {
+        return gameScore;
+    }
+
+    public void setGameScore(Integer gameScore) {
+        this.gameScore = gameScore;
+    }
+
+    public Boolean getPrivacy() {
+        return privacy;
+    }
+
+    public void setPrivacy(Boolean privacy) {
+        this.privacy = privacy;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -85,6 +104,8 @@ public class Player {
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", score='" + score + '\'' +
+                ", gameScore='" + gameScore + '\'' +
+                ", privacy='" + privacy + '\'' +
                 '}';
     }
 }

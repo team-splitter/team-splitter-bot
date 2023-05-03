@@ -17,6 +17,8 @@ public class CoreConverters {
     public static Player toPlayer(PlayerEntity entity) {
         Player player = new Player(entity.getId(), entity.getFirstName(), entity.getLastName(), entity.getUserName());
         player.setScore(entity.getScore());
+        player.setGameScore(entity.getGameScore());
+        player.setPrivacy(entity.getPrivacy());
         return player;
     }
 
@@ -27,6 +29,7 @@ public class CoreConverters {
         entity.setLastName(player.getLastName());
         entity.setUserName(player.getUsername());
         entity.setScore(player.getScore());
+        entity.setPrivacy(player.getPrivacy());
 
         return entity;
     }

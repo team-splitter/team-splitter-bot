@@ -19,6 +19,12 @@ public class PlayerEntity {
     @Column(name = "score")
     private Integer score;
 
+    @Column(name = "game_score")
+    private Integer gameScore;
+
+    @Column(name = "privace")
+    private Boolean privacy;
+
     public Long getId() {
         return id;
     }
@@ -57,5 +63,21 @@ public class PlayerEntity {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public Integer getGameScore() {
+        return gameScore;
+    }
+
+    public void setGameScore(Integer gameScore) {
+        this.gameScore = gameScore;
+    }
+
+    public Boolean getPrivacy() {
+        return privacy;
+    }
+
+    public void setPrivacy(Boolean privacy) {
+        this.privacy = privacy;
     }
 }

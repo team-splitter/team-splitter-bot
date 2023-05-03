@@ -24,5 +24,6 @@
     <include file="db/team-splitter/changelogs/base/team_entry_score.xml"/>
     <include file="db/team-splitter/changelogs/base/game_schedule_add_poll.xml"/>
     <include file="db/team-splitter/changelogs/base/game_blue_red_scored_columns.xml"/>
+    <include file="db/team-splitter/changelogs/base/player_privacy_flag.xml"/>
 
 </databaseChangeLog>
