@@ -10,7 +10,7 @@
         </addColumn>
 
         <update tableName="player">
-            <column name="game_score" valueComputed="(select score from player">
+            <column name="game_score" valueComputed="score">
             </column>
         </update>
 
