@@ -22,7 +22,7 @@ public class PlayerEntity {
     @Column(name = "game_score")
     private Integer gameScore;
 
-    @Column(name = "privace")
+    @Column(name = "privacy")
     private Boolean privacy;
 
     public Long getId() {
