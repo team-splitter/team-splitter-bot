@@ -36,6 +36,8 @@ jobs:
         mvn versions:set -DnewVersion=${release_version}
         echo "Version is ${release_version}"
         
+        mvn versions:revert
+        
         git config --global user.email "mukhanov.max@gmail.com"
         git config --global user.name "Platform"
 
