@@ -42,9 +42,13 @@ jobs:
         git config --global user.name "Platform"
 
         mvn -B -DskipTests -DscmCommentPrefix="[platform] " \
+        -s .maven_settings.xml \
         -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" \
         -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" \
         release:clean release:prepare
+      env:
+          CI_DEPLOY_USERNAME: ${{ secrets.CI_DEPLOY_USERNAME }}
+          CI_DEPLOY_PASSWORD: ${{ secrets.CI_DEPLOY_PASSWORD }}
       
 #     - name: Publish to GitHub Packages Apache Maven
 #       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
