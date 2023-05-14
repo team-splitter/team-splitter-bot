@@ -30,11 +30,12 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+#     - name: Build with Maven
+#       run: mvn -B package --file pom.xml
     - name: Release version
       run: |
-        echo "User name: ${CI_DEPLOY_USERNAME}"
+        user_name=$CI_DEPLOY_USERNAME
+        echo "User name: ${user_name}"
         echo "Password: ${CI_DEPLOY_PASSWORD}"
 #       run: |
 #         release_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | cut -d- -f1)
