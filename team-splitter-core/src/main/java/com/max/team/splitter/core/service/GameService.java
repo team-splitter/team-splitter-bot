@@ -147,8 +147,8 @@ public class GameService {
         log.info("Player game_score update is completed");
     }
 
-    public void removeTeamEntry(Long gameId, Long teamEntryId) {
-        log.info("Deleting team entry by id={}", teamEntryId);
-        teamEntryRepository.deleteById(teamEntryId);
+    public void removeTeamEntry(Long gameId, Long playerId) {
+        log.info("Deleting team entry by gameId={} and playerId={}", gameId, playerId);
+        teamEntryRepository.deleteByGameIdAndPlayerId(gameId, playerId);
     }
 }
