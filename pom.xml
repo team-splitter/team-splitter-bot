@@ -16,7 +16,7 @@
     <scm>
         <!--suppress MavenModelInspection -->
         <developerConnection>
-            scm:git:https://gitlab.com/maxmukhanov/team-splitter-bot
+            scm:git:https://github.com/maxmukhanov/team-splitter-bot
         </developerConnection>
         <tag>HEAD</tag>
     </scm>
