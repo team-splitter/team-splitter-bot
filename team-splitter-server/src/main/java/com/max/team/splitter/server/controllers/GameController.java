@@ -46,4 +46,10 @@ public class GameController {
 
     }
 
+    @RequestMapping(value = "/{gameId}/team_entry/{teamEntryId}", method = RequestMethod.DELETE)
+    public void deleteTeamEntry(@PathVariable("gameId") Long gameId,
+                                @PathVariable("teamEntryId") Long teamEntryId) {
+        gameService.removeTeamEntry(gameId, teamEntryId);
+    }
+
 }
