@@ -34,9 +34,7 @@ jobs:
 #       run: mvn -B package --file pom.xml
     - name: Release version
       run: |
-        user_name=$CI_DEPLOY_USERNAME
-        echo "User name: ${user_name}"
-        echo "Password: ${CI_DEPLOY_PASSWORD}"
+        cat $GITHUB_WORKSPACE/.maven_settings.xml
 #       run: |
 #         release_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | cut -d- -f1)
 #         mvn versions:set -DnewVersion=${release_version}
