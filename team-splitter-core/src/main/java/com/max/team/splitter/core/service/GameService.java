@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.*;
 import java.util.function.Function;
@@ -147,6 +148,7 @@ public class GameService {
         log.info("Player game_score update is completed");
     }
 
+    @Transactional
     public void removeTeamEntry(Long gameId, Long playerId) {
         log.info("Deleting team entry by gameId={} and playerId={}", gameId, playerId);
         teamEntryRepository.deleteByGameIdAndPlayerId(gameId, playerId);
