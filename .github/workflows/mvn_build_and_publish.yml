@@ -35,6 +35,15 @@ jobs:
         release_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | cut -d- -f1)
         mvn versions:set -DnewVersion=${release_version}
         echo "Version is ${release_version}"
+        
+        git config --global user.email "mukhanov.max@gmail.com"
+        git config --global user.name "Platform"
+
+        mvn -B -DskipTests -DscmCommentPrefix="[platform] " \
+        -s $MAVEN_SETTINGS_XML \
+        -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" \
+        -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" \
+        release:clean release:prepare
       
 #     - name: Publish to GitHub Packages Apache Maven
 #       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
