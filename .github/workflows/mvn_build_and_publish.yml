@@ -29,8 +29,13 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Release version
+      run: |
+        release_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | cut -d- -f1)
+        mvn versions:set -DnewVersion=${release_version}
+        echo "Version is ${release_version}"
       
-    - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
+#     - name: Publish to GitHub Packages Apache Maven
+#       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+#       env:
+#         GITHUB_TOKEN: ${{ github.token }}
