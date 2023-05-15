@@ -32,13 +32,7 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-    - name: Configure Maven
-      uses: whelk-io/maven-settings-xml-action@v20
-      with:
-        servers: >
-          [
-            { "id": "github.com", "username": "${{ github.repository_owner }}", "password": "${{ secrets.GITHUB_TOKEN }}" }
-          ]
+        server-id: github
 #     - name: Build with Maven
 #       run: mvn -B package --file pom.xml
     - name: Release version
@@ -49,13 +43,15 @@ jobs:
         
         mvn versions:revert
         
-        git config --global user.email "mukhanov.max@gmail.com"
-        git config --global user.name "Platform"
+        git config user.email "actions@github.com"
+        git config user.name "GitHub Actions"
 
         mvn -B -DskipTests -DscmCommentPrefix="[platform] " \
         -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" \
         -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" \
         release:clean release:prepare
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
 #     - name: Publish to GitHub Packages Apache Maven
 #       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
