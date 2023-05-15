@@ -14,7 +14,6 @@ on:
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
-    branches: [ "main" ]
 
 jobs:
   build:
@@ -30,29 +29,30 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
+    - name: Configure Maven
+      uses: whelk-io/maven-settings-xml-action@v20
+      with:
+        servers: >
+          [
+            { "id": "github.com", "username": "${{ github.repository_owner }}", "password": "${{ secrets.REPO_TOKEN }}" } }
+          ]
 #     - name: Build with Maven
 #       run: mvn -B package --file pom.xml
     - name: Release version
       run: |
-        cat $GITHUB_WORKSPACE/.maven_settings.xml
-#       run: |
-#         release_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | cut -d- -f1)
-#         mvn versions:set -DnewVersion=${release_version}
-#         echo "Version is ${release_version}"
+        release_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | cut -d- -f1)
+        mvn versions:set -DnewVersion=${release_version}
+        echo "Version is ${release_version}"
         
-#         mvn versions:revert
+        mvn versions:revert
         
-#         git config --global user.email "mukhanov.max@gmail.com"
-#         git config --global user.name "Platform"
+        git config --global user.email "mukhanov.max@gmail.com"
+        git config --global user.name "Platform"
 
-#         mvn -B -DskipTests -DscmCommentPrefix="[platform] " \
-#         -s  $GITHUB_WORKSPACE/.maven_settings.xml \
-#         -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" \
-#         -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" \
-#         release:clean release:prepare
-      env:
-          CI_DEPLOY_USERNAME: ${{ secrets.CI_DEPLOY_USERNAME }}
-          CI_DEPLOY_PASSWORD: ${{ secrets.CI_DEPLOY_PASSWORD }}
+        mvn -B -DskipTests -DscmCommentPrefix="[platform] " \
+        -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" \
+        -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" \
+
       
 #     - name: Publish to GitHub Packages Apache Maven
 #       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
