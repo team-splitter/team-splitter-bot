@@ -34,7 +34,7 @@ jobs:
       with:
         servers: >
           [
-            { "id": "github.com", "username": "${{ github.repository_owner }}", "password": "${{ secrets.REPO_TOKEN }}" } }
+            { "id": "github.com", "username": "${{ github.repository_owner }}", "password": "${{ secrets.REPO_TOKEN }}" }
           ]
 #     - name: Build with Maven
 #       run: mvn -B package --file pom.xml
