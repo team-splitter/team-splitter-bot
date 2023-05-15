@@ -51,7 +51,7 @@
                 <configuration>
                     <to>
                         <image>
-                            registry.hub.docker.com/mukhanovmax/${project.artifactId}:${project.version}
+                            ghcr.io/maxmukhanov/${project.artifactId}:${project.version}
                         </image>
                     </to>
                 </configuration>
