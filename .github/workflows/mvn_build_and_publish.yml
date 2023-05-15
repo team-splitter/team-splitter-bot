@@ -17,6 +17,7 @@ on:
   
 permissions:
   contents: write
+  packages: write
 
 jobs:
   build:
@@ -35,6 +36,12 @@ jobs:
         server-id: github
 #     - name: Build with Maven
 #       run: mvn -B package --file pom.xml
+    - name: Login GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Release version
       run: |
         release_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | cut -d- -f1)
