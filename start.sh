@@ -28,7 +28,7 @@ docker run --name bot -d \
                "team-splitter.db.mysql.password" : "${MYSQLDB_ROOT_PASSWORD}",
                "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"
              }' \
-  mukhanovmax/team-splitter-bot:1.13
+  ghcr.io/maxmukhanov/team-splitter-bot:1.13
 
   docker stop backend
   docker rm backend
@@ -43,7 +43,7 @@ docker run --name bot -d \
                  "team-splitter.db.mysql.password" : "${MYSQLDB_ROOT_PASSWORD}",
                  "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"
                }' \
-    mukhanovmax/team-splitter-server:1.13
+    ghcr.io/maxmukhanov/team-splitter-server:1.13
 
 docker stop frontend
 docker rm frontend
@@ -52,4 +52,4 @@ docker run --name frontend -d \
   --network team-splitter-net \
   --env-file ./.env \
   --restart unless-stopped \
-  mukhanovmax/team-splitter-ui:1.7
+  ghcr.io/maxmukhanov/team-splitter-ui:1.7

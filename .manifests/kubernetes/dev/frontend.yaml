@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: mukhanovmax/team-splitter-ui:1.13
+          image: ghcr.io/maxmukhanov/team-splitter-ui:1.14
           ports:
             - containerPort: 80
 
