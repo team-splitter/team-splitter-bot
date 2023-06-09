@@ -16,9 +16,12 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/maxmukhanov/team-splitter-ui:1.14
+          image: ghcr.io/maxmukhanov/team-splitter-ui:1.15
           ports:
             - containerPort: 80
+          env:
+          - name: REACT_APP_ENV
+            value: dev
 
 ---
 apiVersion: v1
