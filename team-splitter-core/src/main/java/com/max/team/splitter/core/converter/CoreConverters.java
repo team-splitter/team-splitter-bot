@@ -1,13 +1,7 @@
 package com.max.team.splitter.core.converter;
 
-import com.max.team.splitter.core.model.Game;
-import com.max.team.splitter.core.model.Player;
-import com.max.team.splitter.core.model.PollAnswerModel;
-import com.max.team.splitter.core.model.PollModel;
-import com.max.team.splitter.persistence.entities.GameEntity;
-import com.max.team.splitter.persistence.entities.PlayerEntity;
-import com.max.team.splitter.persistence.entities.PollAnswerEntity;
-import com.max.team.splitter.persistence.entities.PollEntity;
+import com.max.team.splitter.core.model.*;
+import com.max.team.splitter.persistence.entities.*;
 
 import java.time.Instant;
 
@@ -80,6 +74,19 @@ public class CoreConverters {
         PollAnswerModel model = new PollAnswerModel();
         model.setId(entity.getId());
         model.setPlayerId(entity.getPlayerId());
+        return model;
+    }
+
+    public static PlayerStat toPlayerStat(PlayerStatEntity playerStatEntity) {
+        PlayerStat model = new PlayerStat();
+        //map all fields
+        model.setPlayerId(playerStatEntity.getPlayerId());
+        model.setFirstName(playerStatEntity.getFirstName());
+        model.setLastName(playerStatEntity.getLastName());
+        model.setTotalWin(playerStatEntity.getTotalWin());
+        model.setTotalLoss(playerStatEntity.getTotalLoss());
+        model.setTotalDraw(playerStatEntity.getTotalDraw());
+        model.setTotalGames(playerStatEntity.getTotalGames());
         return model;
     }
 }
