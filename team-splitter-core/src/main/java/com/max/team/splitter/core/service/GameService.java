@@ -18,8 +18,8 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.max.team.splitter.core.converter.CoreConverters.toGame;
-import static com.max.team.splitter.core.service.Constants.TEAM_COLORS;
+import static com.max.team.splitter.core.Constants.TEAM_COLORS;
+
 
 @Service
 public class GameService {

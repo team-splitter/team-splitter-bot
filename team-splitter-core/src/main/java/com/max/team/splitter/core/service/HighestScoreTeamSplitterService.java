@@ -11,7 +11,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.max.team.splitter.core.service.Constants.TEAM_COLORS;
+import static com.max.team.splitter.core.Constants.DEFAULT_SCORE;
+import static com.max.team.splitter.core.Constants.TEAM_COLORS;
+
 
 @Service
 public class HighestScoreTeamSplitterService implements TeamSplitterService {
@@ -24,6 +26,9 @@ public class HighestScoreTeamSplitterService implements TeamSplitterService {
 
     @Override
     public List<List<Player>> splitIntoTeams(int numberOfTeams, List<Player> players) {
+        //use games store instead of initial player score
+        players.forEach(player -> player.setScore(player.getGameScore() != null ? player.getGameScore() : player.getScore()));
+
         //Sort by score descending then by player id
         int DIVIDER = 5;
         long dayOfTheMonth = LocalDate.now().get(ChronoField.DAY_OF_MONTH);
