@@ -20,7 +20,7 @@ public class HighestScoreTeamSplitterService implements TeamSplitterService {
 
     private final TeamSplitStrategy splitStrategy;
 
-    public HighestScoreTeamSplitterService(@Qualifier("BackAndForceTeamSplitStrategy") TeamSplitStrategy splitStrategy) {
+    public HighestScoreTeamSplitterService(@Qualifier("TeamScoreBalanceSplitStrategy") TeamSplitStrategy splitStrategy) {
         this.splitStrategy = splitStrategy;
     }
 
