@@ -6,6 +6,7 @@ import com.max.team.splitter.core.service.GameService;
 import com.max.team.splitter.core.service.PlayerService;
 import com.max.team.splitter.core.service.PollService;
 import com.max.team.splitter.core.service.TeamSplitterService;
+import com.max.team.splitter.core.strategy.SplitterStrategyType;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -37,7 +38,7 @@ public class BotTeamSplitService {
         this.bot = bot;
     }
 
-    public void split(String pollId, int numberOfTeams) {
+    public void split(String pollId, int numberOfTeams, SplitterStrategyType splitType) {
         PollModel poll = pollService.getById(pollId);
         Long chatId = poll.getChatId();
 
@@ -48,7 +49,7 @@ public class BotTeamSplitService {
 
 
         log.info("Split players={}", players);
-        Map<String, List<Player>> teams = teamSplitterService.splitTeams(numberOfTeams, players);
+        Map<String, List<Player>> teams = teamSplitterService.splitTeams(numberOfTeams, splitType, players);
         gameService.saveGameSplit(teams, pollId);
 
 

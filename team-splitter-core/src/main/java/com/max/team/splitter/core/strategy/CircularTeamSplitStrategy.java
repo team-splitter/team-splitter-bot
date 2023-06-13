@@ -23,4 +23,9 @@ public class CircularTeamSplitStrategy implements TeamSplitStrategy{
         return teams;
     }
 
+    @Override
+    public SplitterStrategyType getType() {
+        return SplitterStrategyType.CIRCULAR;
+    }
+
 }

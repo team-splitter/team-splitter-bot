@@ -4,6 +4,7 @@ import com.max.team.splitter.bot.converter.AppConverters;
 import com.max.team.splitter.core.model.PollModel;
 import com.max.team.splitter.core.service.GameScheduleService;
 import com.max.team.splitter.core.service.PollService;
+import com.max.team.splitter.core.strategy.SplitterStrategyType;
 import com.max.team.splitter.persistence.entities.GameSchedule;
 import com.max.team.splitter.persistence.entities.GameScheduleStatus;
 import com.pengrad.telegrambot.TelegramBot;
@@ -116,7 +117,8 @@ public class GameScheduler {
             log.info("Splitting teams for pollId={}", pollId);
 
             int numberOfTeams = 2; //so far default
-            botTeamSplitService.split(pollId, numberOfTeams);
+            SplitterStrategyType strategyType = SplitterStrategyType.TEAM_SCORE_BALANCE; //so far default
+            botTeamSplitService.split(pollId, numberOfTeams, strategyType);
 
             gameSchedule.setStatus(GameScheduleStatus.COMPLETED);
             gameScheduleService.update(gameSchedule);

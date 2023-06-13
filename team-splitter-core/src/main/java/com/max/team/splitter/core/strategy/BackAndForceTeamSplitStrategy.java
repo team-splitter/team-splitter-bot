@@ -28,4 +28,8 @@ public class BackAndForceTeamSplitStrategy implements TeamSplitStrategy{
         return teams;
     }
 
+    @Override
+    public SplitterStrategyType getType() {
+        return SplitterStrategyType.BACK_AND_FORCE;
+    }
 }

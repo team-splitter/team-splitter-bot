@@ -4,6 +4,7 @@ import com.max.team.splitter.core.model.Player;
 import com.max.team.splitter.core.service.PlayerService;
 import com.max.team.splitter.core.service.PollService;
 import com.max.team.splitter.core.service.TeamSplitterService;
+import com.max.team.splitter.core.strategy.SplitterStrategyType;
 import com.max.team.splitter.server.dto.PlayerDto;
 import com.max.team.splitter.server.dto.TeamDto;
 import org.slf4j.Logger;
@@ -32,7 +33,8 @@ public class TeamSplitterController {
 
     @RequestMapping(value = "/split/{pollId}", method = RequestMethod.GET)
     public List<TeamDto>  split(@PathVariable(value = "pollId") String pollId,
-                                @RequestParam(name = "teamsNum", defaultValue = "2") Integer numberOfTeams) {
+                                @RequestParam(name = "teamsNum", defaultValue = "2") Integer numberOfTeams,
+                                @RequestParam(name = "splitType", defaultValue = "TEAM_SCORE_BALANCE", required = false) SplitterStrategyType splitType) {
         if (numberOfTeams < 2 || numberOfTeams > 4) {
             //set default as 2
             numberOfTeams = 2;
@@ -43,7 +45,7 @@ public class TeamSplitterController {
         List<Player> players = playerService.getPlayersByIds(playerIds);
         players.forEach(player -> player.setScore(player.getScore() != null ? player.getScore() : DEFAULT_SCORE));
 
-        Map<String, List<Player>> teamsMap = teamSplitterService.splitTeams(numberOfTeams, players);
+        Map<String, List<Player>> teamsMap = teamSplitterService.splitTeams(numberOfTeams, splitType, players);
 
         List<TeamDto> teams = new LinkedList<>();
         for (Map.Entry<String, List<Player>> entry : teamsMap.entrySet()) {

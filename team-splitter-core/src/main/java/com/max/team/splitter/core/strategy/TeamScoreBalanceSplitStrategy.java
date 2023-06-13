@@ -4,7 +4,6 @@ import com.max.team.splitter.core.model.Player;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -39,5 +38,10 @@ public class TeamScoreBalanceSplitStrategy implements TeamSplitStrategy {
             i++;
         }
         return teams;
+    }
+
+    @Override
+    public SplitterStrategyType getType() {
+        return SplitterStrategyType.TEAM_SCORE_BALANCE;
     }
 }

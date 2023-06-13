@@ -3,6 +3,7 @@ package com.max.team.splitter.bot.handlers.command;
 import com.max.team.splitter.bot.handlers.BotCommand;
 import com.max.team.splitter.bot.service.BotTeamSplitService;
 import com.max.team.splitter.core.service.PollService;
+import com.max.team.splitter.core.strategy.SplitterStrategyType;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.MessageEntity;
 import org.slf4j.Logger;
@@ -39,7 +40,25 @@ public class SplitCommandHandler implements BotCommandHandler {
         log.info("Last poll_id={} found by chat_id={}", pollId, message.chat().id());
 
         int numberOfTeams = getNumberOfTeams(text, botCommandEntity);
-        botTeamSplitService.split(pollId, numberOfTeams);
+        SplitterStrategyType splitType = getSplitterStrategyType(text, botCommandEntity);
+        botTeamSplitService.split(pollId, numberOfTeams, splitType);
+    }
+
+    private SplitterStrategyType getSplitterStrategyType(String text, MessageEntity botCommandEntity) {
+        SplitterStrategyType splitType = SplitterStrategyType.TEAM_SCORE_BALANCE;
+        String[] tokens = text.substring(botCommandEntity.offset() + botCommandEntity.length()).trim().split(" ");
+        if (tokens.length > 1) {
+            String token = tokens[1];
+            if ("cir".equals(token)) {
+                splitType = SplitterStrategyType.CIRCULAR;
+            } else if ("baf".equals(token)) {
+                splitType = SplitterStrategyType.BACK_AND_FORCE;
+            } else if ("team_score".equals(token)) {
+                splitType = SplitterStrategyType.TEAM_SCORE_BALANCE;
+            }
+            log.info("Can't parse splitter strategy type by token={}", token);
+        }
+        return splitType;
     }
 
     private int getNumberOfTeams(String text, MessageEntity botCommandEntity) {

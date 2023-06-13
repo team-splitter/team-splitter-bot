@@ -1,15 +1,18 @@
 package com.max.team.splitter.core.service;
 
 import com.max.team.splitter.core.model.Player;
+import com.max.team.splitter.core.strategy.SplitterStrategyType;
 import com.max.team.splitter.core.strategy.TeamSplitStrategy;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.max.team.splitter.core.Constants.DEFAULT_SCORE;
 import static com.max.team.splitter.core.Constants.TEAM_COLORS;
@@ -18,14 +21,17 @@ import static com.max.team.splitter.core.Constants.TEAM_COLORS;
 @Service
 public class HighestScoreTeamSplitterService implements TeamSplitterService {
 
-    private final TeamSplitStrategy splitStrategy;
+    private final Map<SplitterStrategyType, TeamSplitStrategy> strategyMap;
 
-    public HighestScoreTeamSplitterService(@Qualifier("TeamScoreBalanceSplitStrategy") TeamSplitStrategy splitStrategy) {
-        this.splitStrategy = splitStrategy;
+    public HighestScoreTeamSplitterService(List<TeamSplitStrategy> splitStrategies) {
+        strategyMap = new HashMap<>();
+        for (TeamSplitStrategy splitStrategy : splitStrategies) {
+            strategyMap.put(splitStrategy.getType(), splitStrategy);
+        }
     }
 
     @Override
-    public List<List<Player>> splitIntoTeams(int numberOfTeams, List<Player> players) {
+    public List<List<Player>> splitIntoTeams(int numberOfTeams, SplitterStrategyType splitType,  List<Player> players) {
         //use games store instead of initial player score
         players.forEach(player -> player.setScore(player.getGameScore() != null ? player.getGameScore() : player.getScore()));
 
@@ -45,12 +51,12 @@ public class HighestScoreTeamSplitterService implements TeamSplitterService {
             }
         });
 
-        List<List<Player>> teams = splitStrategy.split(numberOfTeams, players);
+        List<List<Player>> teams = strategyMap.get(splitType).split(numberOfTeams, players);
         return teams;
     }
 
-    public Map<String, List<Player>> splitTeams(int numberOfTeams, List<Player> players) {
-        List<List<Player>> teams = splitIntoTeams(numberOfTeams, players);
+    public Map<String, List<Player>> splitTeams(int numberOfTeams,  SplitterStrategyType splitType, List<Player> players) {
+        List<List<Player>> teams = splitIntoTeams(numberOfTeams, splitType, players);
         LinkedHashMap<String, List<Player>> teamMap = new LinkedHashMap<>();
         int teamNum = 0;
         for (List<Player> team : teams) {

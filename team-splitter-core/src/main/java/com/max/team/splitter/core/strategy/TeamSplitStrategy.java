@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TeamSplitStrategy {
     List<List<Player>> split(int numberOfTeams, List<Player> playerScores);
+
+    SplitterStrategyType getType();
 }
