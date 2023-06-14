@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: team-splitter-ingress
+#  annotations:
+#    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: teamsplitter.com
+      http:
+        paths:
+        - backend:
+            serviceName: frontend-service
+            servicePort: 9000
