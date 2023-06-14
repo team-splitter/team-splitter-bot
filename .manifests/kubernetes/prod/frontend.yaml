@@ -30,7 +30,7 @@ metadata:
   name: frontend-service
 spec:
 #  type: NodePort
-  type: LoadBalancer
+#  type: LoadBalancer
   selector:
     app: frontend
   ports:
