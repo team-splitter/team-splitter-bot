@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: team-splitter-bot
-          image: ghcr.io/maxmukhanov/team-splitter-bot:1.44
+          image: ghcr.io/maxmukhanov/team-splitter-bot:1.46
           env:
             - name: TEAM-SPLITTER_DB_MYSQL_URL
               value: jdbc:mysql://mysql-service:3306/team-splitter?allowPublicKeyRetrieval=true&useSSL=false
