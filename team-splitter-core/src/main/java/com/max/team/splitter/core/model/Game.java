@@ -1,9 +1,8 @@
 package com.max.team.splitter.core.model;
 
 import java.time.Instant;
-import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 
 public class Game {
@@ -11,9 +10,11 @@ public class Game {
     private String pollId;
     private Instant creationTime;
 
+    private Integer teamSize;
     private Integer blueScored;
     private Integer redScored;
-    private Map<String, List<Player>> teams = new LinkedHashMap<>();
+
+    private List<Team> teams = new LinkedList<>();
 
     public Long getId() {
         return id;
@@ -39,11 +40,19 @@ public class Game {
         this.creationTime = creationTime;
     }
 
-    public Map<String, List<Player>> getTeams() {
+    public Integer getTeamSize() {
+        return teamSize;
+    }
+
+    public void setTeamSize(Integer teamSize) {
+        this.teamSize = teamSize;
+    }
+
+    public List<Team> getTeams() {
         return teams;
     }
 
-    public void setTeams(Map<String, List<Player>> teams) {
+    public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
 

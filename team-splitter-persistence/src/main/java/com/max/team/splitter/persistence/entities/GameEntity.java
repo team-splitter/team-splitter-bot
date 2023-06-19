@@ -15,6 +15,9 @@ public class GameEntity {
     @Column(name = "creation_ts")
     private Instant creationTimestamp;
 
+    @Column(name = "team_size")
+    private Integer teamSize;
+
     @Column(name = "blue_scored")
     private Integer blueScored;
     @Column(name = "red_scored")
@@ -42,6 +45,14 @@ public class GameEntity {
 
     public void setCreationTimestamp(Instant creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
+    }
+
+    public Integer getTeamSize() {
+        return teamSize;
+    }
+
+    public void setTeamSize(Integer teamSize) {
+        this.teamSize = teamSize;
     }
 
     public Integer getBlueScored() {

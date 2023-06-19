@@ -4,6 +4,7 @@ import com.max.team.splitter.core.converter.CoreConverters;
 import com.max.team.splitter.core.exception.NotFoundException;
 import com.max.team.splitter.core.model.Game;
 import com.max.team.splitter.core.model.Player;
+import com.max.team.splitter.core.model.Team;
 import com.max.team.splitter.persistence.entities.GameEntity;
 import com.max.team.splitter.persistence.entities.TeamEntryEntity;
 import com.max.team.splitter.persistence.repositories.GameRepository;
@@ -54,24 +55,33 @@ public class GameService {
         for (Game game : games) {
             if (gameToEntries.containsKey(game.getId())) {
                 Map<String, List<TeamEntryEntity>> byTeamName = gameToEntries.get(game.getId()).stream().collect(Collectors.groupingBy(TeamEntryEntity::getTeamName));
-                Map<String, List<Player>> teams = new LinkedHashMap<>();
+                Map<String, List<Player>> teamsMap = new LinkedHashMap<>();
                 for (Map.Entry<String, List<TeamEntryEntity>> entry : byTeamName.entrySet()) {
-                    teams.put(entry.getKey(), entry.getValue().stream().map((item) -> playerMap.get(item.getPlayerId())).collect(Collectors.toList()));
+                    teamsMap.put(entry.getKey(), entry.getValue().stream().map((item) -> playerMap.get(item.getPlayerId())).collect(Collectors.toList()));
+                }
+
+                List<Team> teams = new LinkedList<>();
+                for (Map.Entry<String, List<Player>> entry : teamsMap.entrySet()) {
+                    Team team = new Team();
+                    team.setName(entry.getKey());
+                    team.setPlayers(entry.getValue());
+                    teams.add(team);
                 }
                 game.setTeams(teams);
-            } else {
-                game.setTeams(Collections.emptyMap());
             }
         }
         games.forEach((game -> {
-            Map<String, List<Player>> teams = game.getTeams();
-            LinkedHashMap<String, List<Player>> sortedByTeamColor = new LinkedHashMap<>();
-            for (String teamColor : TEAM_COLORS) {
-                if (teams.containsKey(teamColor)) {
-                    sortedByTeamColor.put(teamColor, teams.get(teamColor));
-                }
+            List<Team> teams = game.getTeams();
+            Map<String, Integer> teamNameMap = new HashMap<>();
+            for (int i = 0; i < TEAM_COLORS.length; i++) {
+                teamNameMap.put(TEAM_COLORS[i], i);
             }
-            game.setTeams(sortedByTeamColor);
+            //sort teams by color in the TEAMS_COLORS order
+            teams.sort((a, b) -> {
+                Integer aIndex = teamNameMap.getOrDefault(a.getName(), -1);
+                Integer bIndex = teamNameMap.getOrDefault(b.getName(), -1);
+                return aIndex.compareTo(bIndex);
+            });
         }));
 
         return games;
@@ -90,6 +100,7 @@ public class GameService {
         GameEntity entity = new GameEntity();
         entity.setCreationTimestamp(Instant.now());
         entity.setPollId(pollId);
+        entity.setTeamSize(teams.size());
 
         GameEntity savedGame = gameRepository.save(entity);
         List<TeamEntryEntity> teamEntryEntities = new LinkedList<>();
@@ -152,5 +163,12 @@ public class GameService {
     public void removeTeamEntry(Long gameId, Long playerId) {
         log.info("Deleting team entry by gameId={} and playerId={}", gameId, playerId);
         teamEntryRepository.deleteByGameIdAndPlayerId(gameId, playerId);
+    }
+
+    @Transactional
+    public void deleteGame(Long gameId) {
+        log.info("Deleting game by gameId={}", gameId);
+        gameRepository.deleteById(gameId);
+        teamEntryRepository.deleteByGameId(gameId);
     }
 }

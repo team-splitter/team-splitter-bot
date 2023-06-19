@@ -67,6 +67,7 @@ public class CoreConverters {
         game.setCreationTime(entity.getCreationTimestamp());
         game.setBlueScored(entity.getBlueScored());
         game.setRedScored(entity.getRedScored());
+        game.setTeamSize(entity.getTeamSize());
         return game;
     }
 

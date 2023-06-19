@@ -3,7 +3,6 @@ package com.max.team.splitter.core.service;
 import com.max.team.splitter.core.model.Player;
 import com.max.team.splitter.core.strategy.SplitterStrategyType;
 import com.max.team.splitter.core.strategy.TeamSplitStrategy;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,9 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import static com.max.team.splitter.core.Constants.DEFAULT_SCORE;
 import static com.max.team.splitter.core.Constants.TEAM_COLORS;
 
 

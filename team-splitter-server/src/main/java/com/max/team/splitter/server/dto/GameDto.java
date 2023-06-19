@@ -8,6 +8,7 @@ public class GameDto {
     private String pollId;
     private Instant creationTime;
 
+    private Integer teamSize;
     private Integer blueScored;
     private Integer redScored;
     private List<TeamDto> teams;
@@ -34,6 +35,14 @@ public class GameDto {
 
     public void setCreationTime(Instant creationTime) {
         this.creationTime = creationTime;
+    }
+
+    public Integer getTeamSize() {
+        return teamSize;
+    }
+
+    public void setTeamSize(Integer teamSize) {
+        this.teamSize = teamSize;
     }
 
     public List<TeamDto> getTeams() {
