@@ -27,5 +27,6 @@
     <include file="db/team-splitter/changelogs/base/player_privacy_flag.xml"/>
     <include file="db/team-splitter/changelogs/base/player_game_score.xml"/>
     <include file="db/team-splitter/changelogs/base/20230609_player_stats.xml"/>
+    <include file="db/team-splitter/changelogs/base/20230619_game_team_size.xml"/>
 
 </databaseChangeLog>
