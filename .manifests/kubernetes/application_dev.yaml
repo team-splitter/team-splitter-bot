@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/maxmukhanov/team-splitter-bot.git
+    repoURL: https://github.com/team-splitter/team-splitter-bot.git
     targetRevision: HEAD
     path: .manifests/kubernetes/dev
   destination:

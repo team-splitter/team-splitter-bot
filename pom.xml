@@ -16,7 +16,7 @@
     <scm>
         <!--suppress MavenModelInspection -->
         <developerConnection>
-            scm:git:https://github.com/maxmukhanov/team-splitter-bot
+            scm:git:https://github.com/team-splitter/team-splitter-bot
         </developerConnection>
         <tag>HEAD</tag>
     </scm>
@@ -25,7 +25,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/maxmukhanov/team-splitter-bot</url>
+            <url>https://maven.pkg.github.com/team-splitter/team-splitter-bot</url>
         </repository>
     </distributionManagement>
 
