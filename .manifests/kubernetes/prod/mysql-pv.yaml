@@ -12,7 +12,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   local:
-    path: "/Users/lotus/mysql-data"
+    path: "/Users/maximus/mysql-data"
   nodeAffinity:
     required:
       nodeSelectorTerms:
