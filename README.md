@@ -1,7 +1,42 @@
 # team-splitter-bot
 
+## Setup
 
-Start mysql server on docker
+- Install Docker and Enable Kubernetes
+- Install ArgoCD to K8s (https://argo-cd.readthedocs.io/en/stable/getting_started/)
+- Reset Password in ArgoCD
+- Make sure for mysql, following folder `/Users/maximus/mysql_data` is available for Persistent Volume (https://github.com/team-splitter/team-splitter-bot/blob/main/.manifests/kubernetes/prod/mysql-pv.yaml)
+- Add app to ArgoCD
+  ```
+  kubectl apply -f https://github.com/team-splitter/team-splitter-bot/blob/main/.manifests/kubernetes/application_prod.yaml
+  ```
+
+## ArgoCD port forwarding
+```
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+```
+
+## k8s mysql apply dump
+```
+source .env
+
+mysql_pod=$(kubectl get pods -n team-splitter | grep mysql | cut -d' ' -f1)
+cat backups/file | kubectl exec --stdin --tty $mysql_pod -n team-splitter -- /usr/bin/mysql -uroot -p${MYSQLDB_ROOT_PASSWORD} team-splitter
+```
+
+## Crontab
+```
+0 12 * * * sh /Users/lotus/team-splitter/dbdump.sh >> /Users/lotus/team-splitter/dbdump.log 2>&1
+0 12 * * * sh /Users/lotus/team-splitter/generate_player_stats.sh >> /Users/lotus/team-splitter/generate_player_stats.log 2>&1
+```
+
+## Mac is wake up
+```
+caffeinate -d
+```
+
+*** Docker
+Start mysql server on docker (Not used on PROD)
 ```shell
 docker stop mysql
 docker rm mysql
