@@ -30,10 +30,15 @@ cat backups/file | kubectl exec --stdin --tty $mysql_pod -n team-splitter -- /us
 0 12 * * * sh /Users/lotus/team-splitter/generate_player_stats.sh >> /Users/lotus/team-splitter/generate_player_stats.log 2>&1
 ```
 
-## Mac is wake up
+## Mac is awake
 ```
 caffeinate -d
 ```
+
+## IPS port forwarding 
+Go to xfinity app -> WiFi Equipment-> Advanced Settings -> Port Forwarding
+9000 -> FE and Bakcend
+30360 - Mysql DB
 
 *** Docker
 Start mysql server on docker (Not used on PROD)
