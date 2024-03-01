@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/team-splitter/team-splitter-ui:0.1.26
+          image: ghcr.io/team-splitter/team-splitter-ui:1.25
           ports:
-            - containerPort: 80
+            - containerPort: 443
           env:
           - name: REACT_APP_ENV
             value: prod
@@ -36,5 +36,5 @@ spec:
   ports:
     - protocol: TCP
       port: 9000
-      targetPort: 80
+      targetPort: 443
 #      nodePort: 30200
