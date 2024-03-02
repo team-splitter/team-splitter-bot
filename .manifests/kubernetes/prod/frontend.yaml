@@ -22,7 +22,14 @@ spec:
           env:
           - name: REACT_APP_ENV
             value: prod
-
+          volumeMounts:
+            - mountPath: "/etc/nginx/ssl"
+              name: nginx-ssl
+              readOnly: true
+      volumes:
+        - name: nginx-ssl
+          secret:
+            secretName: nginx-secret-cert
 ---
 apiVersion: v1
 kind: Service
