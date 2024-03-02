@@ -22,6 +22,8 @@ spec:
           env:
           - name: REACT_APP_ENV
             value: dev
+      imagePullSecrets:
+        - name: regcred
 
 ---
 apiVersion: v1

@@ -46,3 +46,5 @@ spec:
               value: "false"
             - name: GAME_SCHEDULER_TASK_SPLIT_TEAMS_ENABLED
               value: "false"
+      imagePullSecrets:
+        - name: regcred

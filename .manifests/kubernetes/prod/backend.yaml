@@ -32,6 +32,8 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: mysql-password
+      imagePullSecrets:
+        - name: regcred
 
 ---
 apiVersion: v1

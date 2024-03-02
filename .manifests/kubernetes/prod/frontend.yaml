@@ -30,6 +30,8 @@ spec:
         - name: nginx-ssl
           secret:
             secretName: nginx-secret-cert
+      imagePullSecrets:
+        - name: regcred
 ---
 apiVersion: v1
 kind: Service
