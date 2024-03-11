@@ -1,9 +1,11 @@
 package com.max.team.splitter.core.converter;
 
 import com.max.team.splitter.core.model.*;
+import com.max.team.splitter.core.strategy.SplitterStrategyType;
 import com.max.team.splitter.persistence.entities.*;
 
 import java.time.Instant;
+import java.util.List;
 
 public class CoreConverters {
 
@@ -68,6 +70,11 @@ public class CoreConverters {
         game.setBlueScored(entity.getBlueScored());
         game.setRedScored(entity.getRedScored());
         game.setTeamSize(entity.getTeamSize());
+        game.setGameSplitId(entity.getGameSplitId());
+        game.setTeamOneName(entity.getTeamOneName());
+        game.setTeamTwoName(entity.getTeamTwoName());
+        game.setTeamOneScored(entity.getTeamOneScored());
+        game.setTeamTwoScored(entity.getTeamTwoScored());
         return game;
     }
 
@@ -89,5 +96,16 @@ public class CoreConverters {
         model.setTotalDraw(playerStatEntity.getTotalDraw());
         model.setTotalGames(playerStatEntity.getTotalGames());
         return model;
+    }
+
+    public static GameSplit toGameSplit(GameSplitEntity entity, List<Game> games, List<Team> teams) {
+        GameSplit gameSplit = new GameSplit();
+        gameSplit.setId(entity.getId());
+        gameSplit.setPollId(entity.getPollId());
+        gameSplit.setTeamSize(entity.getTeamSize());
+        gameSplit.setSplitAlg(SplitterStrategyType.valueOf(entity.getSplitAlg()));
+        gameSplit.setGames(games);
+        gameSplit.setTeams(teams);
+        return gameSplit;
     }
 }

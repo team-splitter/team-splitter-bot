@@ -23,6 +23,21 @@ public class GameEntity {
     @Column(name = "red_scored")
     private Integer redScored;
 
+    @Column(name = "team_one_name")
+    private String teamOneName;
+
+    @Column(name = "team_two_name")
+    private String teamTwoName;
+
+    @Column(name = "team_one_scored")
+    private Integer teamOneScored;
+
+    @Column(name = "team_two_scored")
+    private Integer teamTwoScored;
+
+    @Column(name = "game_split_id")
+    private Long gameSplitId;
+
     public Long getId() {
         return id;
     }
@@ -69,5 +84,45 @@ public class GameEntity {
 
     public void setRedScored(Integer redScored) {
         this.redScored = redScored;
+    }
+
+    public String getTeamOneName() {
+        return teamOneName;
+    }
+
+    public void setTeamOneName(String teamOneName) {
+        this.teamOneName = teamOneName;
+    }
+
+    public String getTeamTwoName() {
+        return teamTwoName;
+    }
+
+    public void setTeamTwoName(String teamTwoName) {
+        this.teamTwoName = teamTwoName;
+    }
+
+    public Integer getTeamOneScored() {
+        return teamOneScored;
+    }
+
+    public void setTeamOneScored(Integer teamOneScored) {
+        this.teamOneScored = teamOneScored;
+    }
+
+    public Integer getTeamTwoScored() {
+        return teamTwoScored;
+    }
+
+    public void setTeamTwoScored(Integer teamTwoScored) {
+        this.teamTwoScored = teamTwoScored;
+    }
+
+    public Long getGameSplitId() {
+        return gameSplitId;
+    }
+
+    public void setGameSplitId(Long gameSplitId) {
+        this.gameSplitId = gameSplitId;
     }
 }

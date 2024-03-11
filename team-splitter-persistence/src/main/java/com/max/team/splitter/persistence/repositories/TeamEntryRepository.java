@@ -15,4 +15,10 @@ public interface TeamEntryRepository extends JpaRepository<TeamEntryEntity, Long
 
     void deleteByGameIdAndPlayerId(Long gameId, Long playerId);
     void deleteByGameId(Long gameId);
+
+    List<TeamEntryEntity> findByGameSplitId(Long gameSplitId);
+
+    void deleteByGameSplitIdAndPlayerId(Long gameSplitId, Long playerId);
+
+    void deleteByGameSplitId(Long gameSplitId);
 }

@@ -45,6 +45,12 @@ public class GameService {
         return games;
     }
 
+    public List<Game> getGamesByGameSplit(Long gameSplitId) {
+        List<GameEntity> entities = gameRepository.findByGameSplitId(gameSplitId);
+
+        return entities.stream().map(CoreConverters::toGame).collect(Collectors.toList());
+    }
+
     public List<Game> getGameByPoll(String pollId) {
         List<GameEntity> gameEntities = gameRepository.findByPollId(pollId);
         List<TeamEntryEntity> entities = teamEntryRepository.findByGameIdIn(gameEntities.stream().map(GameEntity::getId).collect(Collectors.toList()));
@@ -96,29 +102,29 @@ public class GameService {
         return playerMap;
     }
 
-    public void saveGameSplit(Map<String, List<Player>> teams, String pollId) {
-        GameEntity entity = new GameEntity();
-        entity.setCreationTimestamp(Instant.now());
-        entity.setPollId(pollId);
-        entity.setTeamSize(teams.size());
-
-        GameEntity savedGame = gameRepository.save(entity);
-        List<TeamEntryEntity> teamEntryEntities = new LinkedList<>();
-        for (Map.Entry<String, List<Player>> entry : teams.entrySet()) {
-            String teamColor = entry.getKey();
-            List<Player> players = entry.getValue();
-            for (Player player : players) {
-                TeamEntryEntity teamEntry = new TeamEntryEntity();
-                teamEntry.setTeamName(teamColor);
-                teamEntry.setPlayerId(player.getId());
-                teamEntry.setGameId(savedGame.getId());
-                teamEntry.setScore(player.getScore());
-                teamEntryEntities.add(teamEntry);
-            }
-        }
-
-        teamEntryRepository.saveAll(teamEntryEntities);
-    }
+//    public void saveGameSplit(Map<String, List<Player>> teams, String pollId) {
+//        GameEntity entity = new GameEntity();
+//        entity.setCreationTimestamp(Instant.now());
+//        entity.setPollId(pollId);
+//        entity.setTeamSize(teams.size());
+//
+//        GameEntity savedGame = gameRepository.save(entity);
+//        List<TeamEntryEntity> teamEntryEntities = new LinkedList<>();
+//        for (Map.Entry<String, List<Player>> entry : teams.entrySet()) {
+//            String teamColor = entry.getKey();
+//            List<Player> players = entry.getValue();
+//            for (Player player : players) {
+//                TeamEntryEntity teamEntry = new TeamEntryEntity();
+//                teamEntry.setTeamName(teamColor);
+//                teamEntry.setPlayerId(player.getId());
+//                teamEntry.setGameId(savedGame.getId());
+//                teamEntry.setScore(player.getScore());
+//                teamEntryEntities.add(teamEntry);
+//            }
+//        }
+//
+//        teamEntryRepository.saveAll(teamEntryEntities);
+//    }
 
     public void saveGameScore(Long gameId, Integer blueScored, Integer redScored) {
         GameEntity gameEntity = gameRepository.findById(gameId).orElseThrow(() -> new NotFoundException("Game id=" + gameId + " is not found"));
@@ -170,5 +176,23 @@ public class GameService {
         log.info("Deleting game by gameId={}", gameId);
         gameRepository.deleteById(gameId);
         teamEntryRepository.deleteByGameId(gameId);
+    }
+
+    @Transactional
+    public void deleteGameAndTeamsForPoll(String pollId) {
+        List<GameEntity> games = gameRepository.findByPollId(pollId);
+        log.info("Found {} games for pollId={}", games.size(), pollId);
+
+        for (GameEntity game : games) {
+            log.info("Deleting team entry for gameId={}", game.getId());
+            teamEntryRepository.deleteByGameId(game.getId());
+        }
+
+        gameRepository.deleteInBatch(games);
+        log.info("Deleted {} games for pollId={}", games.size(), pollId);
+    }
+
+    public void deleteByGameSplitId(Long gameSplitId) {
+        gameRepository.deleteByGameSplitId(gameSplitId);
     }
 }

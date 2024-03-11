@@ -11,6 +11,9 @@ public class TeamEntryEntity {
     private Long id;
     @Column(name = "game_id")
     private Long gameId;
+
+    @Column(name = "game_split_id")
+    private Long gameSplitId;
     @Column(name = "team_name")
     private String teamName;
     @Column(name = "player_id")
@@ -32,6 +35,14 @@ public class TeamEntryEntity {
 
     public void setGameId(Long gameId) {
         this.gameId = gameId;
+    }
+
+    public Long getGameSplitId() {
+        return gameSplitId;
+    }
+
+    public void setGameSplitId(Long gameSplitId) {
+        this.gameSplitId = gameSplitId;
     }
 
     public String getTeamName() {

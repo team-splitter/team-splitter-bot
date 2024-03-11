@@ -10,4 +10,8 @@ import java.util.List;
 @Repository
 public interface GameRepository extends JpaRepository<GameEntity, Long> {
     List<GameEntity> findByPollId(String pollId);
+
+    List<GameEntity> findByGameSplitId(Long gameSplitId);
+
+    void deleteByGameSplitId(Long gameSplitId);
 }
