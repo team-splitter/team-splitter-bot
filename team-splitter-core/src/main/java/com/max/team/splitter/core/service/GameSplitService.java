@@ -112,6 +112,7 @@ public class GameSplitService {
         return CoreConverters.toGameSplit(savedGameSplitEntity, Collections.emptyList(), saveTeams);
     }
 
+    @Transactional
     public void deleteTeamEntry(Long gameSplitId, Long playerId) {
         teamService.deleteByGameSplitId(gameSplitId, playerId);
     }
