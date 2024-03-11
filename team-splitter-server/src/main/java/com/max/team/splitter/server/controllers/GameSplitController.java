@@ -2,6 +2,7 @@ package com.max.team.splitter.server.controllers;
 
 import com.max.team.splitter.core.model.GameSplit;
 import com.max.team.splitter.core.service.GameSplitService;
+import com.max.team.splitter.core.strategy.SplitterStrategyType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,16 @@ public class GameSplitController {
         return splits;
     }
 
+    @RequestMapping(value = "/split", method = RequestMethod.POST)
+    public GameSplit slit(@RequestParam(name = "pollId") String pollId,
+                                @RequestParam(name = "numberOfTeams") Integer numberOfTeams,
+                                @RequestParam(name = "splitAlg")SplitterStrategyType splitAlg) {
+        log.info("Split  pollId={}, numberOfTeams={}, splitAlg={}", pollId, numberOfTeams, splitAlg);
+        GameSplit split = gameSplitService.split(pollId, numberOfTeams, splitAlg);
+
+        return split;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public List<GameSplit> getAllGameSplits() {
         List<GameSplit> splits = gameSplitService.getAllGameSplits();
@@ -49,4 +60,6 @@ public class GameSplitController {
         log.info("Delete game split by gameSplitId={}", gameSplitId);
         gameSplitService.deleteGameSplit(gameSplitId);
     }
+
+
 }

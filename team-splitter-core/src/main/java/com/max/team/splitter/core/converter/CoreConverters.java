@@ -106,6 +106,7 @@ public class CoreConverters {
         gameSplit.setSplitAlg(SplitterStrategyType.valueOf(entity.getSplitAlg()));
         gameSplit.setGames(games);
         gameSplit.setTeams(teams);
+        gameSplit.setCreationTime(entity.getCreationTimestamp());
         return gameSplit;
     }
 }
