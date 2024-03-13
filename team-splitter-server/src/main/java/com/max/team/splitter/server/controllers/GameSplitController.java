@@ -1,5 +1,6 @@
 package com.max.team.splitter.server.controllers;
 
+import com.max.team.splitter.core.model.GameScore;
 import com.max.team.splitter.core.model.GameSplit;
 import com.max.team.splitter.core.service.GameSplitService;
 import com.max.team.splitter.core.strategy.SplitterStrategyType;
@@ -59,6 +60,11 @@ public class GameSplitController {
     public void deleteGameSplit(@PathVariable("gameSplitId") Long gameSplitId) {
         log.info("Delete game split by gameSplitId={}", gameSplitId);
         gameSplitService.deleteGameSplit(gameSplitId);
+    }
+
+    @RequestMapping(value = "/{gameSplitId}/score", method = RequestMethod.POST)
+    public GameSplit setGameSplitScores(@PathVariable("gameSplitId") Long gameSplitId, @RequestBody List<GameScore> scores) {
+        return gameSplitService.setScores(gameSplitId, scores);
     }
 
 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -65,10 +66,6 @@ public class PlayerService {
         return CoreConverters.toPlayer(playerRepository.save(existingPlayer));
     }
 
-    public void increasePlayerScore(Long playerId) {
-
-    }
-
     public List<Player> getPlayersByIds(Collection<Long> ids) {
         List<PlayerEntity> entities = playerRepository.findByIdIn(ids);
 
@@ -79,4 +76,10 @@ public class PlayerService {
         playerRepository.deleteById(id);
     }
 
+    public void updatePlayerScores(Map<Long, Integer> playerPoints) {
+        List<PlayerEntity> entities = playerRepository.findByIdIn(playerPoints.keySet());
+        entities.forEach((entity -> {entity.setGameScore(entity.getGameScore() + playerPoints.get(entity.getId()));}));
+
+        playerRepository.saveAll(entities);
+    }
 }

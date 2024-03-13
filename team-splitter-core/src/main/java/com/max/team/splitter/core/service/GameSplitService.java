@@ -1,10 +1,7 @@
 package com.max.team.splitter.core.service;
 
 import com.max.team.splitter.core.converter.CoreConverters;
-import com.max.team.splitter.core.model.Game;
-import com.max.team.splitter.core.model.GameSplit;
-import com.max.team.splitter.core.model.Player;
-import com.max.team.splitter.core.model.Team;
+import com.max.team.splitter.core.model.*;
 import com.max.team.splitter.core.strategy.SplitterStrategyType;
 import com.max.team.splitter.persistence.entities.GameEntity;
 import com.max.team.splitter.persistence.entities.GameSplitEntity;
@@ -16,10 +13,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.max.team.splitter.core.Constants.DEFAULT_SCORE;
@@ -122,5 +117,72 @@ public class GameSplitService {
         gameService.deleteByGameSplitId(gameSplitId);
         teamService.deleteByGameSplitId(gameSplitId);
         gameSplitRepository.deleteById(gameSplitId);
+    }
+
+    @Transactional
+    public GameSplit setScores(Long gameSplitId, List<GameScore> scores) {
+        gameRepository.deleteByGameSplitId(gameSplitId);
+
+        GameSplitEntity gameSplit = gameSplitRepository.getOne(gameSplitId);
+        Map<String, Team> teamNameToTeam = teamService.getTeamsForGameSplit(gameSplitId).stream().collect(Collectors.toMap(Team::getName, Function.identity()));
+        List<GameEntity> games = scores.stream().map((gameScore -> {
+            GameEntity game = new GameEntity();
+            game.setTeamSize(gameSplit.getTeamSize());
+            game.setGameSplitId(gameSplitId);
+            game.setCreationTimestamp(Instant.now());
+            game.setPollId(gameSplit.getPollId());
+            game.setTeamOneName(gameScore.getTeamOneName());
+            game.setTeamTwoName(gameScore.getTeamTwoName());
+            game.setTeamOneScored(gameScore.getTeamOneScored());
+            game.setTeamTwoScored(gameScore.getTeamTwoScored());
+            return game;
+        })).collect(Collectors.toList());
+
+        List<GameEntity> savedGames = gameRepository.saveAll(games);
+
+
+        //update player scores
+        Map<String, Integer> teamPoints = calculateTeamPoints(scores);
+        log.info("Team points={} for gameSplitId={}", teamPoints, gameSplitId);
+
+        Map<Long, Integer> playerPoints = calculatePlayerPoints(teamPoints, teamNameToTeam);
+        playerService.updatePlayerScores(playerPoints);
+
+        return CoreConverters.toGameSplit(gameSplit, savedGames.stream().map(CoreConverters::toGame).collect(Collectors.toList()), Collections.emptyList());
+    }
+
+    private Map<Long, Integer> calculatePlayerPoints(Map<String, Integer> teamPoints, Map<String, Team> teamNameToTeam) {
+        Map<Long, Integer> playerPoints = new LinkedHashMap<>();
+
+        for (Map.Entry<String, Team> entry : teamNameToTeam.entrySet()) {
+            String teamName = entry.getKey();
+            List<Player> players = entry.getValue().getPlayers();
+
+            Integer points = teamPoints.getOrDefault(teamName, 0);
+            if (points == 0) continue;
+
+            for (Player player : players) {
+                playerPoints.put(player.getId(), points);
+            }
+        }
+        return playerPoints;
+    }
+
+    private Map<String, Integer> calculateTeamPoints(List<GameScore> scores) {
+        Map<String, Integer> points = new LinkedHashMap<>();
+        for (GameScore score : scores) {
+            points.putIfAbsent(score.getTeamOneName(), 0);
+            points.putIfAbsent(score.getTeamTwoName(), 0);
+
+            if (score.getTeamOneScored() > score.getTeamTwoScored()) {
+                points.put(score.getTeamOneName(), points.get(score.getTeamOneName()) + 1);
+                points.put(score.getTeamTwoName(), points.get(score.getTeamTwoName()) - 1);
+            } else if (score.getTeamOneScored() < score.getTeamTwoScored()) {
+                points.put(score.getTeamOneName(), points.get(score.getTeamOneName()) - 1);
+                points.put(score.getTeamTwoName(), points.get(score.getTeamTwoName()) + 1);
+            }
+        }
+
+        return points;
     }
 }
