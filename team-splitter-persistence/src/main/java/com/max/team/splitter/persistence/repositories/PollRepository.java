@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface PollRepository extends JpaRepository<PollEntity, String> {
 
-    Optional<PollEntity> findFirstByChatIdOrderByCreationTimestampDesc(Long chatId);
+    Optional<PollEntity> findFirstByChatIdOrderByCreationTimeDesc(Long chatId);
 }

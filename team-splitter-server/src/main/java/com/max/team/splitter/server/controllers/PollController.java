@@ -9,6 +9,10 @@ import com.max.team.splitter.server.dto.PollVote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,10 +31,10 @@ public class PollController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<PollModel> listPolls() {
-        log.info("Getting list of polls");
-        List<PollModel> all = pollService.getAll();
-        return all;
+    public Page<PollModel> listPolls(@PageableDefault(size = 20, sort = {"creationTime"}, direction = Sort.Direction.DESC) Pageable pageable) {
+        log.info("Getting list of polls pageable={}", pageable);
+        Page<PollModel> page = pollService.getAll(pageable);
+        return page;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

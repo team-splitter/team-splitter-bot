@@ -6,6 +6,10 @@ import com.max.team.splitter.core.service.GameSplitService;
 import com.max.team.splitter.core.strategy.SplitterStrategyType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
@@ -42,9 +46,8 @@ public class GameSplitController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<GameSplit> getAllGameSplits() {
-        List<GameSplit> splits = gameSplitService.getAllGameSplits();
-        splits.sort(Comparator.comparing(GameSplit::getCreationTime).reversed());
+    public Page<GameSplit> getAllGameSplits(@PageableDefault(size = 20, sort = {"creationTime"}, direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<GameSplit> splits = gameSplitService.getAllGameSplits(pageable);
         return splits;
     }
 

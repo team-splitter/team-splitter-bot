@@ -9,6 +9,8 @@ import com.max.team.splitter.persistence.repositories.GameRepository;
 import com.max.team.splitter.persistence.repositories.GameSplitRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -71,17 +73,16 @@ public class GameSplitService {
         return splits;
     }
 
-    public List<GameSplit> getAllGameSplits() {
-        List<GameSplitEntity> entities = gameSplitRepository.findAll();
+    public Page<GameSplit> getAllGameSplits(Pageable pageable) {
+        Page<GameSplitEntity> page = gameSplitRepository.findAll(pageable);
         Map<Long, List<Game>> gamesMap = gameService.getAllGames().stream().collect(Collectors.groupingBy(Game::getGameSplitId));
 
-
         List<GameSplit> splits = new ArrayList<>();
-        for (GameSplitEntity entity : entities) {
+        for (GameSplitEntity entity : page) {
             splits.add(CoreConverters.toGameSplit(entity, gamesMap.getOrDefault(entity.getId(), Collections.emptyList()), Collections.emptyList()));
         }
 
-        return splits;
+        return CoreConverters.toPage(splits, page);
     }
 
     private GameSplit saveGameSplit(Map<String, List<Player>> teams, String pollId, int numberOfTeams, SplitterStrategyType splitType) {
@@ -89,7 +90,7 @@ public class GameSplitService {
         gameSplitEntity.setPollId(pollId);
         gameSplitEntity.setTeamSize(numberOfTeams);
         gameSplitEntity.setSplitAlg(splitType.name());
-        gameSplitEntity.setCreationTimestamp(Instant.now());
+        gameSplitEntity.setCreationTime(Instant.now());
         GameSplitEntity savedGameSplitEntity = gameSplitRepository.save(gameSplitEntity);
 
 

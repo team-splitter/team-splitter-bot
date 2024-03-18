@@ -10,6 +10,8 @@ import com.max.team.splitter.persistence.repositories.PollAnswerRepository;
 import com.max.team.splitter.persistence.repositories.PollRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,9 +29,9 @@ public class PollService {
         this.pollAnswerRepository = pollAnswerRepository;
     }
 
-    public List<PollModel> getAll() {
-        List<PollEntity> all = pollRepository.findAll();
-        return all.stream().map(CoreConverters::toPollModel).collect(Collectors.toList());
+    public Page<PollModel> getAll(Pageable pageable) {
+        Page<PollEntity> page = pollRepository.findAll(pageable);
+        return CoreConverters.toPage(page.getContent().stream().map(CoreConverters::toPollModel).collect(Collectors.toList()), page);
     }
 
     public PollModel getById(String pollId) {
@@ -92,12 +94,12 @@ public class PollService {
     }
 
     public Optional<String> getLastPollId(Long chatId) {
-        Optional<PollEntity> poll = pollRepository.findFirstByChatIdOrderByCreationTimestampDesc(chatId);
+        Optional<PollEntity> poll = pollRepository.findFirstByChatIdOrderByCreationTimeDesc(chatId);
         return poll.map(PollEntity::getId);
     }
 
     public Optional<Integer> getLastPollMessageId(Long chatId) {
-        Optional<PollEntity> poll = pollRepository.findFirstByChatIdOrderByCreationTimestampDesc(chatId);
+        Optional<PollEntity> poll = pollRepository.findFirstByChatIdOrderByCreationTimeDesc(chatId);
         return poll.map(PollEntity::getMessageId);
     }
 

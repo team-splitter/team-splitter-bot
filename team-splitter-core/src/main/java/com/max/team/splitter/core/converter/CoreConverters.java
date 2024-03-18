@@ -3,6 +3,8 @@ package com.max.team.splitter.core.converter;
 import com.max.team.splitter.core.model.*;
 import com.max.team.splitter.core.strategy.SplitterStrategyType;
 import com.max.team.splitter.persistence.entities.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.time.Instant;
 import java.util.List;
@@ -34,7 +36,7 @@ public class CoreConverters {
         PollEntity entity = new PollEntity();
         entity.setId(poll.getId());
         entity.setQuestion(poll.getQuestion());
-        entity.setCreationTimestamp(Instant.now());
+        entity.setCreationTime(Instant.now());
         entity.setMessageId(poll.getMessageId());
         entity.setChatId(poll.getChatId());
         return entity;
@@ -45,7 +47,7 @@ public class CoreConverters {
         model.setId(entity.getId());
         model.setQuestion(entity.getQuestion());
         model.setChatId(entity.getChatId());
-        model.setCreationTime(entity.getCreationTimestamp());
+        model.setCreationTime(entity.getCreationTime());
         model.setMessageId(entity.getMessageId());
         return model;
     }
@@ -102,7 +104,12 @@ public class CoreConverters {
         gameSplit.setSplitAlg(SplitterStrategyType.valueOf(entity.getSplitAlg()));
         gameSplit.setGames(games);
         gameSplit.setTeams(teams);
-        gameSplit.setCreationTime(entity.getCreationTimestamp());
+        gameSplit.setCreationTime(entity.getCreationTime());
         return gameSplit;
+    }
+
+    public static <T> Page<T> toPage(List<T> content, Page other) {
+        Page<T> page = new PageImpl<>(content, other.getPageable(), other.getTotalElements());
+        return page;
     }
 }

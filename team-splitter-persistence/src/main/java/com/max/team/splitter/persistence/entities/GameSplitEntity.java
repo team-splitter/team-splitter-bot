@@ -13,7 +13,7 @@ public class GameSplitEntity {
     @Column(name = "poll_id")
     private String pollId;
     @Column(name = "creation_ts")
-    private Instant creationTimestamp;
+    private Instant creationTime;
 
     @Column(name = "team_size")
     private Integer teamSize;
@@ -37,12 +37,12 @@ public class GameSplitEntity {
         this.pollId = pollId;
     }
 
-    public Instant getCreationTimestamp() {
-        return creationTimestamp;
+    public Instant getCreationTime() {
+        return creationTime;
     }
 
-    public void setCreationTimestamp(Instant creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
+    public void setCreationTime(Instant creationTime) {
+        this.creationTime = creationTime;
     }
 
     public Integer getTeamSize() {

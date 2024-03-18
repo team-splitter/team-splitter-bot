@@ -14,7 +14,7 @@ public class PollEntity {
     private String id;
 
     @Column(name = "creation_ts")
-    private Instant creationTimestamp;
+    private Instant creationTime;
     @Column(name = "question")
     private String question;
     @Column(name = "message_id")
@@ -30,12 +30,12 @@ public class PollEntity {
         this.id = id;
     }
 
-    public Instant getCreationTimestamp() {
-        return creationTimestamp;
+    public Instant getCreationTime() {
+        return creationTime;
     }
 
-    public void setCreationTimestamp(Instant creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
+    public void setCreationTime(Instant creationTime) {
+        this.creationTime = creationTime;
     }
 
     public String getQuestion() {
