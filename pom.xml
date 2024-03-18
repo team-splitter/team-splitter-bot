@@ -3,7 +3,7 @@
 
     <groupId>com.max</groupId>
     <artifactId>team-splitter-parent</artifactId>
-    <version>1.54-SNAPSHOT</version>
+    <version>1.54</version>
     <packaging>pom</packaging>
     <name>Team Splitter Bot :: Parent</name>
 
@@ -18,7 +18,7 @@
         <developerConnection>
             scm:git:https://github.com/team-splitter/team-splitter-bot
         </developerConnection>
-        <tag>HEAD</tag>
+        <tag>1.54</tag>
     </scm>
 
     <distributionManagement>
