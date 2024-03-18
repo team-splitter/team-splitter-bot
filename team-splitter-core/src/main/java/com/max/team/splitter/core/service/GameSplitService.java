@@ -92,16 +92,8 @@ public class GameSplitService {
         gameSplitEntity.setCreationTimestamp(Instant.now());
         GameSplitEntity savedGameSplitEntity = gameSplitRepository.save(gameSplitEntity);
 
-        //TODO: remove after migration
-        GameEntity gameEntity = new GameEntity();
-        gameEntity.setCreationTimestamp(Instant.now());
-        gameEntity.setPollId(pollId);
-        gameEntity.setTeamSize(teams.size());
-        gameEntity.setGameSplitId(savedGameSplitEntity.getId());
-        GameEntity savedGame = gameRepository.save(gameEntity);
 
-
-        List<Team> saveTeams = teamService.saveTeams(teams, savedGame.getId(), gameSplitEntity.getId());
+        List<Team> saveTeams = teamService.saveTeams(teams, gameSplitEntity.getId());
 
 
         return CoreConverters.toGameSplit(savedGameSplitEntity, Collections.emptyList(), saveTeams);
@@ -127,10 +119,8 @@ public class GameSplitService {
         Map<String, Team> teamNameToTeam = teamService.getTeamsForGameSplit(gameSplitId).stream().collect(Collectors.toMap(Team::getName, Function.identity()));
         List<GameEntity> games = scores.stream().map((gameScore -> {
             GameEntity game = new GameEntity();
-            game.setTeamSize(gameSplit.getTeamSize());
             game.setGameSplitId(gameSplitId);
             game.setCreationTimestamp(Instant.now());
-            game.setPollId(gameSplit.getPollId());
             game.setTeamOneName(gameScore.getTeamOneName());
             game.setTeamTwoName(gameScore.getTeamTwoName());
             game.setTeamOneScored(gameScore.getTeamOneScored());

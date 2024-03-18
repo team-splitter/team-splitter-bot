@@ -9,8 +9,6 @@ public class TeamEntryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "game_id")
-    private Long gameId;
 
     @Column(name = "game_split_id")
     private Long gameSplitId;
@@ -27,14 +25,6 @@ public class TeamEntryEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getGameId() {
-        return gameId;
-    }
-
-    public void setGameId(Long gameId) {
-        this.gameId = gameId;
     }
 
     public Long getGameSplitId() {

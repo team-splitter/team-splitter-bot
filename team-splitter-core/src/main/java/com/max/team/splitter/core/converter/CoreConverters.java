@@ -65,11 +65,7 @@ public class CoreConverters {
     public static Game toGame(GameEntity entity) {
         Game game = new Game();
         game.setId(entity.getId());
-        game.setPollId(entity.getPollId());
         game.setCreationTime(entity.getCreationTimestamp());
-        game.setBlueScored(entity.getBlueScored());
-        game.setRedScored(entity.getRedScored());
-        game.setTeamSize(entity.getTeamSize());
         game.setGameSplitId(entity.getGameSplitId());
         game.setTeamOneName(entity.getTeamOneName());
         game.setTeamTwoName(entity.getTeamTwoName());

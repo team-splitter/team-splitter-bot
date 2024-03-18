@@ -29,5 +29,6 @@
     <include file="db/team-splitter/changelogs/base/20230609_player_stats.xml"/>
     <include file="db/team-splitter/changelogs/base/20230619_game_team_size.xml"/>
     <include file="db/team-splitter/changelogs/base/20240124_multi_gates.xml"/>
+    <include file="db/team-splitter/changelogs/base/20240318_drop_game_ids.xml"/>
 
 </databaseChangeLog>

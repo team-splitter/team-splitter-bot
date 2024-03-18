@@ -56,7 +56,7 @@ public class TeamService {
         return playerMap;
     }
 
-    public List<Team> saveTeams(Map<String, List<Player>> teamSplit, Long gameId, Long gameSplitId) {
+    public List<Team> saveTeams(Map<String, List<Player>> teamSplit, Long gameSplitId) {
         List<TeamEntryEntity> teamEntryEntities = new LinkedList<>();
         for (Map.Entry<String, List<Player>> entry : teamSplit.entrySet()) {
             String teamColor = entry.getKey();
@@ -65,7 +65,6 @@ public class TeamService {
                 TeamEntryEntity teamEntry = new TeamEntryEntity();
                 teamEntry.setTeamName(teamColor);
                 teamEntry.setPlayerId(player.getId());
-                teamEntry.setGameId(gameId);
                 teamEntry.setGameSplitId(gameSplitId);
                 teamEntry.setScore(player.getScore());
                 teamEntryEntities.add(teamEntry);

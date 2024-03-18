@@ -10,18 +10,9 @@ public class GameEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "poll_id")
-    private String pollId;
+
     @Column(name = "creation_ts")
     private Instant creationTimestamp;
-
-    @Column(name = "team_size")
-    private Integer teamSize;
-
-    @Column(name = "blue_scored")
-    private Integer blueScored;
-    @Column(name = "red_scored")
-    private Integer redScored;
 
     @Column(name = "team_one_name")
     private String teamOneName;
@@ -46,13 +37,6 @@ public class GameEntity {
         this.id = id;
     }
 
-    public String getPollId() {
-        return pollId;
-    }
-
-    public void setPollId(String pollId) {
-        this.pollId = pollId;
-    }
 
     public Instant getCreationTimestamp() {
         return creationTimestamp;
@@ -60,30 +44,6 @@ public class GameEntity {
 
     public void setCreationTimestamp(Instant creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
-    }
-
-    public Integer getTeamSize() {
-        return teamSize;
-    }
-
-    public void setTeamSize(Integer teamSize) {
-        this.teamSize = teamSize;
-    }
-
-    public Integer getBlueScored() {
-        return blueScored;
-    }
-
-    public void setBlueScored(Integer blueScored) {
-        this.blueScored = blueScored;
-    }
-
-    public Integer getRedScored() {
-        return redScored;
-    }
-
-    public void setRedScored(Integer redScored) {
-        this.redScored = redScored;
     }
 
     public String getTeamOneName() {
