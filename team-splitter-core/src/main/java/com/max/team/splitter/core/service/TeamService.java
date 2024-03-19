@@ -10,6 +10,8 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static com.max.team.splitter.core.Constants.TEAM_COLORS;
+
 @Service
 public class TeamService {
 
@@ -37,10 +39,13 @@ public class TeamService {
         }
 
         List<Team> teams = new LinkedList<>();
-        for (Map.Entry<String, List<Player>> entry : teamsMap.entrySet()) {
+        for (int i = 0; i < teamsMap.size(); i++) {
+            String teamName = TEAM_COLORS[i];
+            List<Player> players = teamsMap.get(teamName);
+
             Team team = new Team();
-            team.setName(entry.getKey());
-            team.setPlayers(entry.getValue());
+            team.setName(teamName);
+            team.setPlayers(players);
             teams.add(team);
         }
 
