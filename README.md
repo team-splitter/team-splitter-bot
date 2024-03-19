@@ -65,5 +65,5 @@ cat backup.sql | docker exec -i  mysql /usr/bin/mysql -u root --password=changei
 ```shell
 kubectl create secret generic regcred \
     --from-file=.dockerconfigjson=docker_config.json \           
-    --type=kubernetes.io/dockerconfigjson
+    --type=kubernetes.io/dockerconfigjson -n team-splitter
 ```
