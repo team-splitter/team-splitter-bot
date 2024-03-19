@@ -16,15 +16,22 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/team-splitter/team-splitter-ui:0.1.38
+          image: ghcr.io/team-splitter/team-splitter-ui:0.1.39
           ports:
-            - containerPort: 80
+            - containerPort: 443
           env:
           - name: REACT_APP_ENV
             value: dev
+          volumeMounts:
+            - mountPath: "/etc/nginx/ssl"
+              name: nginx-ssl
+              readOnly: true
+      volumes:
+        - name: nginx-ssl
+          secret:
+            secretName: nginx-secret-cert
       imagePullSecrets:
         - name: regcred
-
 ---
 apiVersion: v1
 kind: Service
@@ -38,5 +45,5 @@ spec:
   ports:
     - protocol: TCP
       port: 9000
-      targetPort: 80
+      targetPort: 443
 #      nodePort: 30200
