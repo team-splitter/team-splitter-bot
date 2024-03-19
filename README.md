@@ -60,3 +60,10 @@ Apply backup to mysql server
 ```shell
 cat backup.sql | docker exec -i  mysql /usr/bin/mysql -u root --password=changeit team-splitter
 ```
+
+## Docker config as k8s secret
+```shell
+kubectl create secret generic regcred \
+    --from-file=.dockerconfigjson=docker_config.json \           
+    --type=kubernetes.io/dockerconfigjson
+```
