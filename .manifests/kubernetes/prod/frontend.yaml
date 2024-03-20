@@ -44,6 +44,6 @@ spec:
     app: frontend
   ports:
     - protocol: TCP
-      port: 9000
+      port: 443
       targetPort: 443
 #      nodePort: 30200
