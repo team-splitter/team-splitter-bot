@@ -7,9 +7,10 @@ on:
         type: environment
         description: "Select Environment"
 
+run-name: DB Migration for ${{ github.event.inputs.environment }}
+
 jobs:
   run-db-migration:
-    name: DB Migration for ${{ github.event.inputs.environment }}
     environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
 
