@@ -52,6 +52,10 @@ spec:
               value: "false"
             - name: GAME_SCHEDULER_TASK_SPLIT_TEAMS_ENABLED
               value: "false"
+            - name: SPRING_LIQUIBASE_ENABLED
+              value: "false"
+            - name: DB
+              value: "postgres"
       imagePullSecrets:
         - name: regcred
       dnsPolicy: Default
