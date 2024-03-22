@@ -2,11 +2,18 @@ name: DB Migration
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        description: "Select Environment"
+        options:
+          - "dev"
+          - "prd"
 
 
 jobs:
   run-db-migration:
-    environment: prd
+    environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
 
     steps:
