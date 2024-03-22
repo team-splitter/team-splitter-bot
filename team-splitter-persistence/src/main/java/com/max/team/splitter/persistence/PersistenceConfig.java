@@ -75,7 +75,7 @@ public class PersistenceConfig {
     }
 
     @Bean
-    @ConditionalOnProperty(name = "liquibase", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(name = "spring.liquibase.enabled", havingValue = "true", matchIfMissing = true)
     public SpringLiquibase userLiquibase(@Qualifier("userDS") final DataSource dataSource) {
         logger.info("Applying Liquibase");
         SpringLiquibase liquibase = new SpringLiquibase();
