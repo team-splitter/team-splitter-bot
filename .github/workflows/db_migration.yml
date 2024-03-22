@@ -20,7 +20,9 @@ jobs:
           server-id: github
       - name: Liquibase migration
         run: |
-          mvn clean package
-          mvn -f team-splitter-persistence liquibase:update -DDB_URL=jdbc:postgresql://arid-heron-9902.5xj.cockroachlabs.cloud:26257/team_splitter -DDB_USERNAME=ci_test -DDB_PASSWORD=b9VZQogioloG6qzd7VLyMQ
+           mvn -f team-splitter-persistence clean compile liquibase:update
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DB_URL: ${{ secrets.CRDB_URL }}
+          DB_USERNAME: ${{ secrets.CRDB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.CRDB_PASSWORD }}
