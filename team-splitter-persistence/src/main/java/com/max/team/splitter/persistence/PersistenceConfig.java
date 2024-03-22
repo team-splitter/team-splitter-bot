@@ -79,12 +79,11 @@ public class PersistenceConfig {
     public SpringLiquibase userLiquibase(@Qualifier("userDS") final DataSource dataSource) {
         logger.info("Applying Liquibase");
         SpringLiquibase liquibase = new SpringLiquibase();
-//         liquibase.setContexts(RuntimeMode.current().name());
         liquibase.setDataSource(dataSource);
         if (env.containsProperty("initdb") || env.containsProperty("gateway.initdb")) {
             liquibase.setDropFirst(true);
         }
-        liquibase.setChangeLog("classpath:db/team-splitter/changelog-master.xml");
+        liquibase.setChangeLog("classpath:db/crdb/changelog-master.xml");
         return liquibase;
     }
 }

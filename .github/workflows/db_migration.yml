@@ -26,6 +26,6 @@ jobs:
            mvn -f team-splitter-persistence clean compile liquibase:update
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DB_URL: ${{ secrets.CRDB_URL }}
-          DB_USERNAME: ${{ secrets.CRDB_USERNAME }}
+          DB_URL: ${{ vars.CRDB_URL }}
+          DB_USERNAME: ${{ vars.CRDB_USERNAME }}
           DB_PASSWORD: ${{ secrets.CRDB_PASSWORD }}
