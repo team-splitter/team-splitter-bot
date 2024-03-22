@@ -16,22 +16,25 @@ spec:
     spec:
       containers:
         - name: team-splitter-backend
-          image: ghcr.io/team-splitter/team-splitter-server:1.55
+          image: ghcr.io/team-splitter/team-splitter-server:1.56
           ports:
             - containerPort: 8080
           env:
-            - name: TEAM-SPLITTER_DB_MYSQL_URL
-              value: jdbc:mysql://mysql-service:3306/team-splitter?allowPublicKeyRetrieval=true&useSSL=false
-            - name: TEAM-SPLITTER_DB_MYSQL_USER
+            - name: TEAM-SPLITTER_DB_POSTGRES_URL
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
-                  key: mysql-user
-            - name: TEAM-SPLITTER_DB_MYSQL_PASSWORD
+                  name: crdb-secret
+                  key: url
+            - name: TEAM-SPLITTER_DB_POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
-                  key: mysql-password
+                  name: crdb-secret
+                  key: user
+            - name: TEAM-SPLITTER_DB_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: crdb-secret
+                  key: password
       imagePullSecrets:
         - name: regcred
 
