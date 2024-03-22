@@ -15,20 +15,20 @@
     <property name="blob_type" value="blob" dbms="h2"/>
 
     <!-- DDL -->
-    <include file="db/team-splitter/changelogs/base/player_table.xml"/>
-    <include file="db/team-splitter/changelogs/base/player_score_table.xml"/>
-    <include file="db/team-splitter/changelogs/base/poll_table.xml"/>
-    <include file="db/team-splitter/changelogs/base/game_table.xml"/>
-    <include file="db/team-splitter/changelogs/base/game_schedule_table.xml"/>
-    <include file="db/team-splitter/changelogs/base/player_score.xml"/>
-    <include file="db/team-splitter/changelogs/base/team_entry_score.xml"/>
-    <include file="db/team-splitter/changelogs/base/game_schedule_add_poll.xml"/>
-    <include file="db/team-splitter/changelogs/base/game_blue_red_scored_columns.xml"/>
-    <include file="db/team-splitter/changelogs/base/player_privacy_flag.xml"/>
-    <include file="db/team-splitter/changelogs/base/player_game_score.xml"/>
-    <include file="db/team-splitter/changelogs/base/20230609_player_stats.xml"/>
-    <include file="db/team-splitter/changelogs/base/20230619_game_team_size.xml"/>
-    <include file="db/team-splitter/changelogs/base/20240124_multi_gates.xml"/>
-    <include file="db/team-splitter/changelogs/base/20240318_drop_game_ids.xml"/>
+    <include file="db/crdb/changelogs/base/player_table.xml"/>
+    <include file="db/crdb/changelogs/base/player_score_table.xml"/>
+    <include file="db/crdb/changelogs/base/poll_table.xml"/>
+    <include file="db/crdb/changelogs/base/game_table.xml"/>
+    <include file="db/crdb/changelogs/base/game_schedule_table.xml"/>
+    <include file="db/crdb/changelogs/base/player_score.xml"/>
+    <include file="db/crdb/changelogs/base/team_entry_score.xml"/>
+    <include file="db/crdb/changelogs/base/game_schedule_add_poll.xml"/>
+    <include file="db/crdb/changelogs/base/game_blue_red_scored_columns.xml"/>
+    <include file="db/crdb/changelogs/base/player_privacy_flag.xml"/>
+    <include file="db/crdb/changelogs/base/player_game_score.xml"/>
+    <include file="db/crdb/changelogs/base/20230609_player_stats.xml"/>
+    <include file="db/crdb/changelogs/base/20230619_game_team_size.xml"/>
+    <include file="db/crdb/changelogs/base/20240124_multi_gates.xml"/>
+    <include file="db/crdb/changelogs/base/20240318_drop_game_ids.xml"/>
 
 </databaseChangeLog>
