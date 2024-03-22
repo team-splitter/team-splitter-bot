@@ -6,7 +6,7 @@ on:
 
 jobs:
   run-db-migration:
-    
+    environment: prd
     runs-on: ubuntu-latest
 
     steps:
