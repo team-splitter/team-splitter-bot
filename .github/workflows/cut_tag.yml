@@ -1,4 +1,4 @@
-name: Build And Cut Tag
+name: Release and Cut Tag
 
 on:
   workflow_dispatch:
