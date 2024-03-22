@@ -6,10 +6,6 @@ on:
       environment:
         type: environment
         description: "Select Environment"
-        options:
-          - "dev"
-          - "prd"
-
 
 jobs:
   run-db-migration:
