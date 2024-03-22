@@ -37,7 +37,6 @@ spec:
                   key: password
       imagePullSecrets:
         - name: regcred
-      dnsPolicy: Default
 
 ---
 apiVersion: v1
