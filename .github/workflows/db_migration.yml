@@ -9,6 +9,7 @@ on:
 
 jobs:
   run-db-migration:
+    name: DB Migration for ${{ github.event.inputs.environment }}
     environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
 
