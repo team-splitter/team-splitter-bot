@@ -54,3 +54,4 @@ spec:
               value: "false"
       imagePullSecrets:
         - name: regcred
+      dnsPolicy: Default
