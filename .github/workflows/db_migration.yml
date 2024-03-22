@@ -7,7 +7,7 @@ on:
         type: environment
         description: "Select Environment"
 
-run-name: DB Migration for ${{ github.event.inputs.environment }}
+run-name: DB Migration [${{ github.event.inputs.environment }}]
 
 jobs:
   run-db-migration:
