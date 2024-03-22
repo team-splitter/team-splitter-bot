@@ -59,6 +59,7 @@
                     <url>${DB_URL}</url>
                     <username>${DB_USERNAME}</username>
                     <password>${DB_PASSWORD}</password>
+                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
                 </configuration>
                 <dependencies>
                     <dependency>
