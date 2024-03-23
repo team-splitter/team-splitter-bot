@@ -5,7 +5,6 @@
 - Install Docker and Enable Kubernetes
 - Install ArgoCD to K8s (https://argo-cd.readthedocs.io/en/stable/getting_started/)
 - Reset Password in ArgoCD
-- Make sure for mysql, following folder `/Users/maximus/mysql_data` is available for Persistent Volume (https://github.com/team-splitter/team-splitter-bot/blob/main/.manifests/kubernetes/prod/mysql-pv.yaml)
 - Add app to ArgoCD
   ```
   kubectl apply -f https://github.com/team-splitter/team-splitter-bot/blob/main/.manifests/kubernetes/application_prod.yaml
@@ -38,7 +37,6 @@ caffeinate -d
 ## IPS port forwarding 
 Go to xfinity app -> WiFi Equipment-> Advanced Settings -> Port Forwarding
 9000 -> FE and Bakcend
-30360 - Mysql DB
 
 *** Docker
 Start mysql server on docker (Not used on PROD)

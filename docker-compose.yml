@@ -11,7 +11,7 @@ services:
     volumes:
       - "crdb_volume:/cockroach/cockroach-data"
     networks:
-      - springmysql-net
+      - team-splitter-net
   app:
     depends_on:
       - crdb
@@ -27,7 +27,7 @@ services:
     volumes:
       - .m2:/root/.m2
     networks:
-      - springmysql-net
+      - team-splitter-net
     stdin_open: true
     tty: true
 
@@ -38,13 +38,12 @@ services:
     env_file: ./.env
     environment:
       SPRING_APPLICATION_JSON: '{
-              "telegram.bot.token": "${TELEGRAM_BOT_TOKEN}",
               "team-splitter.db.postgres.url"  : "jdbc:postgresql://crdb:26257/defaultdb",
                "team-splitter.db.postgres.user" : "root",
                "team-splitter.db.postgres.password" : ""
             }'
     networks:
-      - springmysql-net
+      - team-splitter-net
     stdin_open: true
     ports:
       - "8080:8080"
@@ -53,4 +52,4 @@ volumes:
   crdb_volume:
 
 networks:
-  springmysql-net:
+  team-splitter-net:
