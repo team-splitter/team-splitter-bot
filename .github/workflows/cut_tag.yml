@@ -44,5 +44,7 @@ jobs:
         -DscmDevelopmentCommitComment="@{prefix} prepare next development iteration [skip ci]" \
         -DscmReleaseCommitComment="@{prefix} prepare release @{releaseLabel} [skip ci]" \
         release:clean release:prepare
+        
+        echo "release_version=${release_version}" >> "$GITHUB_OUTPUT"
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
