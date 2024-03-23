@@ -16,17 +16,23 @@ spec:
     spec:
       containers:
         - name: team-splitter-bot
-          image: ghcr.io/team-splitter/team-splitter-bot:1.55
+          image: ghcr.io/team-splitter/team-splitter-app:1.57
           env:
-            - name: TEAM-SPLITTER_DB_MYSQL_URL
-              value: jdbc:mysql://mysql-service:3306/team-splitter?allowPublicKeyRetrieval=true&useSSL=false
-            - name: TEAM-SPLITTER_DB_MYSQL_USER
-              value: root
-            - name: TEAM-SPLITTER_DB_MYSQL_PASSWORD
+            - name: TEAM-SPLITTER_DB_POSTGRES_URL
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
-                  key: mysql-password
+                  name: crdb-secret
+                  key: url
+            - name: TEAM-SPLITTER_DB_POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: crdb-secret
+                  key: user
+            - name: TEAM-SPLITTER_DB_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: crdb-secret
+                  key: password
             - name: TELEGRAM_BOT_TOKEN
               valueFrom:
                 secretKeyRef:

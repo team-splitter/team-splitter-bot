@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: team-splitter-bot
-          image: ghcr.io/team-splitter/team-splitter-app:1.56
+          image: ghcr.io/team-splitter/team-splitter-app:1.57
           env:
             - name: TEAM-SPLITTER_DB_POSTGRES_URL
               valueFrom:

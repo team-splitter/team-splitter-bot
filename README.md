@@ -71,7 +71,7 @@ kubectl create secret generic regcred \
 ## `crdb-secret`
 ```shell
 kubectl create secret generic crdb-secret -n team-splitter \                                                                   
---from-literal=url=jdbc:postgresql://arid-heron-9902.5xj.cockroachlabs.cloud:26257/<db> \
---from-literal=user=<user> \
---from-literal=password=<password>
+--from-literal=url='jdbc:postgresql://arid-heron-9902.5xj.cockroachlabs.cloud:26257/team_splitter' \
+--from-literal=user=team_splitter_app \
+--from-literal=password=g2U3kqekILJybybaLRFCiA
 ```
