@@ -1,10 +1,12 @@
 db: "postgres"
+
 team-splitter:
   db:
-    mysql:
+    postgres:
       url: ""
       user: ""
       password: ""
+
 spring:
   liquibase:
     enabled: false

@@ -5,13 +5,18 @@ telegram:
 command:
   allowed-users: "355281005,156023871" #"Maksym"
 #  allowed-users: ""
-db: "mysql"
+db: "postgres"
+
+spring:
+  liquibase:
+    enabled: false
+
 team-splitter:
   db:
-    mysql:
-      url: "jdbc:mysql://localhost:3306/team-splitter"
-      user: "root"
-      password: "pass"
+    postgres:
+      url: ""
+      user: ""
+      password: ""
 
 game:
   scheduler:
