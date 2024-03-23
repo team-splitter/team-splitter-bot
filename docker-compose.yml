@@ -1,31 +1,28 @@
 version: "3.8"
 
 services:
-  mysql:
-    image: mysql:8
-    restart: unless-stopped
-    env_file: ./.env
-    environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+  crdb:
+    image: cockroachdb/cockroach:v19.2.2
     ports:
-      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+      - "26257:26257"
+      - "8090:8080"
+    command: start-single-node --insecure
+    restart: unless-stopped
     volumes:
-      - mysql:/var/lib/mysql
+      - "crdb_volume:/cockroach/cockroach-data"
     networks:
       - springmysql-net
   app:
     depends_on:
-      - mysql
+      - crdb
     build: ./team-splitter-app
     env_file: ./.env
     environment:
       SPRING_APPLICATION_JSON: '{
         "telegram.bot.token": "${TELEGRAM_BOT_TOKEN}",
-        "team-splitter.db.mysql.url"  : "jdbc:mysql://mysql:${MYSQLDB_DOCKER_PORT}/${MYSQLDB_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false",
-         "team-splitter.db.mysql.user" : "${MYSQLDB_USER}",
-         "team-splitter.db.mysql.password" : "${MYSQLDB_ROOT_PASSWORD}",
-         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"
+        "team-splitter.db.postgres.url"  : "jdbc:postgresql://crdb:26257/defaultdb",
+         "team-splitter.db.postgres.user" : "root",
+         "team-splitter.db.postgres.password" : ""
       }'
     volumes:
       - .m2:/root/.m2
@@ -36,16 +33,16 @@ services:
 
   backend:
     depends_on:
-      - mysql
+      - crdb
     build: ./team-splitter-server
     env_file: ./.env
     environment:
       SPRING_APPLICATION_JSON: '{
-         "team-splitter.db.mysql.url"  : "jdbc:mysql://mysql:${MYSQLDB_DOCKER_PORT}/${MYSQLDB_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false",
-          "team-splitter.db.mysql.user" : "${MYSQLDB_USER}",
-          "team-splitter.db.mysql.password" : "${MYSQLDB_ROOT_PASSWORD}",
-          "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"
-       }'
+              "telegram.bot.token": "${TELEGRAM_BOT_TOKEN}",
+              "team-splitter.db.postgres.url"  : "jdbc:postgresql://crdb:26257/defaultdb",
+               "team-splitter.db.postgres.user" : "root",
+               "team-splitter.db.postgres.password" : ""
+            }'
     networks:
       - springmysql-net
     stdin_open: true
@@ -53,7 +50,7 @@ services:
       - "8080:8080"
 
 volumes:
-  mysql:
+  crdb_volume:
 
 networks:
   springmysql-net:
