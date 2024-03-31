@@ -16,3 +16,19 @@ spring:
       WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS: false
     deserialization:
       READ_DATE_TIMESTAMPS_AS_NANOSECONDS: false
+
+
+game:
+  scheduler:
+    chat_id: -1001517284618 # dev
+    task:
+      open_poll:
+        cron: "0 */5 * * * * " #every 5 minute
+        lookForwardInDays: 2
+
+telegram:
+  bot:
+    token: ""#Bot token
+
+command:
+  allowed-users: "355281005,156023871" #"Maksym, Andrei"

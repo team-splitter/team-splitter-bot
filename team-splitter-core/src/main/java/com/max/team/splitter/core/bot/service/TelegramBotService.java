@@ -1,15 +1,19 @@
-package com.max.team.splitter.bot.service;
+package com.max.team.splitter.core.bot.service;
 
+import com.max.team.splitter.core.bot.handlers.CompositeUpdateHandler;
+import com.max.team.splitter.core.converter.AppConverters;
 import com.max.team.splitter.core.model.GameSplit;
 import com.max.team.splitter.core.model.Player;
 import com.max.team.splitter.core.model.PollModel;
 import com.max.team.splitter.core.model.Team;
+import com.max.team.splitter.core.model.telegram.Update;
 import com.max.team.splitter.core.service.GameSplitService;
 import com.max.team.splitter.core.service.PollService;
 import com.max.team.splitter.core.strategy.SplitterStrategyType;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
+import com.pengrad.telegrambot.request.SendPoll;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +22,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BotTeamSplitService {
+public class TelegramBotService {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final PollService pollService;
     private final GameSplitService gameSplitService;
 
     private final TelegramBot bot;
 
-    public BotTeamSplitService(PollService pollService, GameSplitService gameSplitService, TelegramBot bot) {
+    public TelegramBotService(PollService pollService, GameSplitService gameSplitService, TelegramBot bot) {
         this.pollService = pollService;
         this.gameSplitService = gameSplitService;
         this.bot = bot;
@@ -93,5 +97,17 @@ public class BotTeamSplitService {
                 return 0;
             }
         });
+    }
+
+    public PollModel createPoll(long chatId, String message) {
+        SendPoll sendPoll = new SendPoll(chatId, message, "+", "-");
+        sendPoll.isAnonymous(false);
+
+        SendResponse sendPollResponse = bot.execute(sendPoll);
+        log.info("Send poll response={}", sendPollResponse);
+        PollModel pollModel = AppConverters.toPollModel(sendPollResponse.message().poll(), sendPollResponse.message().messageId(), chatId);
+        pollService.addPoll(pollModel);
+
+        return pollModel;
     }
 }

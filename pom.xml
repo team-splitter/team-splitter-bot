@@ -37,7 +37,7 @@
     <modules>
         <module>team-splitter-persistence</module>
         <module>team-splitter-core</module>
-        <module>team-splitter-app</module>
+<!--        <module>team-splitter-app</module>-->
         <module>team-splitter-server</module>
     </modules>
 

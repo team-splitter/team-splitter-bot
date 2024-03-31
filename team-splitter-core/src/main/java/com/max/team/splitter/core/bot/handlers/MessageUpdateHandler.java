@@ -1,11 +1,11 @@
-package com.max.team.splitter.bot.handlers;
+package com.max.team.splitter.core.bot.handlers;
 
-import com.max.team.splitter.bot.handlers.command.BotCommandHandler;
+import com.max.team.splitter.core.bot.handlers.command.BotCommandHandler;
+import com.max.team.splitter.core.model.telegram.Message;
+import com.max.team.splitter.core.model.telegram.MessageEntity;
 import com.max.team.splitter.core.service.PollService;
 import com.pengrad.telegrambot.TelegramBot;
-import com.pengrad.telegrambot.model.Message;
-import com.pengrad.telegrambot.model.MessageEntity;
-import com.pengrad.telegrambot.model.Update;
+import com.max.team.splitter.core.model.telegram.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.StopPoll;
 import org.slf4j.Logger;
@@ -37,30 +37,30 @@ public class MessageUpdateHandler  implements UpdateHandler {
 
     @Override
     public void handle(Update update) {
-        Message message = update.message();
+        Message message = update.getMessage();
         if (message == null) {
             return;
         }
 
         log.info("Handling message, {}", message);
 
-        Long fromUserId = message.from().id();
+        Long fromUserId = message.getFrom().getId();
         if (!allowedUsers.contains(fromUserId)) {
             log.info("User {} not allowed to execute command", fromUserId);
             return;
         }
-        if (update.message().text() != null) {
-            String text = update.message().text().trim();
-            MessageEntity[] entities = message.entities();
+        if (update.getMessage().getText() != null) {
+            String text = update.getMessage().getText().trim();
+            MessageEntity[] entities = message.getEntities();
             if (entities == null) {
                 return;
             }
-            List<MessageEntity> botCommands = Arrays.stream(entities).filter((item) -> item.type() == MessageEntity.Type.bot_command).collect(Collectors.toList());
+            List<MessageEntity> botCommands = Arrays.stream(entities).filter((item) -> item.getType().equals("bot_command")).collect(Collectors.toList());
             log.info("Bot commands {}", botCommands);
 
             for (MessageEntity botCommand : botCommands) {
                 for (BotCommandHandler commandHandler : commandHandlers) {
-                    String commandStr = text.substring(botCommand.offset(), botCommand.offset() + botCommand.length());
+                    String commandStr = text.substring(botCommand.getOffset(), botCommand.getOffset() + botCommand.getLength());
                     BotCommand command = BotCommand.getCommand(commandStr);
                     log.info("Got BotCommand={} by command str={}", command, commandStr);
                     Set<BotCommand> supports = commandHandler.supports();
@@ -72,7 +72,7 @@ public class MessageUpdateHandler  implements UpdateHandler {
 
 //            String text = update.message().text().trim();
             log.info("text message = {}", text);
-            Long chatId = update.message().chat().id();
+            Long chatId = update.getMessage().getChat().getId();
 
             if (text.startsWith("/poll")) {
 

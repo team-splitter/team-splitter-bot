@@ -1,11 +1,11 @@
-package com.max.team.splitter.bot.handlers;
+package com.max.team.splitter.core.bot.handlers;
 
-import com.max.team.splitter.bot.converter.AppConverters;
+import com.max.team.splitter.core.converter.AppConverters;
 import com.max.team.splitter.core.model.Player;
 import com.max.team.splitter.core.service.PlayerService;
 import com.max.team.splitter.core.service.PollService;
-import com.pengrad.telegrambot.model.PollAnswer;
-import com.pengrad.telegrambot.model.Update;
+import com.max.team.splitter.core.model.telegram.PollAnswer;
+import com.max.team.splitter.core.model.telegram.Update;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,7 @@ public class PollAnswerUpdateHandler  implements UpdateHandler {
 
     @Override
     public void handle(Update update) {
-        PollAnswer pollAnswer = update.pollAnswer();
+        PollAnswer pollAnswer = update.getPollAnswer();
         if (pollAnswer == null) {
             return;
         }
@@ -33,7 +33,7 @@ public class PollAnswerUpdateHandler  implements UpdateHandler {
         log.info("Handling poll answer update, {}", pollAnswer);
 
         pollService.addPollAnswer(AppConverters.toPollAnswerModel(pollAnswer));
-        Player player = AppConverters.toPlayer(pollAnswer.user());
+        Player player = AppConverters.toPlayer(pollAnswer.getUser());
         playerService.createPlayer(player);
     }
 }

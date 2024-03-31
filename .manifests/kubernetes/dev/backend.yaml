@@ -35,6 +35,16 @@ spec:
                 secretKeyRef:
                   name: crdb-secret
                   key: password
+            - name: TELEGRAM_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: team-splitter-secret
+                  key: telegram-bot-token
+            - name: GAME_SCHEDULER_CHAT_ID
+              value: "-1001517284618"
+            - name: GAME_SCHEDULER_TASK_OPEN_POLL_CRON
+              value: "0 * * * * *"
+            - name: GAME_SCHEDULER_TASK_OPEN_POLL_LOOKFORWARDINDAYS
       imagePullSecrets:
         - name: regcred
 

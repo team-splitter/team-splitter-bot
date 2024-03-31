@@ -1,7 +1,7 @@
-package com.max.team.splitter.bot.handlers;
+package com.max.team.splitter.core.bot.handlers;
 
-import com.pengrad.telegrambot.model.Poll;
-import com.pengrad.telegrambot.model.Update;
+import com.max.team.splitter.core.model.telegram.Poll;
+import com.max.team.splitter.core.model.telegram.Update;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ public class PollUpdateHandler implements UpdateHandler {
 
     @Override
     public void handle(Update update) {
-        Poll poll = update.poll();
+        Poll poll = update.getPoll();
         if (poll == null) {
             return;
         }

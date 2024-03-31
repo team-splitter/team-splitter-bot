@@ -1,11 +1,11 @@
-package com.max.team.splitter.bot.handlers.command;
+package com.max.team.splitter.core.bot.handlers.command;
 
-import com.max.team.splitter.bot.handlers.BotCommand;
-import com.max.team.splitter.bot.service.BotTeamSplitService;
+import com.max.team.splitter.core.bot.handlers.BotCommand;
+import com.max.team.splitter.core.bot.service.TelegramBotService;
 import com.max.team.splitter.core.service.PollService;
 import com.max.team.splitter.core.strategy.SplitterStrategyType;
-import com.pengrad.telegrambot.model.Message;
-import com.pengrad.telegrambot.model.MessageEntity;
+import com.max.team.splitter.core.model.telegram.Message;
+import com.max.team.splitter.core.model.telegram.MessageEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -19,34 +19,34 @@ public class SplitCommandHandler implements BotCommandHandler {
 
     private final PollService pollService;
 
-    private final BotTeamSplitService botTeamSplitService;
+    private final TelegramBotService telegramBotService;
 
-    public SplitCommandHandler(PollService pollService, BotTeamSplitService botTeamSplitService) {
+    public SplitCommandHandler(PollService pollService, TelegramBotService telegramBotService) {
         this.pollService = pollService;
-        this.botTeamSplitService = botTeamSplitService;
+        this.telegramBotService = telegramBotService;
         ;
     }
 
     @Override
     public void handle(Message message, String text, MessageEntity botCommandEntity) {
         log.info("Handling split command");
-        Optional<String> lastPollId = pollService.getLastPollId(message.chat().id());
+        Optional<String> lastPollId = pollService.getLastPollId(message.getChat().getId());
         if (lastPollId.isEmpty()) {
-            log.warn("Last poll id is not found by chat_id={}", message.chat().id());
+            log.warn("Last poll id is not found by chat_id={}", message.getChat().getId());
             return;
         }
 
         String pollId = lastPollId.get();
-        log.info("Last poll_id={} found by chat_id={}", pollId, message.chat().id());
+        log.info("Last poll_id={} found by chat_id={}", pollId, message.getChat().getId());
 
         int numberOfTeams = getNumberOfTeams(text, botCommandEntity);
         SplitterStrategyType splitType = getSplitterStrategyType(text, botCommandEntity);
-        botTeamSplitService.split(pollId, numberOfTeams, splitType);
+        telegramBotService.split(pollId, numberOfTeams, splitType);
     }
 
     private SplitterStrategyType getSplitterStrategyType(String text, MessageEntity botCommandEntity) {
         SplitterStrategyType splitType = SplitterStrategyType.TEAM_SCORE_BALANCE;
-        String[] tokens = text.substring(botCommandEntity.offset() + botCommandEntity.length()).trim().split(" ");
+        String[] tokens = text.substring(botCommandEntity.getOffset() + botCommandEntity.getLength()).trim().split(" ");
         if (tokens.length > 1) {
             String token = tokens[1];
             if ("cir".equals(token)) {
@@ -64,7 +64,7 @@ public class SplitCommandHandler implements BotCommandHandler {
     private int getNumberOfTeams(String text, MessageEntity botCommandEntity) {
         int numberOfTeams = 2;
 
-        String[] tokens = text.substring(botCommandEntity.offset() + botCommandEntity.length()).trim().split(" ");
+        String[] tokens = text.substring(botCommandEntity.getOffset() + botCommandEntity.getLength()).trim().split(" ");
         if (tokens.length > 0) {
             try {
                 numberOfTeams = Integer.parseInt(tokens[0]);

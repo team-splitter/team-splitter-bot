@@ -1,11 +1,11 @@
-package com.max.team.splitter.bot.handlers.command;
+package com.max.team.splitter.core.bot.handlers.command;
 
-import com.max.team.splitter.bot.handlers.BotCommand;
-import com.max.team.splitter.bot.converter.AppConverters;
+import com.max.team.splitter.core.bot.handlers.BotCommand;
+import com.max.team.splitter.core.converter.AppConverters;
 import com.max.team.splitter.core.service.PollService;
 import com.pengrad.telegrambot.TelegramBot;
-import com.pengrad.telegrambot.model.Message;
-import com.pengrad.telegrambot.model.MessageEntity;
+import com.max.team.splitter.core.model.telegram.Message;
+import com.max.team.splitter.core.model.telegram.MessageEntity;
 import com.pengrad.telegrambot.request.SendPoll;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.slf4j.Logger;
@@ -29,9 +29,9 @@ public class PollCommandHandler implements BotCommandHandler {
     @Override
     public void handle(Message message, String text, MessageEntity botCommandEntity) {
         log.info("Handling poll command");
-        String pollTitle = text.substring(botCommandEntity.offset()+botCommandEntity.length()).trim();
+        String pollTitle = text.substring(botCommandEntity.getOffset()+botCommandEntity.getLength()).trim();
         pollTitle = pollTitle.isEmpty() ? "Game" : pollTitle;
-        Long chatId = message.chat().id();
+        Long chatId = message.getChat().getId();
         SendPoll sendPoll = new SendPoll(chatId, pollTitle, "+", "-");
         sendPoll.isAnonymous(false);
         SendResponse response = bot.execute(sendPoll);

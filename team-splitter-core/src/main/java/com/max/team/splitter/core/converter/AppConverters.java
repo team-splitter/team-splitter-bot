@@ -1,15 +1,15 @@
-package com.max.team.splitter.bot.converter;
+package com.max.team.splitter.core.converter;
 
 import com.max.team.splitter.core.model.Player;
 import com.max.team.splitter.core.model.PollAnswerModel;
 import com.max.team.splitter.core.model.PollModel;
+import com.max.team.splitter.core.model.telegram.PollAnswer;
+import com.max.team.splitter.core.model.telegram.User;
 import com.pengrad.telegrambot.model.Poll;
-import com.pengrad.telegrambot.model.PollAnswer;
-import com.pengrad.telegrambot.model.User;
 
 public class AppConverters {
     public static Player toPlayer(User user) {
-        return new Player(user.id(), user.firstName(), user.lastName(), user.username());
+        return new Player(user.getId(), user.getFirstName(), user.getLastName(), user.getUsername());
     }
 
     public static PollModel toPollModel(Poll poll, Integer messageId, Long chatId) {
@@ -23,9 +23,9 @@ public class AppConverters {
 
     public static PollAnswerModel toPollAnswerModel(PollAnswer pollAnswer) {
         PollAnswerModel model = new PollAnswerModel();
-        model.setPollId(pollAnswer.pollId());
-        model.setPlayerId(pollAnswer.user().id());
-        model.setOptionIds(pollAnswer.optionIds());
+        model.setPollId(pollAnswer.getPoll_id());
+        model.setPlayerId(pollAnswer.getUser().getId());
+        model.setOptionIds(pollAnswer.getOption_ids());
         return model;
     }
 }

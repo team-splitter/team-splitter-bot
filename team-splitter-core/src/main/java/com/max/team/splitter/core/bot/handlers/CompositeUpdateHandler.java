@@ -1,6 +1,6 @@
-package com.max.team.splitter.bot.handlers;
+package com.max.team.splitter.core.bot.handlers;
 
-import com.pengrad.telegrambot.model.Update;
+import com.max.team.splitter.core.model.telegram.Update;
 
 import java.util.List;
 
