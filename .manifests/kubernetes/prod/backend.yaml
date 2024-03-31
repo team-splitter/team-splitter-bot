@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: team-splitter-backend
-          image: ghcr.io/team-splitter/team-splitter-server:1.58
+          image: ghcr.io/team-splitter/team-splitter-server:1.59
           ports:
             - containerPort: 8080
           env:
@@ -35,6 +35,17 @@ spec:
                 secretKeyRef:
                   name: crdb-secret
                   key: password
+            - name: TELEGRAM_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: team-splitter-secret
+                  key: telegram-bot-token
+            - name: GAME_SCHEDULER_CHAT_ID
+              value: "-1001333858606"
+            - name: GAME_SCHEDULER_TASK_OPEN_POLL_CRON
+              value: "0 */5 * * * *"
+            - name: GAME_SCHEDULER_TASK_OPEN_POLL_LOOKFORWARDINDAYS
+              value: "2"
       imagePullSecrets:
         - name: regcred
 
