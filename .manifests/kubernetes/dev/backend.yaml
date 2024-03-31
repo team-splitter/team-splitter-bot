@@ -45,6 +45,7 @@ spec:
             - name: GAME_SCHEDULER_TASK_OPEN_POLL_CRON
               value: "0 * * * * *"
             - name: GAME_SCHEDULER_TASK_OPEN_POLL_LOOKFORWARDINDAYS
+              value: "2"
       imagePullSecrets:
         - name: regcred
 
