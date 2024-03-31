@@ -8,7 +8,7 @@ permissions:
   packages: write
 
 jobs:
-  build:
+  release-and-cut-tag:
     
     runs-on: ubuntu-latest
 
