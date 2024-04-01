@@ -83,18 +83,6 @@ public class CoreConverters {
         return model;
     }
 
-    public static PlayerStat toPlayerStat(PlayerStatEntity playerStatEntity) {
-        PlayerStat model = new PlayerStat();
-        //map all fields
-        model.setPlayerId(playerStatEntity.getPlayerId());
-        model.setFirstName(playerStatEntity.getFirstName());
-        model.setLastName(playerStatEntity.getLastName());
-        model.setTotalWin(playerStatEntity.getTotalWin());
-        model.setTotalLoss(playerStatEntity.getTotalLoss());
-        model.setTotalDraw(playerStatEntity.getTotalDraw());
-        model.setTotalGames(playerStatEntity.getTotalGames());
-        return model;
-    }
 
     public static GameSplit toGameSplit(GameSplitEntity entity, List<Game> games, List<Team> teams) {
         GameSplit gameSplit = new GameSplit();

@@ -15,7 +15,7 @@ WITH player_stats_tmp as
 		count(*) total_games
 	 from player p
 		left join team_entry te on te.player_id = p.id
-        join game g on g.game_split_id = te.game_split_id
+        join game g on g.game_split_id = te.game_split_id and (g.team_one_name = te.team_name or g.team_two_name = te.team_name)
         join game_stat_results gsr on g.id=gsr.game_id
 	 group by p.id,p.first_name, p.last_name
 )
