@@ -15,6 +15,8 @@ public class PlayerStat {
 
     private Integer totalGames;
 
+    private Integer totalDays;
+
     public PlayerStat() {
     }
 
@@ -72,5 +74,13 @@ public class PlayerStat {
 
     public void setTotalGames(Integer totalGames) {
         this.totalGames = totalGames;
+    }
+
+    public Integer getTotalDays() {
+        return totalDays;
+    }
+
+    public void setTotalDays(Integer totalDays) {
+        this.totalDays = totalDays;
     }
 }
