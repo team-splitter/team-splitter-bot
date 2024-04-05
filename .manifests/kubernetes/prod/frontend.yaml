@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/team-splitter/team-splitter-ui:0.1.41
+          image: ghcr.io/team-splitter/team-splitter-ui:0.1.42
           ports:
             - containerPort: 443
           env:

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: team-splitter-backend
-          image: ghcr.io/team-splitter/team-splitter-server:1.60
+          image: ghcr.io/team-splitter/team-splitter-server:1.61
           ports:
             - containerPort: 8080
           env:
