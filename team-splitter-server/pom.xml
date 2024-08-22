@@ -4,11 +4,11 @@
     <parent>
         <groupId>com.max</groupId>
         <artifactId>team-splitter-parent</artifactId>
-        <version>1.62</version>
+        <version>1.63-SNAPSHOT</version>
     </parent>
 
     <artifactId>team-splitter-server</artifactId>
-    <version>1.62</version>
+    <version>1.63-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Team Splitter :: Server</name>
 
