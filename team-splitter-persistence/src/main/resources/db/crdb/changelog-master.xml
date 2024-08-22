@@ -30,5 +30,6 @@
     <include file="db/crdb/changelogs/20230619_game_team_size.xml"/>
     <include file="db/crdb/changelogs/20240124_multi_gates.xml"/>
     <include file="db/crdb/changelogs/20240318_drop_game_ids.xml"/>
+    <include file="db/crdb/changelogs/20240822_drop_player_stats_score.xml"/>
 
 </databaseChangeLog>

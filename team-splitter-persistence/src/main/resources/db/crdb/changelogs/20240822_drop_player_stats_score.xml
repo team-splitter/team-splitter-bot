@@ -4,11 +4,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet author="max" id="add scored columns">
-        <addColumn tableName="game">
-            <column name="blue_scored" type="bigint"/>
-            <column name="red_scored" type="bigint"/>
-        </addColumn>
+    <changeSet author="max" id="drop player_stats player_score table">
+        <dropTable tableName="player_stats"/>
+        <dropTable tableName="player_score"/>
 
     </changeSet>
 </databaseChangeLog>

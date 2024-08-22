@@ -1,2 +1,0 @@
-SET MODE PostgreSQL;
-SET IGNORECASE false;
