@@ -3,13 +3,14 @@ package com.max.team.splitter.core.bot.service;
 import com.max.team.splitter.core.bot.handlers.CompositeUpdateHandler;
 import com.max.team.splitter.core.converter.AppConverters;
 import com.max.team.splitter.core.model.GameSplit;
-import com.max.team.splitter.core.model.Player;
+import com.max.team.splitter.persistence.entities.PlayerEntity;
 import com.max.team.splitter.core.model.PollModel;
 import com.max.team.splitter.core.model.Team;
 import com.max.team.splitter.core.model.telegram.Update;
 import com.max.team.splitter.core.service.GameSplitService;
 import com.max.team.splitter.core.service.PollService;
 import com.max.team.splitter.core.strategy.SplitterStrategyType;
+import com.max.team.splitter.persistence.entities.PlayerEntity;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -54,13 +55,13 @@ public class TelegramBotService {
         String textMessage = "";
         for (Team team : gameSplit.getTeams()) {
             String teamColor = team.getName();
-            List<Player> players = team.getPlayers();
+            List<PlayerEntity> players = team.getPlayers();
 
             //Apply sorting by first name
             sortTeamByFirstName(players);
 
             textMessage += "*Team " + teamColor + "*\n";
-            for (Player player : players) {
+            for (PlayerEntity player : players) {
                 String playerNameRow = playerDisplayName(player);
 
                 textMessage += playerNameRow + "\n";
@@ -70,7 +71,7 @@ public class TelegramBotService {
         return textMessage;
     }
 
-    private String playerDisplayName(Player player) {
+    private String playerDisplayName(PlayerEntity player) {
         String personName = "";
         if (player.getFirstName() != null) {
             personName += player.getFirstName();
@@ -83,7 +84,7 @@ public class TelegramBotService {
         return personName;
     }
 
-    private static void sortTeamByFirstName(List<Player> team) {
+    private static void sortTeamByFirstName(List<PlayerEntity> team) {
         team.sort((a, b) -> {
             String f1 = a.getFirstName();
             String f2 = b.getFirstName();

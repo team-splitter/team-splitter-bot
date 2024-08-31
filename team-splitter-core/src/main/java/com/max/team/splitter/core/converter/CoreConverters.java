@@ -11,27 +11,6 @@ import java.util.List;
 
 public class CoreConverters {
 
-
-    public static Player toPlayer(PlayerEntity entity) {
-        Player player = new Player(entity.getId(), entity.getFirstName(), entity.getLastName(), entity.getUserName());
-        player.setScore(entity.getScore());
-        player.setGameScore(entity.getGameScore());
-        player.setPrivacy(entity.getPrivacy());
-        return player;
-    }
-
-    public static PlayerEntity toPlayerEntity(Player player) {
-        PlayerEntity entity = new PlayerEntity();
-        entity.setId(player.getId());
-        entity.setFirstName(player.getFirstName());
-        entity.setLastName(player.getLastName());
-        entity.setUserName(player.getUsername());
-        entity.setScore(player.getScore());
-        entity.setPrivacy(player.getPrivacy());
-
-        return entity;
-    }
-
     public static PollEntity toPollEntity(PollModel poll) {
         PollEntity entity = new PollEntity();
         entity.setId(poll.getId());

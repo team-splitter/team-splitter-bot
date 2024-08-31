@@ -5,6 +5,7 @@ import com.max.team.splitter.core.model.*;
 import com.max.team.splitter.core.strategy.SplitterStrategyType;
 import com.max.team.splitter.persistence.entities.GameEntity;
 import com.max.team.splitter.persistence.entities.GameSplitEntity;
+import com.max.team.splitter.persistence.entities.PlayerEntity;
 import com.max.team.splitter.persistence.repositories.GameRepository;
 import com.max.team.splitter.persistence.repositories.GameSplitRepository;
 import org.slf4j.Logger;
@@ -48,12 +49,12 @@ public class GameSplitService {
     @Transactional
     public GameSplit split(String pollId, int numberOfTeams, SplitterStrategyType splitType) {
         List<Long> playerIds = pollService.getPlayerIdsGoingToGame(pollId);
-        List<Player> players = playerService.getPlayersByIds(playerIds);
+        List<PlayerEntity> players = playerService.getPlayersByIds(playerIds);
         players.forEach(player -> player.setScore(player.getScore() != null ? player.getScore() : DEFAULT_SCORE));
 
 
         log.info("Split players={}", players);
-        Map<String, List<Player>> teams = teamSplitterService.splitTeams(numberOfTeams, splitType, players);
+        Map<String, List<PlayerEntity>> teams = teamSplitterService.splitTeams(numberOfTeams, splitType, players);
         GameSplit gameSplit = saveGameSplit(teams, pollId, numberOfTeams, splitType);
 
         return gameSplit;
@@ -85,7 +86,7 @@ public class GameSplitService {
         return CoreConverters.toPage(splits, page);
     }
 
-    private GameSplit saveGameSplit(Map<String, List<Player>> teams, String pollId, int numberOfTeams, SplitterStrategyType splitType) {
+    private GameSplit saveGameSplit(Map<String, List<PlayerEntity>> teams, String pollId, int numberOfTeams, SplitterStrategyType splitType) {
         GameSplitEntity gameSplitEntity = new GameSplitEntity();
         gameSplitEntity.setPollId(pollId);
         gameSplitEntity.setTeamSize(numberOfTeams);
@@ -147,12 +148,12 @@ public class GameSplitService {
 
         for (Map.Entry<String, Team> entry : teamNameToTeam.entrySet()) {
             String teamName = entry.getKey();
-            List<Player> players = entry.getValue().getPlayers();
+            List<PlayerEntity> players = entry.getValue().getPlayers();
 
             Integer points = teamPoints.getOrDefault(teamName, 0);
             if (points == 0) continue;
 
-            for (Player player : players) {
+            for (PlayerEntity player : players) {
                 playerPoints.put(player.getId(), points);
             }
         }

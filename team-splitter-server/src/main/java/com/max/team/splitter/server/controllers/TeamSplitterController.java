@@ -1,12 +1,11 @@
 package com.max.team.splitter.server.controllers;
 
-import com.max.team.splitter.core.model.Player;
+import com.max.team.splitter.core.model.Team;
 import com.max.team.splitter.core.service.PlayerService;
 import com.max.team.splitter.core.service.PollService;
 import com.max.team.splitter.core.service.TeamSplitterService;
 import com.max.team.splitter.core.strategy.SplitterStrategyType;
-import com.max.team.splitter.server.dto.PlayerDto;
-import com.max.team.splitter.server.dto.TeamDto;
+import com.max.team.splitter.persistence.entities.PlayerEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.max.team.splitter.core.Constants.DEFAULT_SCORE;
-import static com.max.team.splitter.server.converters.DtoConverters.toPlayerDto;
 
 @RestController
 @RequestMapping("/team")
@@ -32,7 +30,7 @@ public class TeamSplitterController {
     private PlayerService playerService;
 
     @RequestMapping(value = "/split/{pollId}", method = RequestMethod.GET)
-    public List<TeamDto>  split(@PathVariable(value = "pollId") String pollId,
+    public List<Team>  split(@PathVariable(value = "pollId") String pollId,
                                 @RequestParam(name = "teamsNum", defaultValue = "2") Integer numberOfTeams,
                                 @RequestParam(name = "splitType", defaultValue = "TEAM_SCORE_BALANCE", required = false) SplitterStrategyType splitType) {
         if (numberOfTeams < 2 || numberOfTeams > 4) {
@@ -42,30 +40,20 @@ public class TeamSplitterController {
         log.info("Splitting teams for pollId={} into {} teams", pollId, numberOfTeams);
 
         List<Long> playerIds = pollService.getPlayerIdsGoingToGame(pollId);
-        List<Player> players = playerService.getPlayersByIds(playerIds);
+        List<PlayerEntity> players = playerService.getPlayersByIds(playerIds);
         players.forEach(player -> player.setScore(player.getScore() != null ? player.getScore() : DEFAULT_SCORE));
 
-        Map<String, List<Player>> teamsMap = teamSplitterService.splitTeams(numberOfTeams, splitType, players);
+        Map<String, List<PlayerEntity>> teamsMap = teamSplitterService.splitTeams(numberOfTeams, splitType, players);
 
-        List<TeamDto> teams = new LinkedList<>();
-        for (Map.Entry<String, List<Player>> entry : teamsMap.entrySet()) {
-            TeamDto team = new TeamDto();
+        List<Team> teams = new LinkedList<>();
+        for (Map.Entry<String, List<PlayerEntity>> entry : teamsMap.entrySet()) {
+            Team team = new Team();
             team.setName(entry.getKey());
-            team.setPlayers(toPlayerDtoList(entry.getValue()));
+            team.setPlayers(entry.getValue());
             teams.add(team);
         }
 
         return teams;
     }
 
-    private List<PlayerDto> toPlayerDtoList(List<Player> players) {
-        List<PlayerDto> playerDtos = new LinkedList<>();
-        for (Player player : players) {
-            PlayerDto dto = toPlayerDto(player);
-
-            playerDtos.add(dto);
-        }
-
-        return playerDtos;
-    }
 }

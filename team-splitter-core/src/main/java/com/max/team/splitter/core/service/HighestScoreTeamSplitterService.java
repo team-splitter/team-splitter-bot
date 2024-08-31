@@ -1,8 +1,8 @@
 package com.max.team.splitter.core.service;
 
-import com.max.team.splitter.core.model.Player;
 import com.max.team.splitter.core.strategy.SplitterStrategyType;
 import com.max.team.splitter.core.strategy.TeamSplitStrategy;
+import com.max.team.splitter.persistence.entities.PlayerEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -28,9 +28,7 @@ public class HighestScoreTeamSplitterService implements TeamSplitterService {
     }
 
     @Override
-    public List<List<Player>> splitIntoTeams(int numberOfTeams, SplitterStrategyType splitType,  List<Player> players) {
-        //use games store instead of initial player score
-        players.forEach(player -> player.setScore(player.getGameScore() != null ? player.getGameScore() : player.getScore()));
+    public List<List<PlayerEntity>> splitIntoTeams(int numberOfTeams, SplitterStrategyType splitType,  List<PlayerEntity> players) {
 
         //Sort by score descending then by player id
         int DIVIDER = 5;
@@ -48,15 +46,15 @@ public class HighestScoreTeamSplitterService implements TeamSplitterService {
             }
         });
 
-        List<List<Player>> teams = strategyMap.get(splitType).split(numberOfTeams, players);
+        List<List<PlayerEntity>> teams = strategyMap.get(splitType).split(numberOfTeams, players);
         return teams;
     }
 
-    public Map<String, List<Player>> splitTeams(int numberOfTeams,  SplitterStrategyType splitType, List<Player> players) {
-        List<List<Player>> teams = splitIntoTeams(numberOfTeams, splitType, players);
-        LinkedHashMap<String, List<Player>> teamMap = new LinkedHashMap<>();
+    public Map<String, List<PlayerEntity>> splitTeams(int numberOfTeams,  SplitterStrategyType splitType, List<PlayerEntity> players) {
+        List<List<PlayerEntity>> teams = splitIntoTeams(numberOfTeams, splitType, players);
+        LinkedHashMap<String, List<PlayerEntity>> teamMap = new LinkedHashMap<>();
         int teamNum = 0;
-        for (List<Player> team : teams) {
+        for (List<PlayerEntity> team : teams) {
             String teamColor = TEAM_COLORS[teamNum];
 
             teamMap.put(teamColor, team);

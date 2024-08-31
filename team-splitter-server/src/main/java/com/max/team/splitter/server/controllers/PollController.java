@@ -1,10 +1,11 @@
 package com.max.team.splitter.server.controllers;
 
-import com.max.team.splitter.core.model.Player;
+import com.max.team.splitter.persistence.entities.PlayerEntity;
 import com.max.team.splitter.core.model.PollAnswerModel;
 import com.max.team.splitter.core.model.PollModel;
 import com.max.team.splitter.core.service.PlayerService;
 import com.max.team.splitter.core.service.PollService;
+import com.max.team.splitter.persistence.entities.PlayerEntity;
 import com.max.team.splitter.server.dto.PollVote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +65,7 @@ public class PollController {
 
     @RequestMapping(value = "/{id}/vote", method = RequestMethod.GET)
     public List<PollVote> getVotes(@PathVariable("id") String pollId) {
-        Map<Long, Player> map =  playerService.getPlayers().stream().collect(Collectors.toMap(Player::getId, Function.identity()));
+        Map<Long, PlayerEntity> map =  playerService.getPlayers().stream().collect(Collectors.toMap(PlayerEntity::getId, Function.identity()));
         List<PollAnswerModel> answers = pollService.getVotesForPoll(pollId);
 
         return answers.stream().map((answer) -> {

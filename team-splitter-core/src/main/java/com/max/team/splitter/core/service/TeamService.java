@@ -1,7 +1,8 @@
 package com.max.team.splitter.core.service;
 
-import com.max.team.splitter.core.model.Player;
+import com.max.team.splitter.persistence.entities.PlayerEntity;
 import com.max.team.splitter.core.model.Team;
+import com.max.team.splitter.persistence.entities.PlayerEntity;
 import com.max.team.splitter.persistence.entities.TeamEntryEntity;
 import com.max.team.splitter.persistence.repositories.TeamEntryRepository;
 import org.springframework.stereotype.Service;
@@ -26,14 +27,14 @@ public class TeamService {
 
     public List<Team> getTeamsForGameSplit(Long gameSplitId) {
         List<TeamEntryEntity> teamEntryEntities = teamEntryRepository.findByGameSplitId(gameSplitId);
-        Map<Long, Player> playerMap = getPlayersMap(teamEntryEntities);
+        Map<Long, PlayerEntity> playerMap = getPlayersMap(teamEntryEntities);
 
         return toTeams(teamEntryEntities, playerMap);
     }
 
-    private static List<Team> toTeams(List<TeamEntryEntity> teamEntryEntities, Map<Long, Player> playerMap) {
+    private static List<Team> toTeams(List<TeamEntryEntity> teamEntryEntities, Map<Long, PlayerEntity> playerMap) {
         Map<String, List<TeamEntryEntity>> byTeamName = teamEntryEntities.stream().collect(Collectors.groupingBy(TeamEntryEntity::getTeamName));
-        Map<String, List<Player>> teamsMap = new LinkedHashMap<>();
+        Map<String, List<PlayerEntity>> teamsMap = new LinkedHashMap<>();
         for (Map.Entry<String, List<TeamEntryEntity>> entry : byTeamName.entrySet()) {
             teamsMap.put(entry.getKey(), entry.getValue().stream().map((item) -> playerMap.get(item.getPlayerId())).collect(Collectors.toList()));
         }
@@ -41,7 +42,7 @@ public class TeamService {
         List<Team> teams = new LinkedList<>();
         for (int i = 0; i < teamsMap.size(); i++) {
             String teamName = TEAM_COLORS[i];
-            List<Player> players = teamsMap.get(teamName);
+            List<PlayerEntity> players = teamsMap.get(teamName);
 
             Team team = new Team();
             team.setName(teamName);
@@ -52,21 +53,21 @@ public class TeamService {
         return teams;
     }
 
-    private Map<Long, Player> getPlayersMap(List<TeamEntryEntity> teamEntryEntities) {
+    private Map<Long, PlayerEntity> getPlayersMap(List<TeamEntryEntity> teamEntryEntities) {
         Set<Long> ids = teamEntryEntities.stream().map(TeamEntryEntity::getPlayerId).collect(Collectors.toSet());
-        List<Player> playersByIds = playerService.getPlayersByIds(ids);
-        Map<Long, Player> playerMap = playersByIds.stream().collect(Collectors.toMap(Player::getId, Function.identity()));
+        List<PlayerEntity> playersByIds = playerService.getPlayersByIds(ids);
+        Map<Long, PlayerEntity> playerMap = playersByIds.stream().collect(Collectors.toMap(PlayerEntity::getId, Function.identity()));
         //set player score from team entry, hence current player score could be different
         teamEntryEntities.forEach((entry -> playerMap.get(entry.getPlayerId()).setScore(entry.getScore())));
         return playerMap;
     }
 
-    public List<Team> saveTeams(Map<String, List<Player>> teamSplit, Long gameSplitId) {
+    public List<Team> saveTeams(Map<String, List<PlayerEntity>> teamSplit, Long gameSplitId) {
         List<TeamEntryEntity> teamEntryEntities = new LinkedList<>();
-        for (Map.Entry<String, List<Player>> entry : teamSplit.entrySet()) {
+        for (Map.Entry<String, List<PlayerEntity>> entry : teamSplit.entrySet()) {
             String teamColor = entry.getKey();
-            List<Player> players = entry.getValue();
-            for (Player player : players) {
+            List<PlayerEntity> players = entry.getValue();
+            for (PlayerEntity player : players) {
                 TeamEntryEntity teamEntry = new TeamEntryEntity();
                 teamEntry.setTeamName(teamColor);
                 teamEntry.setPlayerId(player.getId());
@@ -78,7 +79,7 @@ public class TeamService {
 
         List<TeamEntryEntity> saved = teamEntryRepository.saveAll(teamEntryEntities);
 
-        Map<Long, Player> playerMap = teamSplit.values().stream().flatMap(List::stream).collect(Collectors.toMap(Player::getId, Function.identity()));
+        Map<Long, PlayerEntity> playerMap = teamSplit.values().stream().flatMap(List::stream).collect(Collectors.toMap(PlayerEntity::getId, Function.identity()));
         return toTeams(saved, playerMap);
     }
 

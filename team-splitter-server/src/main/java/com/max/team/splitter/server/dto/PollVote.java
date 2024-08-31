@@ -1,10 +1,10 @@
 package com.max.team.splitter.server.dto;
 
-import com.max.team.splitter.core.model.Player;
+import com.max.team.splitter.persistence.entities.PlayerEntity;
 
 public class PollVote {
     private Long id;
-    private Player player;
+    private PlayerEntity player;
 
     public Long getId() {
         return id;
@@ -14,11 +14,11 @@ public class PollVote {
         this.id = id;
     }
 
-    public Player getPlayer() {
+    public PlayerEntity getPlayer() {
         return player;
     }
 
-    public void setPlayer(Player player) {
+    public void setPlayer(PlayerEntity player) {
         this.player = player;
     }
 }

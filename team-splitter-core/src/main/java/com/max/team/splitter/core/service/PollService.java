@@ -89,7 +89,7 @@ public class PollService {
     public List<Long> getPlayerIdsGoingToGame(String pollId) {
         List<PollAnswerEntity> answers = pollAnswerRepository.findByPollId(pollId);
         List<Long> going = answers.stream().map(PollAnswerEntity::getPlayerId).collect(Collectors.toList());
-        log.info("Player ids going={}", going);
+        log.info("PlayerEntity ids going={}", going);
         return going;
     }
 

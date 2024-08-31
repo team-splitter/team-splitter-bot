@@ -1,11 +1,11 @@
 package com.max.team.splitter.core.strategy;
 
-import com.max.team.splitter.core.model.Player;
+import com.max.team.splitter.persistence.entities.PlayerEntity;
 
 import java.util.List;
 
 public interface TeamSplitStrategy {
-    List<List<Player>> split(int numberOfTeams, List<Player> playerScores);
+    List<List<PlayerEntity>> split(int numberOfTeams, List<PlayerEntity> playerScores);
 
     SplitterStrategyType getType();
 }

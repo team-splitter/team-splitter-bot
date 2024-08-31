@@ -1,25 +1,26 @@
 package com.max.team.splitter.core;
 
-import com.max.team.splitter.core.model.Player;
+import com.max.team.splitter.persistence.entities.PlayerEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestData {
-    public static Player createPlayer(Long id) {
-        Player player = new Player(id);
+    public static PlayerEntity createPlayer(Long id) {
+        PlayerEntity player = new PlayerEntity();
+        player.setId(id);
         return player;
     }
 
-    public static Player createPlayer(Long id, Integer score) {
-        Player player = createPlayer(id);
+    public static PlayerEntity createPlayer(Long id, Integer score) {
+        PlayerEntity player = createPlayer(id);
         player.setScore(score);
 
         return player;
     }
 
-    public static Player createPlayer(long id, String firstName, String lastName, Integer score) {
-        Player player = createPlayer(id);
+    public static PlayerEntity createPlayer(long id, String firstName, String lastName, Integer score) {
+        PlayerEntity player = createPlayer(id);
         player.setScore(score);
         player.setFirstName(firstName);
         player.setLastName(lastName);
@@ -27,12 +28,12 @@ public class TestData {
         return player;
     }
 
-    public static Player createPlayer(int id, String firstName, String lastName, Integer score) {
+    public static PlayerEntity createPlayer(int id, String firstName, String lastName, Integer score) {
         return createPlayer((long) id, firstName, lastName, score);
     }
 
-    public static List<Player> playersList() {
-        List<Player> players = new ArrayList<>();
+    public static List<PlayerEntity> playersList() {
+        List<PlayerEntity> players = new ArrayList<>();
         
         players.add(createPlayer(949248180,"Sergii","Rodik", 85));
         players.add(createPlayer(355281005,"Maksym","Mukhanov", 82));

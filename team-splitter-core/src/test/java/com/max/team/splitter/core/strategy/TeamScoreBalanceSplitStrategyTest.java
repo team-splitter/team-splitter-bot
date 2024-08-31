@@ -1,6 +1,6 @@
 package com.max.team.splitter.core.strategy;
 
-import com.max.team.splitter.core.model.Player;
+import com.max.team.splitter.persistence.entities.PlayerEntity;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -14,16 +14,16 @@ class TeamScoreBalanceSplitStrategyTest {
 //    @Test
     void splitIntoTwoTeams() {
 
-        List<List<Player>> teams = splitStrategy.split(4, playersList());
+        List<List<PlayerEntity>> teams = splitStrategy.split(4, playersList());
 
         printTeams(teams);
 
     }
 
-    private void printTeams(List<List<Player>> teams) {
-        for (List<Player> team : teams) {
+    private void printTeams(List<List<PlayerEntity>> teams) {
+        for (List<PlayerEntity> team : teams) {
             int sum = 0;
-            for (Player player : team) {
+            for (PlayerEntity player : team) {
                 System.out.println(player.getScore() + ", id:" + player.getId() + ", " + player.getFirstName()  + " " + player.getLastName());
                 sum += player.getScore();
             }

@@ -1,10 +1,12 @@
 package com.max.team.splitter.core.model;
 
+import com.max.team.splitter.persistence.entities.PlayerEntity;
+
 import java.util.List;
 
 public class Team {
     private String name;
-    private List<Player> players;
+    private List<PlayerEntity> players;
 
     public String getName() {
         return name;
@@ -14,11 +16,11 @@ public class Team {
         this.name = name;
     }
 
-    public List<Player> getPlayers() {
+    public List<PlayerEntity> getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(List<PlayerEntity> players) {
         this.players = players;
     }
 }
